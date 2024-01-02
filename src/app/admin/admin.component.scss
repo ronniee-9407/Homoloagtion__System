@@ -1,0 +1,414 @@
+.headerClass{
+    position: absolute;
+    width: 99.75%;
+    height: 8%;
+    // border: 1px solid black;
+    top: 0%;
+    left: 0%;
+}
+.bodyClass{
+    position: absolute;
+    width: 100%;
+    height: 91.65%;
+    // border: 1px solid black;
+    top: 7%;
+    left: -0.75%;
+}
+.logoClass{
+    position: relative;
+    height: 87%;
+    width: 10%;
+    left: 1.5%;
+    bottom: 9%;
+}
+.hondaLogoclass{
+    position: relative;
+    height: 100%;
+    width: 10%;
+    left: 80%;
+}
+.leftContainer{
+    height: 100%;
+    width: 15%;
+    background-color: #5e5e5e;
+}
+.rightContainer{
+    height: 100%;
+    width: 85%;
+    background-color: #d9d9d9;
+}
+.upperContainer{
+    width: 100%;
+    height: 20%;
+    background-color: #4e4e4e;
+}
+.lowerContainer{
+    width: 100%;
+    height: 80%;
+}
+.adminProfileClass{
+    height: 50%;
+    width: 30%;
+}
+.greet{
+    color: white;
+    margin: 0px;
+}
+.iconsContainer{
+    position: relative;
+    height: 60%;
+    width: 22%;
+    cursor: pointer;
+    border-radius: 50%;
+}
+.iconsContainer:hover{
+    -webkit-box-shadow: 0px 4px 13px 0px rgba(60, 54, 235, 0.8);
+    -moz-box-shadow: 0px 4px 13px 0px rgba(60, 54, 235, 0.8);
+    box-shadow: 0px 4px 13px 0px rgba(60, 54, 235, 0.8);
+}
+.featureContainer{
+    position: relative;
+    height: 27%;
+    width: 60%;
+    left: 5%;
+    cursor: pointer;
+    display: inline-block;
+}
+.adminFeatureClass{
+    width: 100%;
+    height: 80%;
+    // border: 1px solid black;
+    position: relative;
+    top: 0%;
+}
+.adminFeatureContainer{
+    height: 20%;
+    width: 100%;
+    // border: 1px solid black;
+}
+.upperRightContainer{
+    position: relative;
+    top: 2%;
+    left: 2%;
+    height: 18%;
+    width: 96%;
+    background-color: white;
+    border-radius: 15px;
+}
+.middleRightContainer{
+    position: relative;
+    top: 4%;
+    left: 2%;
+    height: 52%;
+    width: 96%;
+    background-color: white;
+}
+.lowerRightContainer{
+    position: relative;
+    top: 6%;
+    left: 2%;
+    height: 20%;
+    width: 96%;
+    background-color: white;
+}
+.pending_data_container{
+    height: 60%;
+    width: 90%;
+    background-color: #afcfd3;
+    border-radius: 10px;
+}
+.leftContainerClass{
+    height: 100%;
+    width: 5%;
+    background-color: #5e5e5e;
+}
+.rightContainerClass{
+    height: 100%;
+    width: 95%;
+    background-color: #d9d9d9;
+}
+.smallProfileClass{
+    height: 35%;
+    width: 60%;
+}
+.iconsLeftContainer{
+    position: relative;
+    height: 55%;
+    width: 60%;
+    cursor: pointer;
+    border-radius: 50%;
+}
+.iconsLeftContainer:hover{
+    -webkit-box-shadow: 0px 4px 13px 0px rgba(60, 54, 235, 0.8);
+    -moz-box-shadow: 0px 4px 13px 0px rgba(60, 54, 235, 0.8);
+    box-shadow: 0px 4px 13px 0px rgba(60, 54, 235, 0.8);
+}
+
+.pending_report_header{
+    color: black;
+    text-align: center;
+}
+.pending_report_outer_container{
+    height: 90%;
+    width: 94%;
+    position: relative;
+    left: 3.5%;
+    top: 2%;
+    overflow-y: auto;
+}
+.pending_report_container{
+    height: 17%;
+    width: 99%;
+    // border: 1px solid black;
+    background-color: white;
+    border-radius: 10px;
+    margin-top: 1%;
+    margin-bottom:2%;
+}
+.camDetail_container{
+    height: 75%;
+    width: 35%;
+    // border: 1px solid black;
+    background-color: #4e4e4e;
+    border-radius: 15px;
+}
+.camera_header{
+    // color: black;
+    text-align: center;
+}
+.w-50{
+    width: 60%;
+    height: 7%;
+}
+.inputClass{
+    height: 90%;
+    width: 55%;
+    text-align: center;
+    border-radius: 8px;
+    border: 1px solid white;
+}
+.submitBtn{
+    height: 8%;
+    width: 20%;
+    background-color: #5e5e5e;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    // border: 1px solid #5e5e5e;
+    border: ridge;
+}
+label{
+    color: white;
+}
+.inputClass:focus{
+    outline: none;
+}
+.searchContainer{
+    background-color: white;
+    height: 99.1%;
+    width: 99.7%;
+    position: relative;
+    left: 0.1%;
+}
+.searchByDate{
+    position: relative;
+    border-radius: 20px;
+    width: 70%;
+    height: 90%;
+    // top: -2%;
+}
+#subHeading1{
+    display: inline;
+    position: relative;
+    left: 36%;
+    top: 5%;
+    font-size: 2.5rem;
+}
+#datePick{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    top: 22%;
+    left: 5%;
+    height: 8%;
+}
+
+#date{
+    margin-left: 3%;
+    width: 50%;
+    height: 100%;
+}
+
+#timePick{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 89%;
+    top: 41%;
+    left: 5%;
+    height: 8%;
+}
+
+#time{
+    margin-left: 3%;
+    width: 50%;
+    height: 100%;
+}
+
+#start-time, #end-time{
+    width: 57%;
+    height: 75%;
+}
+
+#start-date, #end-date{
+    width: 55%;
+    height: 75%;
+}
+#start-time:focus, #end-time:focus, #start-date:focus, #end-date:focus{
+    outline: none;
+}
+#searchButton{
+    position: relative;
+    top: 55%;
+    left: 47%;
+    height: 8%;
+    width: 12%;
+    background-color: #4e4e4e;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.link{
+    color: #1a67b4;
+    // color: black;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.link:hover{
+    color: #1a67b4;
+}
+
+.w-15{
+    width: 15%;
+    text-align: center;
+    color: black;
+}
+.w-25{
+    width: 25%;
+    text-align: center;
+    color: black;
+}
+.w-40{
+    width: 40%;
+    text-align: center;
+    color: black;
+}
+.w-60{
+    width: 60%;
+    text-align: center;
+    color: black;
+}
+.w-75{
+    width: 75%;
+    text-align: center;
+    color: black;
+}
+
+.f-10{
+    font-size: 10px;
+}
+
+.h_70{
+    height: 70%;
+    width: auto;
+}
+.w_100{
+    width: 100%;
+    height: auto;
+}
+
+.flex-row{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flex-col{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.flex-row-even{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.flex-col-even{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.shadow{
+    -webkit-box-shadow: 0px 4px 13px 0px rgba(60, 54, 235, 0.8);
+    -moz-box-shadow: 0px 4px 13px 0px rgba(60, 54, 235, 0.8);
+    box-shadow: 0px 4px 13px 0px rgba(60, 54, 235, 0.8);
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background-color: #eeece9;
+    box-shadow: inset 0 0 5px darkgrey; 
+    border-radius: 6px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    /* background: linear-gradient(to right, #517fa4 0%, #243949  51%, #517fa4  100%);  */
+    background-image: linear-gradient(to bottom, #0575E6 0%, #021B79  100%);
+    border-radius: 6px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to top, #0575E6 0%, #021B79  100%);
+  }

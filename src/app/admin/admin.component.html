@@ -1,1 +1,180 @@
-<p>admin works!</p>
+<header class="headerClass">
+    <img src="../../assets/icons/logo.png" alt="" class="logoClass">
+    <img src="../../assets/icons/Honda_Logo.svg" alt="" class="hondaLogoclass">
+</header>
+<body *ngIf="curr_admin_view == 'Dashboard'" class="bodyClass flex-row-even">
+    <div class="leftContainer flex-col-even">
+        <div class="upperContainer flex-col-even">
+            <img src="../../assets/icons/profile.png" alt="" class="adminProfileClass">
+            <h2 class="greet">Hi Admin !</h2>
+            <p class="greet">Employee ID : HSA12345</p>
+        </div>
+        <div class="lowerContainer">
+            <div class="adminFeatureClass">
+                <div *ngFor="let imageUrl of feature_logo_list; let i = index" class="adminFeatureContainer flex-row-even" (click)="changeView(i)">
+                    <img *ngIf="curr_admin_view != admin_view_list[i]" [src]="'../../assets/icons/' + imageUrl" alt="" class="iconsContainer">
+                    <img *ngIf="curr_admin_view == admin_view_list[i]" [src]="'../../assets/icons/' + imageUrl" alt="" class="iconsContainer shadow">
+                    <h4 class="featureContainer greet">{{admin_view_list[i]}}</h4>
+                    <!-- <h4 *ngIf="curr_admin_view == admin_view_list[i]" class="featureContainer greet shadow">{{admin_view_list[i]}}</h4> -->
+                </div>
+                <div class="adminFeatureContainer flex-row-even" (click)="logout()">
+                    <img src="../../assets/icons/out.png" alt="" class="iconsContainer">
+                    <h4 class="featureContainer greet">Logout</h4>
+                </div>
+            </div>
+        </div>
+        <p class="greet f-10">V 1.0</p>
+    </div>
+    <div class="rightContainer">
+        <div class="upperRightContainer flex-row-even">
+            <div class="pending_data_container flex-row-even">
+                <!-- <h4 class="greet w-25">Date/Time</h4> -->
+                <h3 class="greet w-25">26-12-2023  05:00 PM</h3>
+                <h3 class="greet w-60">Inspection of Activa 125cc</h3>
+                <h4 class="greet w-15 link">Preview</h4>
+            </div>
+            <h4 class="link greet" (click)="goToPendingReport()">See All</h4>
+        </div>
+        <div class="middleRightContainer"></div>
+        <div class="lowerRightContainer"></div>
+    </div>
+</body>
+
+<body *ngIf="curr_admin_view == 'Pending Report'" class="bodyClass flex-row-even">
+    <div class="leftContainerClass flex-col-even">
+        <div class="upperContainer flex-col-even">
+            <img src="../../assets/icons/profile.png" alt="" class="smallProfileClass" >
+            <h4 class="greet" style="font-size: 12px;">Hi Admin !</h4>
+            <!-- <p class="greet" style="font-size: 8px; width: 90%;">Employee ID : HSA12345</p> -->
+        </div>
+
+        <div class="lowerContainer">
+            <div class="adminFeatureClass">
+                <div *ngFor="let imageUrl of feature_logo_list; let i = index" class="adminFeatureContainer flex-col-even" (click)="changeView(i)">
+                    <img *ngIf="curr_admin_view != admin_view_list[i]" [src]="'../../assets/icons/' + imageUrl" alt="" class="iconsLeftContainer">
+                    <img *ngIf="curr_admin_view == admin_view_list[i]" [src]="'../../assets/icons/' + imageUrl" alt="" class="iconsLeftContainer shadow">
+                </div>
+                <div class="adminFeatureContainer flex-row-even" (click)="logout()">
+                    <img src="../../assets/icons/out.png" alt="" class="iconsLeftContainer">
+                </div>
+            </div>
+        </div>
+        <p class="greet f-10">V 1.0</p>
+    </div>
+    <div class="rightContainerClass">
+        <h1 class="greet pending_report_header">Pending Reports for Approval</h1>
+        <div class="pending_report_outer_container">
+            <div *ngFor="let value of pending_report_list; let i = index" class="pending_report_container">
+                
+            </div>
+        </div>
+    </div>
+</body>
+
+<body *ngIf="curr_admin_view == 'Report Analysis'" class="bodyClass flex-row-even">
+    <div class="leftContainerClass flex-col-even">
+        <div class="upperContainer flex-col-even">
+            <img src="../../assets/icons/profile.png" alt="" class="smallProfileClass" >
+            <h4 class="greet" style="font-size: 12px;">Hi Admin !</h4>
+            <!-- <p class="greet" style="font-size: 8px; width: 90%;">Employee ID : HSA12345</p> -->
+        </div>
+
+        <div class="lowerContainer">
+            <div class="adminFeatureClass">
+                <div *ngFor="let imageUrl of feature_logo_list; let i = index" class="adminFeatureContainer flex-col-even" (click)="changeView(i)">
+                    <img *ngIf="curr_admin_view != admin_view_list[i]" [src]="'../../assets/icons/' + imageUrl" alt="" class="iconsLeftContainer">
+                    <img *ngIf="curr_admin_view == admin_view_list[i]" [src]="'../../assets/icons/' + imageUrl" alt="" class="iconsLeftContainer shadow">
+                </div>
+                <div class="adminFeatureContainer flex-row-even" (click)="logout()">
+                    <img src="../../assets/icons/out.png" alt="" class="iconsLeftContainer">
+                </div>
+            </div>
+        </div>
+        <p class="greet f-10">V 1.0</p>
+    </div>
+    <div class="rightContainerClass flex-col-even">
+        <div class="searchContainer flex-col-even">
+            <div *ngIf="!report_page_flag" class="searchByDate">
+                <h2 id="subHeading1">Search By Date</h2>
+                <div id="datePick">
+                    <div id="date">
+                        <label for="start-date">Start Date: &nbsp;&nbsp;</label>
+                        <input autocomplete="off" id="start-date"/>
+                    </div>
+                    
+                    <div id="date">
+                        <label for="end-date">End Date: &nbsp;&nbsp;</label>
+                        <input autocomplete="off" id="end-date"/>
+                    </div>
+                </div>
+            
+                <div id="timePick">
+                    <div id="time">
+                        <label for="start-time">Start Time: &nbsp;&nbsp;</label>
+                        <input type="time" autocomplete="off" [(ngModel)]="startTime" id="start-time" value="start time"/>
+                    </div>
+                    
+                    <div id="time">
+                        <label for="end-time">End Time: &nbsp;&nbsp;</label>
+                        <input type="time" autocomplete="off" [(ngModel)]="endTime"  id="end-time"  value="end time"/>
+                    </div>
+                </div>
+            
+                <button id="searchButton" class="btn btn-primary" (click)="searchDateTime()">Search</button>
+            </div>
+            <div *ngIf="report_page_flag">
+
+            </div>
+        </div>
+    </div>
+</body>
+
+<body *ngIf="curr_admin_view == 'Camera'" class="bodyClass flex-row-even">
+    <div class="leftContainerClass flex-col-even">
+        <div class="upperContainer flex-col-even">
+            <img src="../../assets/icons/profile.png" alt="" class="smallProfileClass" >
+            <h4 class="greet" style="font-size: 12px;">Hi Admin !</h4>
+            <!-- <p class="greet" style="font-size: 8px; width: 90%;">Employee ID : HSA12345</p> -->
+        </div>
+
+        <div class="lowerContainer">
+            <div class="adminFeatureClass">
+                <div *ngFor="let imageUrl of feature_logo_list; let i = index" class="adminFeatureContainer flex-col-even" (click)="changeView(i)">
+                    <img *ngIf="curr_admin_view != admin_view_list[i]" [src]="'../../assets/icons/' + imageUrl" alt="" class="iconsLeftContainer">
+                    <img *ngIf="curr_admin_view == admin_view_list[i]" [src]="'../../assets/icons/' + imageUrl" alt="" class="iconsLeftContainer shadow">
+                </div>
+                <div class="adminFeatureContainer flex-row-even" (click)="logout()">
+                    <img src="../../assets/icons/out.png" alt="" class="iconsLeftContainer">
+                </div>
+            </div>
+        </div>
+        <p class="greet f-10">V 1.0</p>
+    </div>
+    <div class="rightContainerClass flex-col-even">
+        <div class="camDetail_container flex-col-even shadow">
+            <h2 class="greet camera_header">Enter Camera Credentials</h2>
+            <div class="flex-row w-50">
+                <label for="user">User ID: </label>
+                <input type="text" name="user" id="user" class="inputClass" value="admin" required (input)="generateRTSP()">
+            </div>
+            <div class="flex-row w-50">
+                <label for="pass">Password: </label>
+                <input type="password" name="pass" id="pass" class="inputClass" value="Deevia@123" required (input)="generateRTSP()">
+            </div>
+            <div class="flex-row w-50">
+                <label for="ip">Cam IP: </label>
+                <input type="text" name="ip" id="ip" class="inputClass" placeholder="192.168.1.2" required (input)="generateRTSP()">
+            </div>
+            <div class="flex-row w-50">
+                <label for="port">Port: </label>
+                <input type="text" name="port" id="port" class="inputClass" value="554" required readonly>
+            </div>
+            <!-- <div class="flex-row w-50">
+                <label for="user">RTSP: </label>
+                <input type="text" name="rtspLink" id="rtspLink" class="inputClass"  required readonly >
+            </div> -->
+            <input type="submit" class="submitBtn" value="Submit" (click)="addCam()">
+        </div>
+    </div>
+</body>
+
