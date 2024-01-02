@@ -6,7 +6,7 @@ import { AdminComponent} from './admin/admin.component';
 import { OperatorComponent} from './operator/operator.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/login', pathMatch: 'full'},
+  {path: '', redirectTo: '/admin', pathMatch: 'full'},
   {path:'login', component: LoginComponent},
   {path:'super_user', component: SuperUserComponent},
   {path: 'admin', component: AdminComponent},
