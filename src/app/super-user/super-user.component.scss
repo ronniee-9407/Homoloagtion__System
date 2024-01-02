@@ -1,0 +1,140 @@
+*,html{
+    margin: 0;
+    padding: 0;
+}
+
+
+body{
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #303841;
+}
+
+.main-container{
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #303841;
+}
+
+.dashboard-container{
+    display: grid;
+    background-color: black;
+    grid-template-rows: 1fr 15fr;
+    grid-template-columns: 1fr 12fr;
+    height: 100vh;
+    width: 100%;
+}
+
+
+
+
+.header{
+    display: grid;
+    grid-template-rows: 1fr ;    
+    grid-column: 1/-1;
+    grid-row: 1/2;
+    background-color: #FFFFFF;
+    color: #000000;
+    opacity: 83%;
+}
+
+.header-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.deevia-logo{
+    height: 4vh;
+    width: auto;
+    margin: 0.5%;
+}
+
+.header-heading{
+    font-size: 220%;
+    font-weight: 600;
+    font-family: 'Inria Sans';
+}
+
+.honda-logo{
+    height: 4vh;
+    width: auto;
+    margin: 0.5% 3% 0.5% 0.5%;
+}
+
+
+
+.nav-bar{
+    background-color: #303841;
+    grid-row: 2/3;
+    grid-column: 1/2;
+}
+
+.nav-bar-container{
+    background-color: #1F1830;
+    border-radius: 10px;
+    height: 98%;
+    margin: 10px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.allOptions{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 80%;
+}
+
+.logout{
+    height: 20%;
+}
+
+.icon-home{
+    height: 6vh;
+    width: auto;
+    margin: 0.5%;
+}
+
+.icon-add-friend{
+    height: 6vh;
+    width: auto;
+    margin: 0.5%;
+}
+
+.icon-video{
+    height: 6vh;
+    width: auto;
+    margin: 0.5%;
+}
+
+.icon-clock{
+    height: 6vh;
+    width: auto;
+    margin: 0.5%;
+}
+
+.check-out{
+    height: 6vh;
+    width: auto;
+    margin: 0.5%;
+}
+
+.main-body{
+    background-color: #303841;
+    grid-row: 2/3;
+    grid-column: 2/3;
+}
+
+.main-body-container{
+    background-color: #1F1830;
+    border-radius: 10px;
+    height: 98%;
+    margin: 10px 10px 10px 4px;
+}
