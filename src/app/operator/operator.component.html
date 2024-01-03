@@ -1,1 +1,143 @@
-<p>operator works!</p>
+<header class="headerClass">
+    <img src="../../assets/icons/logo.png" alt="" class="logoClass">
+    <img src="../../assets/icons/Honda_Logo.svg" alt="" class="hondaLogoclass">
+</header>
+<body *ngIf="curr_operator_view == 'Dashboard'" class="bodyClass flex-row-even">
+    <div class="leftContainer flex-col-even">
+        <div class="upperContainer flex-col-even">
+            <img src="../../assets/icons/profile.png" alt="" class="adminProfileClass">
+            <h2 class="greet">Hi Operator !</h2>
+            <p class="greet">Employee ID : HSAO12345</p>
+        </div>
+        <div class="lowerContainer">
+            <div class="adminFeatureClass">
+                <div *ngFor="let imageUrl of feature_logo_list; let i = index" class="adminFeatureContainer flex-row-even">
+                    <img *ngIf="curr_operator_view != operator_view_list[i]" [src]="'../../assets/icons/' + imageUrl" alt="" class="iconsContainer">
+                    <img *ngIf="curr_operator_view == operator_view_list[i]" [src]="'../../assets/icons/' + imageUrl" alt="" class="iconsContainer shadow">
+                    <h4 class="featureContainer greet">{{operator_view_list[i]}}</h4>
+                    <!-- <h4 *ngIf="curr_admin_view == admin_view_list[i]" class="featureContainer greet shadow">{{admin_view_list[i]}}</h4> -->
+                </div>
+                <div class="adminFeatureContainer flex-row-even" (click)="logout()">
+                    <img src="../../assets/icons/out.png" alt="" class="iconsContainer">
+                    <h4 class="featureContainer greet">Logout</h4>
+                </div>
+            </div>
+        </div>
+        <p class="greet f-10">V 1.0</p>
+    </div>
+    <div class="rightContainer">
+        <div class="inner_dashboard">
+            <div class="operator_dashboard" (click)="newInspection()">New Inspection</div>
+            <div class="operator_dashboard" (click)="reInspectionOld()">Re-Inspection</div>
+        </div>
+    </div>
+</body>
+
+<body *ngIf="curr_operator_view == 'select_vehicle'" class="bodyClass flex-row-even">
+    <div class="start_inspection_page flex-col-even">
+        <div class="selectionClass flex-row-even">
+            <div class="leftContainerOperator flex-col-even">
+                <h1 class="greet" style="text-align: center; margin-top: 10px; height: 10%;">Welcome Operator!</h1>
+                <div class="selectVehicleClass flex-row-even">
+                    <div class="selectModel">
+                        <select [(ngModel)]="inspection_model" (ngModelChange)="modelSelection()" class="dropDown">
+                            <option *ngFor="let vehicle of model_list; let i = index" value="{{vehicle}}">{{vehicle}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="model_selected" class="selectModel">
+                        <select [(ngModel)]="inspection_variant" (ngModelChange)="variantSelection()" class="dropDown">
+                            <option *ngFor="let variant of variant_list; let i = index" value="{{variant}}">{{variant}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="variant_selected" class="selectModel">
+                        <select [(ngModel)]="inspection_cc" (ngModelChange)="ccSelection()" class="dropDown">
+                            <option *ngFor="let cc of cc_list; let i = index" value="{{cc}}">{{cc}}</option>
+                        </select>
+                    </div>
+                </div>      
+            </div>
+            <div class="rightContainerOperator flex-col-even">
+                <img src="../../assets/icons/honda-activa-6g-6.jpg" alt="" style="height: 84%; width: 100%;">
+                <h3 *ngIf="cc_selected" class="greet bg-color_black start_btn" (click)="startInspection()">Start Inspection</h3>
+            </div>
+        </div>
+    </div>
+</body>
+
+<body *ngIf="curr_operator_view == 'live_feed'" class="bodyClass flex-row-even">
+    <div class="fullBodyContainer flex-row-even">
+        <div class="outer_video_container flex-col-even">
+            <div class="video_feed_container flex-col-even">
+                <img src="../../assets/icons/part3.png" alt="" style="height: 35%; width: 25%;">
+            </div>
+            <div class="btn_container flex-row-even">
+                <div class="abortBtn bg-color_green flex-row-even" (click)="reInspectToggle()">
+                    <h3>Re-Inspect</h3>
+                    <img src="../../assets/icons/synchronize (1).png" alt="" style="height: 65%; width: 16%;">
+                </div>
+                <div class="abortBtn bg-color_red flex-row-even" (click)="abortToggle()">
+                    <h3>Abort</h3>
+                    <img src="../../assets/icons/prohibition.png" alt="" style="height: 65%; width: 16%;">
+                </div>
+            </div>
+        </div>
+        <div class="outer_video_container flex-col-even">
+            <div class="upperClass flex-row-even">
+                <div class="upperInnerClass flex-row-even">
+                    <div class="upperImgClass">
+                        <img src="../../assets/icons/Engine.png" alt="" style="height: 100%; width: 100%; border-radius: 10px 0px 0px 10px;">
+                    </div>
+                    <div class="upperTxtClass">
+                        <h1 class="greet">Inspection of Engine</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="middleClass flex-row-even">
+                <div class="doubleInputTextFirst flex-col-even">
+                    <input *ngFor="let data of id_array; let i = index" type="text" id="input{{i}}" placeholder="Part No." class="inputText" value="">
+                </div>
+                <div class="arrowContainer flex-col-even">
+                    <img *ngFor="let data of id_array; let i = index" src="../../assets/icons/start.png" alt="" class="rightArrow">
+                </div>
+                <div class="doubleInputTextFirst flex-col-even">
+                    <input *ngFor="let data of id_array; let i = index" type="text" id="inputB{{i}}" class="inputTextOP blur" value="{{data}}">
+                </div>
+                <div class="btnContainer flex-col-even">
+                    <div *ngFor="let data of id_array; let i = index" class="bottomBox" (click)="checkValue(i)">Check</div>
+                </div>
+                <div class="statusConatiner flex-col-even">
+                    <div *ngFor="let data of id_array; let i = index" class="statusBox flex-row-even">
+                        <img *ngIf="status_array[i] == 'G'" class="topBoxImg" src="../../assets/icons/yes.png" alt="">
+                        <img *ngIf="status_array[i] != 'G'" class="topBoxImgOP" src="../../assets/icons/yes.png" alt="">
+                        <img *ngIf="status_array[i] == 'R'" class="topBoxImg" src="../../assets/icons/delete.png" alt="">
+                        <img *ngIf="status_array[i] != 'R'" class="topBoxImgOP" src="../../assets/icons/delete.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="lowerClass"></div>
+        </div>
+    </div>
+
+    <div *ngIf="reInspectFlag" class="overlay">
+        <div class="warningContainer flex-col-even">
+            <div class="warning_inner_container">
+                <h1>Do you really want to Re-Inspect ?</h1>
+            </div>
+            <div class="warning_inner_container flex-row-even">
+                <button class="btnSize bg-color_green" (click)="reInspect(true)">Yes</button>
+                <button class="btnSize bg-color_red" (click)="reInspect(false)">No</button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="abortFlag" class="overlay">
+        <div class="warningContainer flex-col-even">
+            <div class="warning_inner_container">
+                <h1>Do you really want to Abort Inspection?</h1>
+            </div>
+            <div class="warning_inner_container flex-row-even">
+                <button class="btnSize bg-color_green" (click)="abort(true)">Yes</button>
+                <button class="btnSize bg-color_red" (click)="abort(false)">No</button>
+            </div>
+        </div>
+    </div>
+</body>

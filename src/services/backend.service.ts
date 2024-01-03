@@ -22,4 +22,19 @@ export class BackendService {
   {
     return this.http.post("http://127.0.0.1:8000/searchDateTimeFull",{"query": query});
   }
+
+  getDataforInspection(data: any){
+    console.log(data);
+    return this.http.post("http://127.0.0.1:8000/vehicle_details",{"data": data});
+  }
+
+  getVehicleModels(){
+    return this.http.get("http://127.0.0.1:8000/model_list");
+  }
+  getVehicleVariants(model: any){
+    return this.http.post("http://127.0.0.1:8000/variant_list", {'model': model});
+  }
+  getVehicleCc(data: any){
+    return this.http.post("http://127.0.0.1:8000/cc_list", {'data': data});
+  }
 }

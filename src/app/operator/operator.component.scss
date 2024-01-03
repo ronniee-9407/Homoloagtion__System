@@ -1,0 +1,554 @@
+.headerClass{
+    position: absolute;
+    width: 99.75%;
+    height: 8%;
+    // border: 1px solid black;
+    top: 0%;
+    left: 0%;
+    background-color: #f7f7f794;
+}
+.bodyClass{
+    position: absolute;
+    width: 100%;
+    height: 91.65%;
+    // border: 1px solid black;
+    top: 7%;
+    left: -0.75%;
+}
+.logoClass{
+    position: relative;
+    height: 87%;
+    width: 10%;
+    left: 1.5%;
+    bottom: 9%;
+}
+.hondaLogoclass{
+    position: relative;
+    height: 100%;
+    width: 10%;
+    left: 80%;
+}
+.leftContainer{
+    height: 100%;
+    width: 15%;
+    background-color: #5e5e5e;
+}
+.rightContainer{
+    height: 100%;
+    width: 85%;
+    background-color: #f1ecec;
+}
+.upperContainer{
+    width: 100%;
+    height: 20%;
+    background-color: #4e4e4e;
+}
+.lowerContainer{
+    width: 100%;
+    height: 80%;
+}
+.adminProfileClass{
+    height: 50%;
+    width: 30%;
+}
+.greet{
+    color: white;
+    margin: 0px;
+}
+.iconsContainer{
+    position: relative;
+    height: 60%;
+    width: 22%;
+    cursor: pointer;
+    border-radius: 50%;
+}
+.iconsContainer:hover{
+    -webkit-box-shadow: 0px 4px 13px 0px rgba(60, 54, 235, 0.8);
+    -moz-box-shadow: 0px 4px 13px 0px rgba(60, 54, 235, 0.8);
+    box-shadow: 0px 4px 13px 0px rgba(60, 54, 235, 0.8);
+}
+.featureContainer{
+    position: relative;
+    height: 27%;
+    width: 60%;
+    left: 5%;
+    cursor: pointer;
+    display: inline-block;
+}
+.adminFeatureClass{
+    width: 100%;
+    height: 80%;
+    // border: 1px solid black;
+    position: relative;
+    top: 0%;
+}
+.adminFeatureContainer{
+    height: 20%;
+    width: 100%;
+    // border: 1px solid black;
+}
+.inner_dashboard{
+    height: 100%;
+    width: 85%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    backdrop-filter: blur(5px);
+    background-color: transparent;
+    z-index: 200;
+}
+.operator_dashboard{
+    height: 10%;
+    width: 20%;
+    // border: 1px solid black;
+    text-align: center;
+    font-size: x-large;
+    line-height: 58px;
+    cursor: pointer;
+    border-radius: 15px;
+    color: white;
+    background-color: #5e5e5e;
+}
+.operator_dashboard:hover{
+    background-color: #4e4e4e;
+}
+.start_inspection_page{
+    height: 100%;
+    width: 100%;
+    background-color: #d9d9d9;
+}
+.selectionClass{
+    height: 90%;
+    width: 90%;
+    // border: 1px solid black;
+}
+.leftContainerOperator{
+    height: 100%;
+    width: 55%;
+    background-color: black;
+    border-radius: 0px 0px 0px 20px;
+}
+.rightContainerOperator{
+    height: 100%;
+    width: 45%;
+    background-color: white;
+    border-radius: 0px 20px 0px 0px;
+}
+.selectVehicleClass{
+    height: 90%;
+    width: 100%;
+    border-top: 1px solid white;
+    background-color: #484848;
+    border-radius: 0px 0px 0px 20px;
+}
+.selectModel{
+    height: 7%;
+    width: 20%;
+    // border: 1px solid white;
+    // background-color: white;
+}
+.dropDown{
+    height: 100%;
+    width: 100%;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.dropDown:focus{
+    outline: none;
+}
+.start_btn{
+    width: 95%;
+    height: 8%;
+    text-align: center;
+    border-radius: 20px;
+    line-height: 40px;
+    cursor: pointer;
+}
+.fullBodyContainer{
+    height: 100%;
+    width: 100%;
+    background-color: #484848;
+}
+.outer_video_container{
+    height: 98%;
+    width: 49%;
+    // border: 1px solid white;
+}
+.video_feed_container{
+    height: 75%;
+    width: 98%;
+    background-color: white;
+    border-radius: 10px;
+}
+.btn_container{
+    height: 20%;
+    width: 98%;
+}
+.btn_class{
+    width: 16%;
+    height: 30%;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.upperClass{
+    height: 16%;
+    width: 98%;
+    background-color: white;
+    border-radius: 10px;
+}
+.middleClass{
+    height: 30%;
+    width: 98%;
+    background-color: white;
+    border-radius: 10px;
+}
+.lowerClass{
+    height: 40%;
+    width: 98%;
+    background-color: white;
+    border-radius: 10px;
+}
+.warningContainer{
+    height: 25%;
+    width: 45%;
+    background-color: rgb(247 247 247 / 95%);;
+    border-radius: 10px;
+}
+.warning_inner_container{
+    width: 100%;
+    height: 50%;
+    text-align: center;
+}
+.btnSize{
+    height: 45%;
+    width: 13%;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.abortBtn{
+    height: 35%;
+    width: 24%;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.abortBtn h3{
+    margin: 8px;
+    width: 60%;
+    // display: inline;
+    line-height: 24px;
+    text-align: center;
+}
+.upperInnerClass{
+    height: 90%;
+    width: 98%;
+}
+.upperImgClass{
+    height: 100%;
+    width: 25%;
+    background-color: #484848;
+    border-radius: 10px 0px 0px 10px;
+}
+.upperTxtClass{
+    height: 100%;
+    width: 75%;
+    background-color: #231939;
+    border-radius: 0px 10px 10px 0px;
+}
+.upperTxtClass h1{
+    line-height: 80px;
+    text-align: center;
+}
+.doubleInputText{
+    height: 100%;
+    width: 20%;
+    position: relative;
+    left: 2%;
+}
+.doubleInputTextFirst{
+    height: 100%;
+    width: 22%;
+    position: relative;
+    left: 1%;
+}
+.arrowContainer{
+    height: 100%;
+    width: 6%;
+    // position: relative;
+    // left: 0%;
+}
+.inputText{
+    height: 19%;
+    width: 100%;
+    border: ridge;
+    border-radius: 8px;
+    text-align: center;
+}
+.inputTextOP{
+    height: 19%;
+    width: 100%;
+    border: 1px solid black;
+    text-align: center;
+    // border-radius: 8px;
+}
+.inputText:focus, .inputTextOP:focus{
+    outline: none;
+}
+.rightArrow{
+    height: 25%;
+    width: 100%;
+}
+.blur {
+    font-size: 14px;
+    color: transparent;
+    text-shadow: 0 0 10px #000;
+    border: ridge;
+    border-radius: 8px;
+    cursor: not-allowed;
+    width: 100%;
+    height: 19%;
+    text-align: center;
+    line-height: 4vh;
+  }
+  .blurG {
+    font-size: 14px;
+    color: transparent;
+    text-shadow: 0 0 0px #000;
+    border: ridge;
+    border-radius: 8px;
+    // cursor: not-allowed;
+    width: 100%;
+    height: 19%;
+    text-align: center;
+    line-height: 4vh;
+  }
+  .btnContainer{
+    height: 100%;
+    width: 10%;
+    position: relative;
+    left: 4%;
+}
+.bottomBox{
+    height: 19%;
+    width: 100%;
+    background-color: #4281CC;
+    color: white;
+    text-align: center;
+    // padding: 6px;
+    cursor: pointer;
+    border-radius: 8px;
+    line-height: 5vh;
+}
+.bottomBoxOP{
+    height: 27%;
+    width: 100%;
+    background-color: #4281CC;
+    color: white;
+    text-align: center;
+    // padding: 6px;
+    cursor: pointer;
+    border-radius: 8px;
+    line-height: 4vh;
+}
+.statusConatiner{
+    height: 100%;
+    width: 14%;
+    // border: 1px solid black;
+    position: relative;
+    left: 3%;
+}
+.statusBox{
+    height: 19%;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 8px;
+}
+.topBoxImg{
+    height: 90%;
+    width: 45%;
+}
+.topBoxImgOP{
+    height: 90%;
+    width: 45%;
+    opacity: 0.2;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.bg-color_white{
+    background-color: white;
+    color: black;
+}
+.bg-color_black{
+    background-color: #000000e0;
+    color: white;
+}
+.bg-color_black:hover{
+    background-color: black;
+    color: white;
+}
+.bg-color_green{
+    background-color: #1bf372;
+    color: white;
+}
+.bg-color_green:hover{
+    background-color: #0f9c47;
+    color: white;
+}
+.bg-color_red{
+    background-color: #ff4545;
+    color: white;
+}
+.bg-color_red:hover{
+    background-color: #d61c1c;
+    color: white;
+}
+.overlay{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    backdrop-filter: blur(5px);
+    // z-index: 10;
+    // left: 0;
+    // top: 10vh;
+    width: 100vw;
+    height: 92vh;
+    background-color: transparent;
+    z-index: 100;
+}
+
+.link{
+    color: #1a67b4;
+    // color: black;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.link:hover{
+    color: #1a67b4;
+}
+
+.h-100{
+    height: 70%;
+    width: 35%;
+    opacity: 0.3;
+    cursor: pointer;
+}
+.h-100:hover{
+    opacity: 1;
+}
+
+.w-10{
+    width: 10%;
+    text-align: center;
+    color: black;
+}
+
+.w-15{
+    width: 15%;
+    text-align: center;
+    color: black;
+}
+.w-30{
+    width: 30%;
+    text-align: center;
+    color: black;
+}
+.w-40{
+    width: 40%;
+    text-align: center;
+    color: black;
+}
+.w-45{
+    width: 45%;
+    text-align: center;
+    color: black;
+}
+.w-75{
+    width: 75%;
+    text-align: center;
+    color: black;
+}
+
+
+.f-10{
+    font-size: 10px;
+}
+
+.h_70{
+    height: 70%;
+    width: auto;
+}
+.w_100{
+    width: 100%;
+    height: auto;
+}
+
+.flex-row{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flex-col{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.flex-row-even{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.flex-col-even{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.shadow{
+    -webkit-box-shadow: 0px 4px 13px 0px rgba(60, 54, 235, 0.8);
+    -moz-box-shadow: 0px 4px 13px 0px rgba(60, 54, 235, 0.8);
+    box-shadow: 0px 4px 13px 0px rgba(60, 54, 235, 0.8);
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background-color: #eeece9;
+    box-shadow: inset 0 0 5px darkgrey; 
+    border-radius: 6px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    /* background: linear-gradient(to right, #517fa4 0%, #243949  51%, #517fa4  100%);  */
+    background-image: linear-gradient(to bottom, #0575E6 0%, #021B79  100%);
+    border-radius: 6px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to top, #0575E6 0%, #021B79  100%);
+  }
