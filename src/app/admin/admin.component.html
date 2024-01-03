@@ -27,15 +27,22 @@
     </div>
     <div class="rightContainer">
         <div class="upperRightContainer flex-row-even">
-            <div class="pending_data_container flex-row-even">
+            <div class="pending_data_container_dashboard flex-row-even">
                 <!-- <h4 class="greet w-25">Date/Time</h4> -->
-                <h3 class="greet w-25">26-12-2023  05:00 PM</h3>
-                <h3 class="greet w-60">Inspection of Activa 125cc</h3>
-                <h4 class="greet w-15 link">Preview</h4>
+                <h3 class="greet w-15">JOB ID</h3>
+                <h3 class="greet w-30">26-12-2023  05:00 PM</h3>
+                <h3 class="greet w-45">Inspection of Activa 125cc</h3>
+                <h4 class="greet w-10 link" (click)="viewReportFromdashboard()">Preview</h4>
             </div>
             <h4 class="link greet" (click)="goToPendingReport()">See All</h4>
         </div>
-        <div class="middleRightContainer"></div>
+        <div class="middleRightContainer flex-row-even">
+            <div class="adminDashboardChart1">
+                <h3 style="margin: 0px; text-align: center;">Past 6 days Analysis</h3>
+                <div class="charts" id="chart1"></div>
+            </div>
+            <div class="adminDashboardChart2"></div>
+        </div>
         <div class="lowerRightContainer"></div>
     </div>
 </body>
@@ -61,11 +68,46 @@
         </div>
         <p class="greet f-10">V 1.0</p>
     </div>
-    <div class="rightContainerClass">
+    <div *ngIf="!inspection_report_flag" class="rightContainerClass">
         <h1 class="greet pending_report_header">Pending Reports for Approval</h1>
         <div class="pending_report_outer_container">
-            <div *ngFor="let value of pending_report_list; let i = index" class="pending_report_container">
-                
+            <div *ngFor="let value of pending_report_list; let i = index" class="pending_report_container flex-row-even">
+                <div class="pending_data_container flex-row-even">
+                    <!-- <h4 class="greet w-25">Date/Time</h4> -->
+                    <h3 class="greet w-15">JOB ID</h3>
+                    <h3 class="greet w-30">26-12-2023  05:00 PM</h3>
+                    <h3 class="greet w-45">Inspection of Activa 125cc</h3>
+                    <h4 class="greet w-10 link" (click)="viewReport(i+1)">Preview</h4>
+                </div>
+                <div class="btnContainer flex-row-even">
+                    <img class="h-100" src="../../assets/icons/yes.png" alt="" (click)="approveToggle(i+1)">
+                    <img class="h-100" src="../../assets/icons/delete.png" alt="" (click)="rejectToggle(i+1)">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="inspection_report_flag" class="rightContainerClass bg-color_white">
+        <button class="backBtnSize bg-color_black" (click)="goToPendingReport()">Back</button>
+    </div>
+    <div *ngIf="approval_flag" class="overlay">
+        <div class="warningContainer flex-col-even">
+            <div class="warning_inner_container">
+                <h1>Do you really want to Approve ?</h1>
+            </div>
+            <div class="warning_inner_container flex-row-even">
+                <button class="btnSize bg-color_green" (click)="reportApproved(true)">Yes</button>
+                <button class="btnSize bg-color_red" (click)="reportApproved(false)">No</button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="reject_flag" class="overlay">
+        <div class="warningContainer flex-col-even">
+            <div class="warning_inner_container">
+                <h1>Do you really want to Reject ?</h1>
+            </div>
+            <div class="warning_inner_container flex-row-even">
+                <button class="btnSize bg-color_green" (click)="reportRejected(true)">Yes</button>
+                <button class="btnSize bg-color_red" (click)="reportRejected(false)">No</button>
             </div>
         </div>
     </div>

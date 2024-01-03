@@ -3,6 +3,7 @@ import { BackendService } from 'src/services/backend.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import Litepicker from 'litepicker';
+import * as echarts from 'echarts';
 
 @Component({
   selector: 'app-admin',
@@ -16,6 +17,9 @@ export class AdminComponent implements OnInit {
   pending_report_list = [1, 2, 3, 4, 5, 6, 7, 8];
   report_page_flag : boolean = false;
   inspection_report_flag : boolean = false;
+  approval_flag: boolean = false;
+  reject_flag: boolean = false;
+  index_for_approve_reject: any = 0;
   rtspLink = '';
   camAdded: boolean = false;
   camDetails = {
@@ -46,16 +50,29 @@ export class AdminComponent implements OnInit {
   array_for_chart: any = [];
   data_received: boolean = true;
 
+  myChart: any;
+  xAxisData = ['26-12-2023', '27-12-2023', '28-12-2023', '29-12-2023', '30-12-2023'];
+  yAxisData = [8, 7, 5, 9, 6];
+
   constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router){}
 
   ngOnInit(): void {
-    
+    setTimeout(()=>{
+      this.createChart(this.xAxisData, this.yAxisData)
+      console.log('createChart called');
+    },100);
   }
 
   changeView(index: any){
     this.curr_admin_view = this.admin_view_list[index];
     if(index == 2){
       setTimeout(() => this.initializingDatePicker(), 0);
+    }
+    if(index == 0){
+      setTimeout(()=>{
+        this.createChart(this.xAxisData, this.yAxisData)
+        console.log('createChart called');
+      },100);
     }
   }
 
@@ -165,5 +182,129 @@ export class AdminComponent implements OnInit {
 
   goToPendingReport(){
     this.curr_admin_view = this.admin_view_list[1];
+    this.inspection_report_flag = false;
+    this.approval_flag = false;
+    this.reject_flag = false;
+  }
+  approveToggle(data: any){
+    console.log('index for approval...',data);
+    this.approval_flag = true;
+    this.index_for_approve_reject = data;
+  }
+  rejectToggle(data: any){
+    console.log('index for rejection...',data);
+    this.reject_flag = true;
+    this.index_for_approve_reject = data;
+  }
+
+  reportApproved(data: any){
+    if(!data){
+      this.approval_flag = false;
+    }
+    else{
+      console.log('Report Approved');
+      this.approval_flag = false;
+    }
+  }
+  reportRejected(data: any){
+    if(!data){
+      this.reject_flag = false;
+    }
+    else{
+      console.log('Report Rejected');
+      this.reject_flag = false;
+    }
+  }
+
+  viewReport(data: any){
+    console.log('Data for preview', data);
+    this.inspection_report_flag = true;
+  }
+  viewReportFromdashboard(){
+    this.curr_admin_view = this.admin_view_list[1];
+    this.inspection_report_flag = true;
+  }
+
+  createChart(xData: any, yData: any){
+    const maxValue = Math.max(...yData);
+    this.myChart = echarts.init(document.getElementById('chart1') as any);
+    const option_1 = {
+    color: [ '#70b3e2 '],
+    tooltip: {
+      trigger: 'axis',
+      showContent: true,
+      axisPointer: {
+        type: "cross",
+        crossStyle: {
+          color: "#ccc",
+        },
+      }
+    },
+    toolbox: {
+      show: true,
+      feature: {
+        dataZoom: {
+          yAxisIndex: 'none'
+        },
+        dataView: {show: true, readOnly: false},
+        // magicType: {show: true, type: ["bar", "line"]},
+        saveAsImage: {show: true},
+      }
+    },
+    grid: {
+      top: '25%',
+      bottom: '15%',
+      left: '15%'
+    },
+    xAxis: {
+      name: 'Date',
+      nameLocation: 'middle',
+      nameGap: 38,
+      type: 'category',
+      boundaryGap: true,
+      data: xData,
+      axisPointer: {
+        type: "shadow",
+      },
+      nameTextStyle: { 
+        fontWeight: 'bold',
+        fontSize: 14, 
+        color: 'black' ,
+        padding: [20,0,0,0],
+        verticalAlign: 'bottom'
+      },
+      // position: 'bottom'
+    },
+    yAxis: {
+      type: 'value',
+      name: "Inspected Vehicle",
+      nameGap: 35,
+      max: Math.floor(maxValue + 1),
+      axisLabel: {
+        formatter: '{value}'
+      },
+      nameTextStyle: { 
+        fontWeight: 'bold',
+        fontSize: 14, 
+        color: 'black' 
+      }
+    },
+    series: [
+      {
+        // name: 'Top',
+        type: 'bar',
+        data: yData,
+        emphasis: { focus: 'series' },
+        markPoint: {
+          data: [
+            { type: 'max', name: 'Max' },
+            { type: 'min', name: 'Min' }
+          ]
+        },
+      },
+    ]
+    }
+  
+    this.myChart.setOption(option_1);
   }
 }
