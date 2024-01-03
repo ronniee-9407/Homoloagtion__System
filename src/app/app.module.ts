@@ -9,8 +9,6 @@ import { AdminComponent } from './admin/admin.component';
 import { OperatorComponent } from './operator/operator.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
-import { NgxEchartsModule } from "ngx-echarts";
 
 @NgModule({
   declarations: [
@@ -24,11 +22,7 @@ import { NgxEchartsModule } from "ngx-echarts";
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    NgxEchartsModule.forRoot({
-      echarts: () => import('echarts'), 
-    }),
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
