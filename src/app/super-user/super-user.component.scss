@@ -87,43 +87,46 @@ body{
 .allOptions{
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    // justify-content: space-around;
     align-items: center;
     height: 80%;
 }
 
 .logout{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 20%;
 }
 
 .icon-home{
     height: 6vh;
     width: auto;
-    margin: 0.5%;
+    margin: 38% 0 25% 0;
 }
 
 .icon-add-friend{
     height: 6vh;
     width: auto;
-    margin: 0.5%;
+    margin: 25% 0 25% 0;
 }
 
 .icon-video{
     height: 6vh;
     width: auto;
-    margin: 0.5%;
+    margin: 25% 0 25% 0;
 }
 
 .icon-clock{
     height: 6vh;
     width: auto;
-    margin: 0.5%;
+        margin: 25% 0 25% 0;
 }
 
 .check-out{
     height: 6vh;
     width: auto;
-    margin: 0.5%;
+        margin: 4% 0 4% 0;
 }
 
 .main-body{
@@ -137,4 +140,69 @@ body{
     border-radius: 10px;
     height: 98%;
     margin: 10px 10px 10px 4px;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1%;
 }
+
+.active_users{
+    background-color: #1F1830;
+    grid-row: 1/2;
+    grid-column: 1/2;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20%;
+    justify-content: center;
+    align-items: center;
+}
+
+.active_card{
+    height: 36%;
+    width: 57%;
+    background-color: #3C344E;
+    border-radius: 25px;
+}
+
+.card_header{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 5%;
+}
+
+.card_header_logo{
+    height: 10%;
+    width: 10%;
+}
+
+.head_text{
+    color: white;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.lastweek_graph{
+    grid-row: 1/2;
+    grid-column: 2/3;
+    background-color: #30283E;
+    border-radius: 10px;
+
+}
+
+.overall_report{
+    background-color: #30283E;
+    grid-row: 2/3;
+    grid-column: 1/2;
+    border-radius: 10px;
+
+}
+
+.tabular_data{
+    background-color: #30283E;
+    grid-row: 2/3;
+    grid-column: 2/3;
+    grid-auto-flow: row dense;
+    border-radius: 10px;
+}
+

@@ -1,1 +1,156 @@
+<div class="main-container">
 
+    <!-- ! Super User login page  -->
+    <div class="login_admin" *ngIf="flag_su_page">
+        <div class="header_login">
+            <img class="login_header_img" src="../../assets/Deevia-logo.png" alt="deevia_logo">
+            <img class="login_header_img" src="../../assets/Honda Logo.png" alt="honda_logo">
+        </div>
+        <div class="login_admin_body">
+            <div class="main_body_container">
+                <div class="login_admin_gif">
+                    <div class="login_admin_gif_header">Welcome Super User</div>
+                    <img class="login_gif" src="../../assets/gears-6123.gif" alt="gear_gif">
+                    <div class="login_select_options">
+                        <div class="insideCircle flex-col-even">
+                            <img src="../../assets/icons/administrator.png" alt="admin_icon" class="optionsImage">
+                        </div>
+                        <!-- <img src="../../assets/icons/administrator.png" alt="admin_icon" class="optionsImage"> -->
+
+                        <!-- <div class="insideCircle flex-col-even">
+                            <img src="../../assets/icons/profile.png" alt="profile_icon" class="optionsImage">
+                        </div> -->
+                        <img src="../../assets/icons/profile.png" alt="profile_icon" class="optionsImage" (click)="changeAccessControl('admin')">
+
+                        <!-- <div class="insideCircle flex-col-even">
+                            <img src="../../assets/icons/worker.png" alt="worker_icon" class="optionsImage">
+                        </div> -->
+                        <img src="../../assets/icons/worker.png" alt="worker_icon" class="optionsImage" (click)="changeAccessControl('op')">
+                    </div>
+                </div>
+                <div class="login_admin_form">
+                    <div class="login_form_header">Super User Login</div>
+                    <div class="login_input">
+                        <!-- <div class="input_type">Employee ID</div>
+                        <input type="text" class="input_area">
+                        <div class="input_type">Password</div>
+                        <input type="text" class="input_area"> -->
+
+                        <div class="form__group field">
+                            <input type="input" class="form__field" placeholder="Name" name="name" id='name' required autocomplete="off" />
+                            <label for="name" class="form__label">Employee ID</label>
+                        </div>
+                        <div class="password__group field">
+                            <input type="password" class="password__field" placeholder="Password" name="password" id='password' required autocomplete="off" />
+                            <label for="password" class="form__label">Password</label>
+                        </div>
+                    </div>
+                    <div class="login_button" (click)="login('su')">Login</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- !Admin Login Page  -->
+    <div class="login_admin" *ngIf="flag_admin_page">
+        <div class="header_login">
+            <img class="login_header_img" src="../../assets/Deevia-logo.png" alt="deevia_logo">
+            <img class="login_header_img" src="../../assets/Honda Logo.png" alt="honda_logo">
+        </div>
+        <div class="login_admin_body">
+            <div class="main_body_container">
+                <div class="login_admin_gif">
+                    <div class="login_admin_gif_header">Welcome Admin</div>
+                    <img class="login_gif" src="../../assets/gears-6123.gif" alt="gear_gif">
+                    <div class="login_select_options">
+                        <!-- <div class="insideCircle flex-col-even">
+                            <img src="../../assets/icons/administrator.png" alt="admin_icon" class="optionsImage">
+                        </div> -->
+                        <img src="../../assets/icons/administrator.png" alt="admin_icon" class="optionsImage" (click)="changeAccessControl('su')">
+
+                        <div class="insideCircle flex-col-even">
+                            <img src="../../assets/icons/profile.png" alt="profile_icon" class="optionsImage">
+                        </div>
+                        <!-- <img src="../../assets/icons/profile.png" alt="profile_icon" class="optionsImage"> -->
+
+                        <!-- <div class="insideCircle flex-col-even">
+                            <img src="../../assets/icons/worker.png" alt="worker_icon" class="optionsImage">
+                        </div> -->
+                        <img src="../../assets/icons/worker.png" alt="worker_icon" class="optionsImage" (click)="changeAccessControl('op')">
+                    </div>
+                </div>
+                <div class="login_admin_form">
+                    <div class="login_form_header">Admin Login</div>
+                    <div class="login_input">
+                        <!-- <div class="input_type">Employee ID</div>
+                        <input type="text" class="input_area">
+                        <div class="input_type">Password</div>
+                        <input type="text" class="input_area"> -->
+
+                        <div class="form__group field">
+                            <input type="input" class="form__field" placeholder="Name" name="name" id='name' required autocomplete="off" />
+                            <label for="name" class="form__label">Employee ID</label>
+                        </div>
+                        <div class="password__group field">
+                            <input type="password" class="password__field" placeholder="Password" name="password" id='password' required autocomplete="off" />
+                            <label for="password" class="form__label">Password</label>
+                        </div>
+                    </div>
+                    <div class="login_button" (click)="login('admin')">Login</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- !Operator Login Page  -->
+    <div class="login_admin" *ngIf="flag_operator_page">
+        <div class="header_login">
+            <img class="login_header_img" src="../../assets/Deevia-logo.png" alt="deevia_logo">
+            <img class="login_header_img" src="../../assets/Honda Logo.png" alt="honda_logo">
+        </div>
+        <div class="login_admin_body">
+            <div class="main_body_container">
+                <div class="login_admin_gif">
+                    <div class="login_admin_gif_header">Welcome Operator</div>
+                    <img class="login_gif" src="../../assets/gears-6123.gif" alt="gear_gif">
+                    <div class="login_select_options">
+                        <!-- <div class="insideCircle flex-col-even">
+                                                    <img src="../../assets/icons/administrator.png" alt="admin_icon" class="optionsImage">
+                                                </div> -->
+                        <img src="../../assets/icons/administrator.png" alt="admin_icon" class="optionsImage" (click)="changeAccessControl('su')">
+
+                        <!-- <div class="insideCircle flex-col-even">
+                            <img src="../../assets/icons/profile.png" alt="profile_icon" class="optionsImage">
+                        </div> -->
+                        <img src="../../assets/icons/profile.png" alt="profile_icon" class="optionsImage" (click)="changeAccessControl('admin')">
+
+                        <div class="insideCircle flex-col-even">
+                            <img src="../../assets/icons/worker.png" alt="worker_icon" class="optionsImage">
+                        </div>
+                        <!-- <img src="../../assets/icons/worker.png" alt="worker_icon" class="optionsImage"> -->
+                    </div>
+                </div>
+                <div class="login_admin_form">
+                    <div class="login_form_header">Operator Login</div>
+                    <div class="login_input">
+                        <!-- <div class="input_type">Employee ID</div>
+                        <input type="text" class="input_area">
+                        <div class="input_type">Password</div>
+                        <input type="text" class="input_area"> -->
+
+                        <div class="form__group field">
+                            <input type="input" class="form__field" placeholder="Name" name="name" id='name' required autocomplete="off" />
+                            <label for="name" class="form__label">Employee ID</label>
+                        </div>
+                        <div class="password__group field">
+                            <input type="password" class="password__field" placeholder="Password" name="password" id='password' required autocomplete="off" />
+                            <label for="password" class="form__label">Password</label>
+                        </div>
+                    </div>
+                    <div class="login_button" (click)="login('op')">Login</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

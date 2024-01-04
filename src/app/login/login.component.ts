@@ -14,4 +14,31 @@ export class LoginComponent implements OnInit{
   ngOnInit(): void {
     
   }
+
+  flag_admin_page: boolean = false
+  flag_su_page: boolean = true
+  flag_operator_page: boolean = false
+
+
+
+  changeAccessControl(data: any){
+    if (data==="op"){
+      this.flag_admin_page= false
+      this.flag_su_page= false
+      this.flag_operator_page= true
+    } else if(data==="admin"){
+      this.flag_admin_page= true
+      this.flag_su_page= false
+      this.flag_operator_page= false
+    } else if(data==="su"){
+      this.flag_admin_page= false
+      this.flag_su_page= true
+      this.flag_operator_page= false
+    }
+  }
+
+
+  login(data: any){
+    
+  }
 }
