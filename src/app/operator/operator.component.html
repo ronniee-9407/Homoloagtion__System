@@ -26,7 +26,7 @@
         <p class="greet f-10">V 1.0</p>
     </div>
     <div class="rightContainer">
-        <div class="inner_dashboard">
+        <div class="inner_dashboard flex-col-even">
             <div class="operator_dashboard" (click)="newInspection()">New Inspection</div>
             <div class="operator_dashboard" (click)="reInspectionOld()">Re-Inspection</div>
         </div>
@@ -114,7 +114,39 @@
                     </div>
                 </div>
             </div>
-            <div class="lowerClass"></div>
+            <div class="lowerClass flex-row-even">
+                <div id="good" class="status_container shadow flex-col-even">
+                    <div class="loader" [style.--percentage]="this.inspection_percentage">
+                        <span class="loader-text">{{inspection_percentage}}%</span>
+                        <svg class="loader-circle">
+                            <!-- <circle cx="50%" cy="50%" r="40%" stroke-width="10%" class="loader-circle-progress"></circle> -->
+                            <circle cx="50%" cy="50%" r="34%" stroke-width="10%" class="loader-circle-progress" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="overAll_container flex-row-even shadow">
+                    <div class="iconClassContainer flex-col-even">
+                        <img src="../../assets/icons/check.png" alt="" class="iconClass">
+                        <img src="../../assets/icons/x-button.png" alt="" class="iconClass">
+                        <img src="../../assets/icons/pending.png" alt="" class="iconClass">
+                        <img src="../../assets/icons/clipboard.png" alt="" class="iconClass">
+                    </div>
+                    <div class="textClassContainer flex-col-even">
+                        <h2 class="textClass greet" style="color: #1CD667;">Success</h2>
+                        <h2 class="textClass greet" style="color: #FF0000;">Failed</h2>
+                        <h2 class="textClass greet" style="color: #F99500;">Pending</h2>
+                        <h2 class="textClass greet" style="color: #000000;">Total</h2>
+                    </div>
+                    <div class="countClassContainer flex-col-even">
+                        <h2 class="countClass greet" style="color: #1CD667;">55</h2>
+                        <h2 class="countClass greet" style="color: #FF0000;">11</h2>
+                        <h2 class="countClass greet" style="color: #F99500;">34</h2>
+                        <h2 class="countClass greet" style="color: #000000;">100</h2>
+                    </div>
+
+                </div>
+                
+            </div>
         </div>
     </div>
 
@@ -137,6 +169,41 @@
             <div class="warning_inner_container flex-row-even">
                 <button class="btnSize bg-color_green" (click)="abort(true)">Yes</button>
                 <button class="btnSize bg-color_red" (click)="abort(false)">No</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+<body *ngIf="curr_operator_view == 'reInspect_landing'" class="bodyClass flex-row-even">
+    <div class="leftContainer flex-col-even">
+        <div class="upperContainer flex-col-even">
+            <img src="../../assets/icons/profile.png" alt="" class="adminProfileClass">
+            <h2 class="greet">Hi Operator !</h2>
+            <p class="greet">Employee ID : HSAO12345</p>
+        </div>
+        <div class="lowerContainer">
+            <div class="adminFeatureClass">
+                <div *ngFor="let imageUrl of feature_logo_list; let i = index" class="adminFeatureContainer flex-row-even" (click)="goToDashboard()">
+                    <img  [src]="'../../assets/icons/' + imageUrl" alt="" class="iconsContainer">
+                    <h4 class="featureContainer greet">{{operator_view_list[i]}}</h4>
+                </div>
+                <div class="adminFeatureContainer flex-row-even" (click)="logout()">
+                    <img src="../../assets/icons/out.png" alt="" class="iconsContainer">
+                    <h4 class="featureContainer greet">Logout</h4>
+                </div>
+            </div>
+        </div>
+        <p class="greet f-10">V 1.0</p>
+    </div>
+    <div class="rightContainer">
+        <div class="inner_dashboard">
+            <div class="upperRightContainer flex-row-even">
+                <div class="pending_data_container_dashboard flex-row-even">
+                    <h3 class="greet w-15">JOB ID</h3>
+                    <h3 class="greet w-30">26-12-2023  05:00 PM</h3>
+                    <h3 class="greet w-45">Inspection of Activa 125cc</h3>
+                    <h4 class="greet w-10 link">Preview</h4>
+                </div>
             </div>
         </div>
     </div>

@@ -28,6 +28,9 @@ export class OperatorComponent implements OnInit {
   id_array = ['20028740', 'FP28E-001A', 'K0YD01'];
   status_array = ['O', 'O', 'O'];
 
+  inspection_count = 0;
+  inspection_percentage = 66;
+
   constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router){}
 
   ngOnInit(): void {
@@ -105,6 +108,9 @@ export class OperatorComponent implements OnInit {
   }
   checkValue(data: any){
     
+  }
+  goToDashboard(){
+    this.curr_operator_view = this.operator_view_list[0];
   }
 
   logout(){
