@@ -24,7 +24,7 @@ body{
     display: grid;
     background-color: black;
     grid-template-rows: 1fr 15fr;
-    grid-template-columns: 1fr 12fr;
+    grid-template-columns: 1fr 17fr;
     height: 100vh;
     width: 100%;
 }
@@ -103,24 +103,28 @@ body{
     height: 6vh;
     width: auto;
     margin: 38% 0 25% 0;
+    cursor: pointer;
 }
 
 .icon-add-friend{
     height: 6vh;
     width: auto;
     margin: 25% 0 25% 0;
+    cursor: pointer;
 }
 
 .icon-video{
     height: 6vh;
     width: auto;
     margin: 25% 0 25% 0;
+    cursor: pointer;
 }
 
 .icon-clock{
     height: 6vh;
     width: auto;
-        margin: 25% 0 25% 0;
+    margin: 25% 0 25% 0;
+    cursor: pointer;
 }
 
 .check-out{
@@ -136,40 +140,46 @@ body{
 }
 
 .main-body-container{
+    position: relative;
     background-color: #1F1830;
     border-radius: 10px;
     height: 98%;
     margin: 10px 10px 10px 4px;
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 1%;
+    display: flex;
+    flex-direction: column;
+}
+
+.top_container{
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: row;
 }
 
 .active_users{
     background-color: #1F1830;
-    grid-row: 1/2;
-    grid-column: 1/2;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     gap: 20%;
     justify-content: center;
     align-items: center;
+    width: 10%;
 }
 
 .active_card{
     height: 36%;
-    width: 57%;
+    width: 86%;
     background-color: #3C344E;
     border-radius: 25px;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 .card_header{
     display: flex;
     justify-content: space-evenly;
-    align-items: center;
-    margin: 5%;
+    margin: 8% 0;
+    font-weight: 600;
 }
 
 .card_header_logo{
@@ -179,30 +189,87 @@ body{
 
 .head_text{
     color: white;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: "Inria Sans", sans-serif;
+}
+
+.card_data{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card_value{
+    color: white;
+    font-family: "Inria Sans", sans-serif;
+    font-size: 271%;
+    font-weight: 600;
 }
 
 .lastweek_graph{
-    grid-row: 1/2;
-    grid-column: 2/3;
-    background-color: #30283E;
     border-radius: 10px;
-
+    background-color: #1F1830;
+    width: 94%;
+    height: 93%;
 }
 
-.overall_report{
-    background-color: #30283E;
-    grid-row: 2/3;
-    grid-column: 1/2;
-    border-radius: 10px;
+.graph_container{
+    background-color: #3C344E;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    height: 98%;
+    border-radius: 25px;
+    margin: 1%;
+}
 
+.graph_top_area{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.graph_title{
+    color: white;
+    font-family: "Inria Sans", sans-serif;
+    padding: 1% 2% 1% 2%;
+    font-size: 130%;
+    font-weight: 600;
+}
+
+.graph_area{
+    background-color: #3C344E;
+    margin: 0 1%;
+    border-radius: 25px;
+}
+
+.select_option{
+    border-radius: 25px;
+    margin: 1% 2% 0 0;
+    height: 1%;
+    width: 8%;
+}
+
+.bottom_container{
+    display: flex;
+    flex-direction: row;
+    height: 50%;
+    width: 100%;
+}
+
+
+.overall_report{
+    background-color: #3C344E;
+    height: 91%;
+    width: 76%;
+    border-radius: 10px;
+    margin: 1%;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 .tabular_data{
-    background-color: #30283E;
-    grid-row: 2/3;
-    grid-column: 2/3;
-    grid-auto-flow: row dense;
+    background-color: #3C344E;
+    height: 91%;
+    width: 20%;
     border-radius: 10px;
+    margin: 1%;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
