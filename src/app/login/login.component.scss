@@ -54,8 +54,8 @@ body {
 
 .main_body_container {
   background-color: rgba(33, 33, 33, 0.64);
-  height: 70%;
-  width: 50%;
+  height: 82%;
+  width: 65%;
   border-radius: 25px;
   display: flex;
   flex-direction: row;
@@ -80,6 +80,8 @@ body {
 }
 
 .login_admin_gif_header {
+  position: relative;
+  top: 5%;
   color: white;
   font-family: "Inria Sans", sans-serif;
   margin-top: 1%;
@@ -99,6 +101,8 @@ body {
   width: 100%;
   justify-content: space-around;
   height: 15%;
+  position: relative;
+  bottom: 2%;
 }
 .flex-row-even {
   display: flex;
@@ -117,7 +121,7 @@ body {
   height: 100%;
   border-radius: 50%;
   background-color: white;
-  width: 25%;
+  width: 22%;
 }
 
 .optionsImage {
