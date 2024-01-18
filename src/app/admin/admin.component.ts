@@ -49,10 +49,14 @@ export class AdminComponent implements OnInit {
   dataForExcel: any;
   array_for_chart: any = [];
   data_received: boolean = true;
+  view_profiile: boolean = false;
+
+  success_checkpoints: any = 84;
+  failed_checkpoints: any = 16;
 
   myChart: any;
-  xAxisData = ['26-12-2023', '27-12-2023', '28-12-2023', '29-12-2023', '30-12-2023'];
-  yAxisData = [8, 7, 5, 9, 6];
+  xAxisData = ['25-12-2023', '26-12-2023', '27-12-2023', '28-12-2023', '29-12-2023', '30-12-2023', '31-12-2023'];
+  yAxisData = [5, 8, 7, 5, 9, 6, 4];
 
   constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router){}
 
@@ -75,9 +79,17 @@ export class AdminComponent implements OnInit {
       },100);
     }
   }
+  goToSearchReport(){
+    this.report_page_flag = false;
+    setTimeout(() => this.initializingDatePicker(), 0);
+  }
 
   logout(){
-    
+    this.router.navigate(['/login']);
+  }
+  
+  viewProfileToggle(data: any){
+    this.view_profiile = data;
   }
 
   generateRTSP(){
@@ -217,12 +229,77 @@ export class AdminComponent implements OnInit {
   }
 
   viewReport(data: any){
-    console.log('Data for preview', data);
+    let jobId = 12345;
+    this.service.getPendingReportDetails(jobId).subscribe((data: any) => {
+      this.success_checkpoints = data['success'];
+      this.failed_checkpoints = data['failed'];
+      this.inspection_report_flag = true;
+      // this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
+    });
     this.inspection_report_flag = true;
+    setTimeout(()=>{
+      this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
+    },10);
   }
   viewReportFromdashboard(){
-    this.curr_admin_view = this.admin_view_list[1];
+    let jobId = 12345;
+    this.service.getPendingReportDetails(jobId).subscribe((data: any) => {
+      this.success_checkpoints = data['success'];
+      this.failed_checkpoints = data['failed'];
+      this.inspection_report_flag = true;
+      // this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
+    });
     this.inspection_report_flag = true;
+    this.curr_admin_view = this.admin_view_list[1];
+    setTimeout(()=>{
+      this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
+    },10);
+  }
+
+  createPieChart(xData: any, yData: any){
+    let myChart2 = echarts.init(document.getElementById('chart2') as HTMLDivElement);
+    const option = {
+      tooltip: {
+        trigger: 'item'
+      },
+      legend: {
+        // top: '5%',
+        left: 'center%'
+      },
+      series: [
+        {
+          name: 'No. of Checkpoints',
+          type: 'pie',
+          radius: ['40%', '70%'],
+          center: ['50%', '60%'],
+          avoidLabelOverlap: false,
+          itemStyle: {
+            borderRadius: 10,
+            borderColor: '#fff',
+            borderWidth: 2
+          },
+          label: {
+            show: false,
+            position: 'center'
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: 10,
+              fontWeight: 'bold'
+            }
+          },
+          labelLine: {
+            show: false
+          },
+          data: [
+            { value: xData, name: 'Success', itemStyle: { color: '#1bf372' }},
+            { value: yData, name: 'Failed',  itemStyle: { color: '#ff4545' }} 
+          ]
+        }
+      ]
+    };
+    myChart2.setOption(option);
   }
 
   createChart(xData: any, yData: any){

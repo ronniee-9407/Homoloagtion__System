@@ -5,12 +5,12 @@
 <body *ngIf="curr_admin_view == 'Dashboard'" class="bodyClass flex-row-even">
     <div class="leftContainer flex-col-even">
         <div class="upperContainer flex-col-even">
-            <img src="../../assets/icons/profile.png" alt="" class="adminProfileClass">
+            <img src="../../assets/icons/profile.png" alt="" class="adminProfileClass" (click)="viewProfileToggle(true)">
             <h2 class="greet">Hi Admin !</h2>
             <p class="greet">Employee ID : HSA12345</p>
         </div>
         <div class="lowerContainer">
-            <div class="adminFeatureClass">
+            <div class="adminFeatureClass flex-col-even">
                 <div *ngFor="let imageUrl of feature_logo_list; let i = index" class="adminFeatureContainer flex-row-even" (click)="changeView(i)">
                     <img *ngIf="curr_admin_view != admin_view_list[i]" [src]="'../../assets/icons/' + imageUrl" alt="" class="iconsContainer">
                     <img *ngIf="curr_admin_view == admin_view_list[i]" [src]="'../../assets/icons/' + imageUrl" alt="" class="iconsContainer shadow">
@@ -38,7 +38,7 @@
         </div>
         <div class="middleRightContainer flex-row-even">
             <div class="adminDashboardChart1">
-                <h3 style="margin: 0px; text-align: center;">Past 6 days Analysis</h3>
+                <h3 style="margin: 0px; text-align: center;">Past 7 days Analysis</h3>
                 <div class="charts" id="chart1"></div>
             </div>
             <div class="adminDashboardChart2"></div>
@@ -86,12 +86,26 @@
             </div>
         </div>
     </div>
-    <div *ngIf="inspection_report_flag" class="rightContainerClass bg-color_white">
+
+    <div *ngIf="inspection_report_flag" class="rightContainerClass flex-row-even">
+        <!-- <div></div>
+        <div></div> -->
+        <div class="pendingReportsDetails flex-col-even">
+            <div class="innerReportDetails">
+
+            </div>
+            <div class="innerChartDetails flex-row-even">
+                <div class="pie_chart" id="chart2"></div>
+                <div class=""></div>
+            </div>
+        </div>
+        <div class="pendingReportTable bg-color_white"></div>
         <button class="backBtnSize bg-color_black" (click)="goToPendingReport()">Back</button>
     </div>
+
     <div *ngIf="approval_flag" class="overlay">
         <div class="warningContainer flex-col-even">
-            <div class="warning_inner_container">
+            <div class="warning_inner_container flex-col-even">
                 <h1>Do you really want to Approve ?</h1>
             </div>
             <div class="warning_inner_container flex-row-even">
@@ -102,7 +116,7 @@
     </div>
     <div *ngIf="reject_flag" class="overlay">
         <div class="warningContainer flex-col-even">
-            <div class="warning_inner_container">
+            <div class="warning_inner_container flex-col-even">
                 <h1>Do you really want to Reject ?</h1>
             </div>
             <div class="warning_inner_container flex-row-even">
@@ -164,8 +178,10 @@
             
                 <button id="searchButton" class="btn btn-primary" (click)="searchDateTime()">Search</button>
             </div>
-            <div *ngIf="report_page_flag">
-
+            <div *ngIf="report_page_flag" class="reportDataClass">
+                <div *ngIf="report_page_flag" class="rightContainerClass bg-color_white">
+                    <button class="backBtnSize bg-color_black" (click)="goToSearchReport()">Back</button>
+                </div>
             </div>
         </div>
     </div>
