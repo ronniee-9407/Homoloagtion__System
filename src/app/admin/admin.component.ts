@@ -11,8 +11,8 @@ import * as echarts from 'echarts';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
-  admin_view_list = ['Dashboard', 'Pending Report', 'Report Analysis', 'Camera'];
-  feature_logo_list = ['home.png', 'checklist.png', 'report.png', 'video.png'];
+  admin_view_list = ['Dashboard', 'Pending Report', 'Report Analysis', 'Camera', 'Profile'];
+  feature_logo_list = ['home.png', 'checklist.png', 'report.png', 'video.png', 'user.png'];
   curr_admin_view = this.admin_view_list[0];
   pending_report_list = [1, 2, 3, 4, 5, 6, 7, 8];
   report_page_flag : boolean = false;

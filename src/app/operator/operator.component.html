@@ -116,12 +116,16 @@
             </div>
             <div class="lowerClass flex-row-even">
                 <div id="good" class="status_container shadow flex-col-even">
-                    <div class="loader" [style.--percentage]="this.inspection_percentage">
+                    <!-- <div class="loader" [style.--percentage]="this.inspection_percentage">
                         <span class="loader-text">{{inspection_percentage}}%</span>
                         <svg class="loader-circle">
-                            <!-- <circle cx="50%" cy="50%" r="40%" stroke-width="10%" class="loader-circle-progress"></circle> -->
                             <circle cx="50%" cy="50%" r="34%" stroke-width="10%" class="loader-circle-progress" />
                         </svg>
+                    </div> -->
+                    <div>
+                        <circle-progress [percent]="inspection_percentage"  [space]="4" [radius]="60" [outerStrokeWidth]="10"
+                          [innerStrokeWidth]="5" [outerStrokeColor]="'#78C000'" [innerStrokeColor]="'#C7E596'" [animation]="true"
+                          [animationDuration]="1000" [showSubtitle]="false"></circle-progress>
                     </div>
                 </div>
                 <div class="overAll_container flex-row-even shadow">

@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { NgxEchartsModule } from "ngx-echarts";
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,12 @@ import { NgxEchartsModule } from "ngx-echarts";
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'), 
     }),
+    NgCircleProgressModule.forRoot({
+      "radius": 60,
+      "outerStrokeWidth": 10,
+      "innerStrokeWidth": 5,
+      "showBackground": false,
+      "startFromZero": false})
   ],
   providers: [],
   bootstrap: [AppComponent]

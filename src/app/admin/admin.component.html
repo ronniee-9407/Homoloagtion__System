@@ -236,3 +236,29 @@
     </div>
 </body>
 
+<body *ngIf="curr_admin_view == 'Profile'" class="bodyClass flex-row-even">
+    <div class="leftContainerClass flex-col-even">
+        <div class="upperContainer flex-col-even">
+            <img src="../../assets/icons/profile.png" alt="" class="smallProfileClass" >
+            <h4 class="greet" style="font-size: 12px;">Hi Admin !</h4>
+            <!-- <p class="greet" style="font-size: 8px; width: 90%;">Employee ID : HSA12345</p> -->
+        </div>
+
+        <div class="lowerContainer">
+            <div class="adminFeatureClass">
+                <div *ngFor="let imageUrl of feature_logo_list; let i = index" class="adminFeatureContainer flex-col-even" (click)="changeView(i)">
+                    <img *ngIf="curr_admin_view != admin_view_list[i]" [src]="'../../assets/icons/' + imageUrl" alt="" class="iconsLeftContainer">
+                    <img *ngIf="curr_admin_view == admin_view_list[i]" [src]="'../../assets/icons/' + imageUrl" alt="" class="iconsLeftContainer shadow">
+                </div>
+                <div class="adminFeatureContainer flex-row-even" (click)="logout()">
+                    <img src="../../assets/icons/out.png" alt="" class="iconsLeftContainer">
+                </div>
+            </div>
+        </div>
+        <p class="greet f-10">V 1.0</p>
+    </div>
+    <div class="rightContainerClass">
+
+    </div>
+</body>
+

@@ -41,4 +41,8 @@ export class BackendService {
   getPendingReportDetails(jobId: any){
     return this.http.post("http://127.0.0.1:8000/report_details", {'jobId': jobId});
   }
+
+  validateUser(data: any){
+    return this.http.post("http://127.0.0.1:8000/validate_user", {'userData': data});
+  }
 }
