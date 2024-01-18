@@ -14,7 +14,7 @@ export class BackendService {
   }
   searchDateTime(query: any, page: any, per_page: any)
   {
-    console.log(query);    
+    // console.log(query);    
     return this.http.post("http://127.0.0.1:8000/searchDateTime",{"query": query, "page": page, "per_page": per_page});
   }
 
@@ -36,5 +36,9 @@ export class BackendService {
   }
   getVehicleCc(data: any){
     return this.http.post("http://127.0.0.1:8000/cc_list", {'data': data});
+  }
+
+  getPendingReportDetails(jobId: any){
+    return this.http.post("http://127.0.0.1:8000/report_details", {'jobId': jobId});
   }
 }

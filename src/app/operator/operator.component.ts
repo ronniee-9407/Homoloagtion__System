@@ -19,9 +19,9 @@ export class OperatorComponent implements OnInit {
   model_list = ['Activa', 'Dio', 'Grazia'];
   variant_list = ['BS-IV', 'BS-VI'];
   cc_list = ['110', '125'];
-  inspection_model: any;
-  inspection_variant: any;
-  inspection_cc: any;
+  inspection_model: any = '';
+  inspection_variant: any = '';
+  inspection_cc: any = '';
   reInspectFlag: boolean = false;
   abortFlag: boolean = false;
 
@@ -100,10 +100,23 @@ export class OperatorComponent implements OnInit {
     if(!flag){
       this.reInspectFlag = false;
     }
+    else{
+      this.reInspectFlag = false;
+      this.curr_operator_view = this.operator_view_list[2];
+    }
   }
   abort(flag: any){
     if(!flag){
       this.abortFlag = false;
+    }
+    else{
+      this.abortFlag = false;
+      this.curr_operator_view = this.operator_view_list[0];
+      this.inspection_model = '';
+      this.inspection_variant = '';
+      this.inspection_cc = '';
+      this.model_selected = false;
+      this.variant_selected = false;
     }
   }
   checkValue(data: any){
@@ -114,6 +127,6 @@ export class OperatorComponent implements OnInit {
   }
 
   logout(){
-
+    this.router.navigate(['/login']);
   }
 }

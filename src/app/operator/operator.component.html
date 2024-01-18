@@ -7,10 +7,10 @@
         <div class="upperContainer flex-col-even">
             <img src="../../assets/icons/profile.png" alt="" class="adminProfileClass">
             <h2 class="greet">Hi Operator !</h2>
-            <p class="greet">Employee ID : HSAO12345</p>
+            <p class="greet">Employee ID : HSO12345</p>
         </div>
         <div class="lowerContainer">
-            <div class="adminFeatureClass">
+            <div class="adminFeatureClass flex-col-even">
                 <div *ngFor="let imageUrl of feature_logo_list; let i = index" class="adminFeatureContainer flex-row-even">
                     <img *ngIf="curr_operator_view != operator_view_list[i]" [src]="'../../assets/icons/' + imageUrl" alt="" class="iconsContainer">
                     <img *ngIf="curr_operator_view == operator_view_list[i]" [src]="'../../assets/icons/' + imageUrl" alt="" class="iconsContainer shadow">
@@ -152,7 +152,7 @@
 
     <div *ngIf="reInspectFlag" class="overlay">
         <div class="warningContainer flex-col-even">
-            <div class="warning_inner_container">
+            <div class="warning_inner_container flex-col-even">
                 <h1>Do you really want to Re-Inspect ?</h1>
             </div>
             <div class="warning_inner_container flex-row-even">
@@ -163,7 +163,7 @@
     </div>
     <div *ngIf="abortFlag" class="overlay">
         <div class="warningContainer flex-col-even">
-            <div class="warning_inner_container">
+            <div class="warning_inner_container flex-col-even">
                 <h1>Do you really want to Abort Inspection?</h1>
             </div>
             <div class="warning_inner_container flex-row-even">
@@ -179,10 +179,10 @@
         <div class="upperContainer flex-col-even">
             <img src="../../assets/icons/profile.png" alt="" class="adminProfileClass">
             <h2 class="greet">Hi Operator !</h2>
-            <p class="greet">Employee ID : HSAO12345</p>
+            <p class="greet">Employee ID : HSO12345</p>
         </div>
         <div class="lowerContainer">
-            <div class="adminFeatureClass">
+            <div class="adminFeatureClass flex-col-even">
                 <div *ngFor="let imageUrl of feature_logo_list; let i = index" class="adminFeatureContainer flex-row-even" (click)="goToDashboard()">
                     <img  [src]="'../../assets/icons/' + imageUrl" alt="" class="iconsContainer">
                     <h4 class="featureContainer greet">{{operator_view_list[i]}}</h4>
