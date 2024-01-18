@@ -4,55 +4,64 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import * as echarts from 'echarts';
 
-
 @Component({
   selector: 'app-super-user',
   templateUrl: './super-user.component.html',
-  styleUrls: ['./super-user.component.scss']
+  styleUrls: ['./super-user.component.scss'],
 })
 export class SuperUserComponent implements OnInit {
-  constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router){}
+  currentString: any;
+
+  dashboardFlag: boolean = true;
+  addUser: boolean = false;
+  addCam: boolean = false;
+  report: boolean = false;
+  constructor(
+    private service: BackendService,
+    private sanitizer: DomSanitizer,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.createChart()
+    this.createChart();
   }
 
   myChart1: any;
 
-  createChart(){
+  createChart() {
     this.myChart1 = echarts.init(document.getElementById('graph_area') as any);
 
     const option1 = {
       title: {
-        text: ''
+        text: '',
       },
       tooltip: {
-        trigger: 'axis'
+        trigger: 'axis',
       },
       legend: {
         data: ['Current Week', 'Last Week'],
         textStyle: {
-          color: "white"
-        }
+          color: 'white',
+        },
       },
       grid: {
         left: '3%',
         right: '4%',
         bottom: '3%',
-        containLabel: true
+        containLabel: true,
       },
       toolbox: {
         feature: {
-          saveAsImage: {}
-        }
+          saveAsImage: {},
+        },
       },
       xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
       },
       yAxis: {
-        type: 'value'
+        type: 'value',
       },
       series: [
         {
@@ -60,7 +69,7 @@ export class SuperUserComponent implements OnInit {
           type: 'line',
           smooth: true,
           stack: 'Total',
-          data: [120, 132, 101,]
+          data: [120, 132, 101],
         },
         {
           name: 'Last Week',
@@ -68,14 +77,41 @@ export class SuperUserComponent implements OnInit {
           stack: 'Total',
           smooth: true,
           data: [220, 182, 191, 234, 290, 330, 310],
-        }
-      ]
+        },
+      ],
     };
 
     this.myChart1.setOption(option1);
   }
 
+  //! Function to fecth and store the data for the cam details
+  submitCamDetails() {
+    console.log('Submit cam details clicked.');
+  }
 
-  //! Function to control the route 
-  
+  changeOptions(data: any) {
+    if (data == 'home') {
+      this.dashboardFlag = true;
+      this.addUser = false;
+      this.addCam = false;
+      this.report = false;
+    } else if (data == 'add_del') {
+      this.dashboardFlag = false;
+      this.addUser = true;
+      this.addCam = false;
+      this.report = false;
+    } else if (data == 'cam_details') {
+      this.dashboardFlag = false;
+      this.addUser = false;
+      this.addCam = true;
+      this.report = false;
+    } else if (data == 'report') {
+      this.dashboardFlag = false;
+      this.addUser = false;
+      this.addCam = false;
+      this.report = true;
+    }
+  }
+
+  //! Function to control the route
 }

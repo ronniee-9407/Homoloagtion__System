@@ -1,275 +1,395 @@
-*,html{
-    margin: 0;
-    padding: 0;
+*,
+html {
+  margin: 0;
+  padding: 0;
 }
 
-
-body{
-    height: 100vh;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: #303841;
+body {
+  height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #303841;
 }
 
-.main-container{
-    height: 100vh;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: #303841;
+.main-container {
+  height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #303841;
 }
 
-.dashboard-container{
-    display: grid;
-    background-color: black;
-    grid-template-rows: 1fr 15fr;
-    grid-template-columns: 1fr 17fr;
-    height: 100vh;
-    width: 100%;
+.superuser-container {
+  display: grid;
+  background-color: black;
+  grid-template-rows: 1fr 15fr;
+  grid-template-columns: 1fr 17fr;
+  height: 100vh;
+  width: 100%;
 }
 
-
-
-
-.header{
-    display: grid;
-    grid-template-rows: 1fr ;    
-    grid-column: 1/-1;
-    grid-row: 1/2;
-    background-color: #FFFFFF;
-    color: #000000;
-    opacity: 83%;
+.header {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-column: 1/-1;
+  grid-row: 1/2;
+  background-color: #ffffff;
+  color: #000000;
+  opacity: 83%;
 }
 
-.header-container{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+.header-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.deevia-logo{
-    height: 4vh;
-    width: auto;
-    margin: 0.5%;
+.deevia-logo {
+  height: 4vh;
+  width: auto;
+  margin: 0.5%;
 }
 
-.header-heading{
-    font-size: 220%;
-    font-weight: 600;
-    font-family: 'Inria Sans';
+.header-heading {
+  font-size: 220%;
+  font-weight: 600;
+  font-family: "Inria Sans";
 }
 
-.honda-logo{
-    height: 4vh;
-    width: auto;
-    margin: 0.5% 3% 0.5% 0.5%;
+.honda-logo {
+  height: 4vh;
+  width: auto;
+  margin: 0.5% 3% 0.5% 0.5%;
 }
 
-
-
-.nav-bar{
-    background-color: #303841;
-    grid-row: 2/3;
-    grid-column: 1/2;
+.nav-bar {
+  background-color: #303841;
+  grid-row: 2/3;
+  grid-column: 1/2;
 }
 
-.nav-bar-container{
-    background-color: #1F1830;
+.nav-bar-container {
+  background-color: #1f1830;
+  border-radius: 10px;
+  height: 98%;
+  margin: 10px;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.allOptions {
+  display: flex;
+  flex-direction: column;
+  // justify-content: space-around;
+  align-items: center;
+  height: 80%;
+}
+
+.logout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20%;
+}
+
+.icon-home {
+  height: 6vh;
+  width: auto;
+  margin: 38% 0 25% 0;
+  cursor: pointer;
+}
+
+.icon-add-friend {
+  height: 6vh;
+  width: auto;
+  margin: 25% 0 25% 0;
+  cursor: pointer;
+}
+
+.icon-video {
+  height: 6vh;
+  width: auto;
+  margin: 25% 0 25% 0;
+  cursor: pointer;
+}
+
+.icon-clock {
+  height: 6vh;
+  width: auto;
+  margin: 25% 0 25% 0;
+  cursor: pointer;
+}
+
+.check-out {
+  height: 6vh;
+  width: auto;
+  margin: 4% 0 4% 0;
+}
+
+.main-body {
+  background-color: #303841;
+  grid-row: 2/3;
+  grid-column: 2/3;
+}
+
+.dashboard-container {
+  position: relative;
+  background-color: #1f1830;
+  border-radius: 10px;
+  height: 98%;
+  margin: 10px 10px 10px 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.top_container {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  flex-direction: row;
+}
+
+.active_users {
+  background-color: #1f1830;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20%;
+  justify-content: center;
+  align-items: center;
+  width: 10%;
+}
+
+.active_card {
+  height: 36%;
+  width: 86%;
+  background-color: #3c344e;
+  border-radius: 25px;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+.card_header {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 8% 0;
+  font-weight: 600;
+}
+
+.card_header_logo {
+  height: 10%;
+  width: 10%;
+}
+
+.head_text {
+  color: white;
+  font-family: "Inria Sans", sans-serif;
+}
+
+.card_data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card_value {
+  color: white;
+  font-family: "Inria Sans", sans-serif;
+  font-size: 271%;
+  font-weight: 600;
+}
+
+.lastweek_graph {
+  border-radius: 10px;
+  background-color: #1f1830;
+  width: 94%;
+  height: 93%;
+}
+
+.graph_container {
+  background-color: #3c344e;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+  height: 98%;
+  border-radius: 25px;
+  margin: 1%;
+}
+
+.graph_top_area {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.graph_title {
+  color: white;
+  font-family: "Inria Sans", sans-serif;
+  padding: 1% 2% 1% 2%;
+  font-size: 130%;
+  font-weight: 600;
+}
+
+.graph_area {
+  background-color: #3c344e;
+  margin: 0 1%;
+  border-radius: 25px;
+}
+
+.select_option {
+  border-radius: 25px;
+  margin: 1% 2% 0 0;
+  height: 1%;
+  width: 8%;
+}
+
+.bottom_container {
+  display: flex;
+  flex-direction: row;
+  height: 50%;
+  width: 100%;
+}
+
+.overall_report {
+  background-color: #3c344e;
+  height: 91%;
+  width: 76%;
+  border-radius: 10px;
+  margin: 1%;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+.tabular_data {
+  background-color: #3c344e;
+  height: 91%;
+  width: 20%;
+  border-radius: 10px;
+  margin: 1%;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+//! Style for the camera details
+
+.cameraDetails {
+  position: relative;
+  background-color: #1f1830;
+  border-radius: 10px;
+  height: 98%;
+  margin: 10px 10px 10px 4px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.cameraDetails_container {
+    background-color: #3c344e;
+    width: 37%;
+    height: 71%;
     border-radius: 10px;
-    height: 98%;
-    margin: 10px;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
 }
 
-.allOptions{
-    display: flex;
-    flex-direction: column;
-    // justify-content: space-around;
-    align-items: center;
-    height: 80%;
-}
-
-.logout{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 20%;
-}
-
-.icon-home{
-    height: 6vh;
-    width: auto;
-    margin: 38% 0 25% 0;
-    cursor: pointer;
-}
-
-.icon-add-friend{
-    height: 6vh;
-    width: auto;
-    margin: 25% 0 25% 0;
-    cursor: pointer;
-}
-
-.icon-video{
-    height: 6vh;
-    width: auto;
-    margin: 25% 0 25% 0;
-    cursor: pointer;
-}
-
-.icon-clock{
-    height: 6vh;
-    width: auto;
-    margin: 25% 0 25% 0;
-    cursor: pointer;
-}
-
-.check-out{
-    height: 6vh;
-    width: auto;
-        margin: 4% 0 4% 0;
-}
-
-.main-body{
-    background-color: #303841;
-    grid-row: 2/3;
-    grid-column: 2/3;
-}
-
-.main-body-container{
-    position: relative;
-    background-color: #1F1830;
-    border-radius: 10px;
-    height: 98%;
-    margin: 10px 10px 10px 4px;
-    display: flex;
-    flex-direction: column;
-}
-
-.top_container{
-    width: 100%;
-    height: 50%;
-    display: flex;
-    flex-direction: row;
-}
-
-.active_users{
-    background-color: #1F1830;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 20%;
-    justify-content: center;
-    align-items: center;
-    width: 10%;
-}
-
-.active_card{
-    height: 36%;
-    width: 86%;
-    background-color: #3C344E;
-    border-radius: 25px;
-    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-}
-
-.card_header{
-    display: flex;
-    justify-content: space-evenly;
-    margin: 8% 0;
-    font-weight: 600;
-}
-
-.card_header_logo{
-    height: 10%;
-    width: 10%;
-}
-
-.head_text{
+.cameraDetailsHeading{
+    background-color: #3c344e;
+    text-align: center;
+    font-family: "Inria Sans", sans-serif;
     color: white;
+    font-size: 150%;
+    font-weight: 600;
+    margin-top: 4%;
+}
+
+.cameraDetailsForm{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4%;
     font-family: "Inria Sans", sans-serif;
 }
 
-.card_data{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+//! Input style 1
+$primary: #fa0393;
+$secondary: #ef3875;
+$white: #000000;
+$gray: #9b9b9b;
+.form__group {
+  position: relative;
+  padding: 15px 0 0;
+  margin-top: 10px;
+  width: 50%;
 }
 
-.card_value{
-    color: white;
-    font-family: "Inria Sans", sans-serif;
-    font-size: 271%;
-    font-weight: 600;
-}
+.form__field {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid $gray;
+  outline: 0;
+  font-size: 130%;
+  color: $white;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+  color: white;
 
-.lastweek_graph{
-    border-radius: 10px;
-    background-color: #1F1830;
-    width: 94%;
-    height: 93%;
-}
+  &::placeholder {
+    color: transparent;
+  }
 
-.graph_container{
-    background-color: #3C344E;
-    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-    height: 98%;
-    border-radius: 25px;
-    margin: 1%;
-}
-
-.graph_top_area{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.graph_title{
-    color: white;
-    font-family: "Inria Sans", sans-serif;
-    padding: 1% 2% 1% 2%;
+  &:placeholder-shown ~ .form__label {
     font-size: 130%;
-    font-weight: 600;
+    cursor: text;
+    top: 20px;
+  }
 }
 
-.graph_area{
-    background-color: #3C344E;
-    margin: 0 1%;
-    border-radius: 25px;
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 100%;
+  color: $gray;
+  font-family: "Inria Sans", sans-serif;
 }
 
-.select_option{
-    border-radius: 25px;
-    margin: 1% 2% 0 0;
-    height: 1%;
-    width: 8%;
+.form__field:focus {
+  ~ .form__label {
+    // position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 100%;
+    color: $primary;
+    font-weight: 400;
+  }
+  padding-bottom: 6px;
+  font-weight: 400;
+  border-width: 3px;
+  border-image: linear-gradient(to right, $primary, $secondary);
+  border-image-slice: 1;
+  font-family: "Inria Sans", sans-serif;
+}
+/* reset input */
+.form__field {
+  &:required,
+  &:invalid {
+    box-shadow: none;
+  }
 }
 
-.bottom_container{
+//!----------------------------------------------------------------------------------
+
+.login_button{
+    font-family: "Inria Sans", sans-serif;
+    width: 13%;
+    background-color: #010101;
+    color: white;
     display: flex;
-    flex-direction: row;
-    height: 50%;
-    width: 100%;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    font-size: 124%;
+    cursor: pointer;
 }
-
-
-.overall_report{
-    background-color: #3C344E;
-    height: 91%;
-    width: 76%;
-    border-radius: 10px;
-    margin: 1%;
-    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-}
-
-.tabular_data{
-    background-color: #3C344E;
-    height: 91%;
-    width: 20%;
-    border-radius: 10px;
-    margin: 1%;
-    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-}
-

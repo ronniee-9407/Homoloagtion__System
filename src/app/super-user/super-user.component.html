@@ -1,6 +1,6 @@
 <div class="main-container">
-    <!-- Super User Dashboard -->
-    <div class="dashboard-container">
+    <!--! Super User Dashboard -->
+    <div class="superuser-container">
         <div class="header">
             <div class="header-container">
                 <img class="deevia-logo " src="../../assets/Deevia-logo.png" alt="deevia-logo">
@@ -11,10 +11,10 @@
         <div class="nav-bar">
             <div class="nav-bar-container">
                 <div class="allOptions">
-                    <img class="icon-home" src="../../assets/home.png" alt="home">
-                    <img class="icon-add-friend" src="../../assets/add-friend.png" alt="add-friend">
-                    <img class="icon-video" src="../../assets/video (1).png" alt="video">
-                    <img class="icon-clock" src="../../assets/clock.png" alt="clock">
+                    <img class="icon-home" src="../../assets/home.png" alt="home" (click)="changeOptions('home')">
+                    <img class="icon-add-friend" src="../../assets/add-friend.png" alt="add-friend" (click)="changeOptions('add_del')">
+                    <img class="icon-video" src="../../assets/video (1).png" alt="video" (click)="changeOptions('cam_details')">
+                    <img class="icon-clock" src="../../assets/clock.png" alt="clock" (click)="changeOptions('report')">
                 </div>
                 <div class="logout">
                     <img class="check-out" src="../../assets/check-out.png" alt="check-out">
@@ -22,7 +22,8 @@
             </div>
         </div>
         <div class="main-body">
-            <div class="main-body-container">
+            <!--! Dashboard Container  -->
+            <div class="dashboard-container" *ngIf="dashboardFlag">
                 <div class="top_container">
                     <div class="active_users">
                         <div class="active_card">
@@ -70,18 +71,57 @@
                     <div class="tabular_data"></div>
                 </div>
             </div>
+            <!--! Camera Details Page  -->
+            <div class="cameraDetails" *ngIf="addCam">
+                <div class="cameraDetails_container">
+                    <div class="cameraDetailsHeading">Enter Camera Details</div>
+                    <div class="cameraDetailsForm">
+                        <div class="form__group field">
+                            <label for="name" class="form__label">Camera IP :</label>
+                            <input type="input" class="form__field" placeholder="Name" name="name" id='name' required
+                                autocomplete="off" />
+                        </div>
+                        <br>
+                        <div class="form__group field">
+                            <label for="name" class="form__label">User ID :</label>
+                            <input type="input" class="form__field" placeholder="Name" name="name" id='name' required
+                                autocomplete="off" />
+                        </div>
+                        <br>
+                        <div class="form__group field">
+                            <label for="password" class="form__label">Password</label>
+                            <input type="input" class="form__field" placeholder="Name" name="name" id='name' required
+                                autocomplete="off" />
+                        </div>
+                        <br>
+                        <div class="form__group field">
+                            <label for="password" class="form__label">Port :</label>
+                            <input type="input" class="form__field" placeholder="Name" name="name" id='name' required
+                                autocomplete="off" />
+                        </div>
+                        <br>
+                        <div class="form__group field">
+                            <label for="name" class="form__label">RTSP :</label>
+                            <input type="input" class="form__field" placeholder="Name" name="name" id='name' required
+                                autocomplete="off" />
+                        </div>
+                        <br>
+                        <div class="login_button" (click)="submitCamDetails()">Submit</div>
+                    </div>
+                </div>
+            </div>
+
+            <!--! Edit/Create Users Page -->
+            <div class="edit_create_users">
+                <div class="editUsersContainer">
+
+                </div>
+            </div>
         </div>
-    </div>
-
-    <!--! Camera Details Page  -->
-    <div class="cameraDetails">
 
     </div>
 
-    <!--! Edit/Create Users Page -->
-    <div class="edit_create_users">
 
-    </div>
 
-    
+
 </div>
