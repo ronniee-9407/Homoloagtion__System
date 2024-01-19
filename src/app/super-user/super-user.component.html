@@ -112,14 +112,92 @@
             </div>
 
             <!--! Edit/Create Users Page -->
-            <div class="edit_create_users">
+            <div class="edit_create_users" *ngIf="addUser">
                 <div class="editUsersContainer">
-
+                    <div class="selectToogleOptions">
+                        <div class="toggleOptionsL">Admin</div>
+                        <div class="toggleOptionsR">Operator</div>
+                    </div>
+                    <div class="add_delete">
+                        <div class="add_container">
+                            <div class="ec_container">
+                                <div class="cameraDetails_container">
+                                    <div class="cameraDetailsHeading">Enter Camera Details</div>
+                                    <div class="cameraDetailsForm">
+                                        <div class="form__group field">
+                                            <label for="name" class="form__label">Camera IP :</label>
+                                            <input type="input" class="form__field" placeholder="Name" name="name" id='name' required
+                                                autocomplete="off" />
+                                        </div>
+                                        <br>
+                                        <div class="form__group field">
+                                            <label for="name" class="form__label">User ID :</label>
+                                            <input type="input" class="form__field" placeholder="Name" name="name" id='name' required
+                                                autocomplete="off" />
+                                        </div>
+                                        <br>
+                                        <div class="form__group field">
+                                            <label for="password" class="form__label">Password</label>
+                                            <input type="password" class="form__field" placeholder="Name" name="name" id='name' required
+                                                autocomplete="off" />
+                                        </div>
+                                        <br>
+                                        <div class="form__group field">
+                                            <label for="name" class="form__label">Port :</label>
+                                            <input type="input" class="form__field" placeholder="Name" name="name" id='name' required
+                                                autocomplete="off" />
+                                        </div>
+                                        <br>
+                                        <div class="form__group field">
+                                            <label for="name" class="form__label">RTSP :</label>
+                                            <input type="input" class="form__field" placeholder="Name" name="name" id='name' required
+                                                autocomplete="off" />
+                                        </div>
+                                        <br>
+                                        <div class="login_button" (click)="submitCamDetails()">Submit</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="delete_container">
+                            <div class="ec_container">
+                                <div class="createDetails_container">
+                                    <div class="cameraDetailsHeading">Create New Admin</div>
+                                    <div class="cameraDetailsForm">
+                                        <div class="form__group field">
+                                            <label for="name" class="form__label"> Name:</label>
+                                            <input type="input" class="form__field" placeholder="Name" name="name" id='name' required
+                                                autocomplete="off" />
+                                        </div>
+                                        <br>
+                                        <div class="form__group field">
+                                            <label for="name" class="form__label">Enter ID :</label>
+                                            <input type="input" class="form__field" placeholder="Name" name="name" id='name' required
+                                                autocomplete="off" />
+                                        </div>
+                                        <br>
+                                        <div class="form__group field">
+                                            <label for="password" class="form__label">Password</label>
+                                            <input type="password" class="form__field" placeholder="Name" name="name" id='name' required
+                                                autocomplete="off" />
+                                        </div>
+                                        <br>
+                                        <div class="form__group field">
+                                            <label for="password" class="form__label">Confirm Password</label>
+                                            <input type="password" class="form__field" placeholder="Name" name="name" id='name' required
+                                                autocomplete="off" />
+                                        </div>
+                                        <div class="login_button" (click)="submitCamDetails()">Create</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- ! Generate Report  -->
-            <div class="report_generation">
+            <div class="report_generation" *ngIf="report">
                 <div class="reportGeneratorContainer">
 
                 </div>
