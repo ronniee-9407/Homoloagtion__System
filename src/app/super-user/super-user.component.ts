@@ -114,4 +114,7 @@ export class SuperUserComponent implements OnInit {
   }
 
   //! Function to control the route
+  logout(){
+    this.router.navigate(['/login']);
+  }
 }
