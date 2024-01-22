@@ -428,37 +428,35 @@ export class AdminComponent implements OnInit {
   }
 
   viewPassword(id: any, index: any){
-    for(let i=0; i<3; i++){
-      if(i == index)
-        this.passwordView[i] = true;
-      else{
-        this.passwordView[i] = false;
-      }
-    }
-    if(id === 'name'){
-      let currId = <HTMLInputElement>document.getElementById("name");
-      let restId1 = <HTMLInputElement>document.getElementById("password");
-      let restId2 = <HTMLInputElement>document.getElementById("password2");
-      currId.type = 'text';
-      restId1.type = 'password';
-      restId2.type = 'password';
-    }
-    if(id === 'password'){
-      let currId = <HTMLInputElement>document.getElementById("password");
-      let restId1 = <HTMLInputElement>document.getElementById("name");
-      let restId2 = <HTMLInputElement>document.getElementById("password2");
-      currId.type = 'text';
-      restId1.type = 'password';
-      restId2.type = 'password';
-    }
-    if(id === 'password2'){
-      let currId = <HTMLInputElement>document.getElementById("password2");
-      let restId1 = <HTMLInputElement>document.getElementById("name");
-      let restId2 = <HTMLInputElement>document.getElementById("password");
-      currId.type = 'text';
-      restId1.type = 'password';
-      restId2.type = 'password';
-    }
+    // for(let i=0; i<3; i++){
+    //   if(i == index)
+    //     this.passwordView[i] = true;
+    //   else{
+    //     this.passwordView[i] = false;
+    //   }
+    // }
+    this.passwordView[index] = true;
+    let currId = <HTMLInputElement>document.getElementById(id);
+    currId.type = 'text';
+    // if(id === 'name'){
+    //   let currId = <HTMLInputElement>document.getElementById(id);
+    //   currId.type = 'text';
+    // if(id === 'password'){
+    //   let currId = <HTMLInputElement>document.getElementById("password");
+    //   let restId1 = <HTMLInputElement>document.getElementById("name");
+    //   let restId2 = <HTMLInputElement>document.getElementById("password2");
+    //   currId.type = 'text';
+    //   restId1.type = 'password';
+    //   restId2.type = 'password';
+    // }
+    // if(id === 'password2'){
+    //   let currId = <HTMLInputElement>document.getElementById("password2");
+    //   let restId1 = <HTMLInputElement>document.getElementById("name");
+    //   let restId2 = <HTMLInputElement>document.getElementById("password");
+    //   currId.type = 'text';
+    //   restId1.type = 'password';
+    //   restId2.type = 'password';
+    // }
   }
 
   closePassword(id: any, index: any){

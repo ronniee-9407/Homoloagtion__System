@@ -30,6 +30,8 @@
                         <div class="password__group field">
                             <input type="password" class="password__field" placeholder="Password" name="password" id='password' required autocomplete="off" />
                             <label for="password" class="form__label">Password</label>
+                            <img *ngIf="!viewPassword[0]" src="../../assets/icons/view.png" alt="" class="viewPasswordClass" (click)="showPassword(0)">
+                            <img *ngIf="viewPassword[0]" src="../../assets/icons/close-eye.png" alt="" class="viewPasswordClass" (click)="hidePassword(0)">
                         </div>
                     </div>
                     <div class="login_button" (click)="login('su')">Login</div>
@@ -81,6 +83,8 @@
                         <div class="password__group field">
                             <input type="password" class="password__field" placeholder="Password" name="password" id='password' required autocomplete="off" />
                             <label for="password" class="form__label">Password</label>
+                            <img *ngIf="!viewPassword[1]" src="../../assets/icons/view.png" alt="" class="viewPasswordClass" (click)="showPassword(1)">
+                            <img *ngIf="viewPassword[1]" src="../../assets/icons/close-eye.png" alt="" class="viewPasswordClass" (click)="hidePassword(1)">
                         </div>
                     </div>
                     <div class="login_button" (click)="login('admin')">Login</div>
@@ -133,6 +137,8 @@
                         <div class="password__group field">
                             <input type="password" class="password__field" placeholder="Password" name="password" id='password' required autocomplete="off" />
                             <label for="password" class="form__label">Password</label>
+                            <img *ngIf="!viewPassword[2]" src="../../assets/icons/view.png" alt="" class="viewPasswordClass" (click)="showPassword(2)">
+                            <img *ngIf="viewPassword[2]" src="../../assets/icons/close-eye.png" alt="" class="viewPasswordClass" (click)="hidePassword(2)">
                         </div>
                     </div>
                     <div class="login_button" (click)="login('op')">Login</div>

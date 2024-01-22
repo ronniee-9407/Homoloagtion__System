@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit{
   flag_su_page: boolean = true
   flag_operator_page: boolean = false
   curr_user: any = 'super_user';
+  viewPassword = [false, false, false];
 
 
 
@@ -39,6 +40,7 @@ export class LoginComponent implements OnInit{
       this.flag_su_page= true
       this.flag_operator_page= false
     }
+    this.viewPassword = [false, false, false];
     // console.log('CurrentUser', this.curr_user);
   }
 
@@ -66,5 +68,16 @@ export class LoginComponent implements OnInit{
       }
     });
     this.router.navigate([this.curr_user]);
+  }
+
+  showPassword(index: any){
+    this.viewPassword[index] = true;
+    let currId = <HTMLInputElement>document.getElementById("password");
+    currId.type = 'text';
+  }
+  hidePassword(index: any){
+    this.viewPassword[index] = false;
+    let currId = <HTMLInputElement>document.getElementById("password");
+    currId.type = 'password';
   }
 }
