@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { NgxEchartsModule } from "ngx-echarts";
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,9 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      preventDuplicates: true
+    }),
     FormsModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'), 

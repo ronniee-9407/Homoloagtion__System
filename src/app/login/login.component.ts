@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BackendService } from 'src/services/backend.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { NotificationService } from 'src/services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit{
-  constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router){}
+  constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router, private notifyService: NotificationService){}
 
   ngOnInit(): void {
     
@@ -50,9 +51,13 @@ export class LoginComponent implements OnInit{
     let userId = idValue.value;
     let pass = <HTMLInputElement> document.getElementById('password');
     let password = pass.value;
-    console.log('UserId :', userId);
-    console.log('Password :', password);
-    console.log('CurrentUser', this.curr_user);
+    if(userId == '' || password == ''){
+      this.notifyService.showWarning('Input fiels cannot be empty','Notification');
+      return;
+    }
+    // console.log('UserId :', userId);
+    // console.log('Password :', password);
+    // console.log('CurrentUser', this.curr_user);
     let user_data = {
       'userId' : userId,
       'password' : password,
@@ -62,12 +67,15 @@ export class LoginComponent implements OnInit{
       let login_status = data['login_status'];
       if(login_status){
         this.router.navigate([this.curr_user]);
+        this.notifyService.showSuccess('Logged in successfully','Notification');
       }
       else{
-
+        this.notifyService.showError('Incorrect login Credentials','Error')
       }
     });
+    // this.notifyService.showError('Incorrect login Credentials','Error');
     this.router.navigate([this.curr_user]);
+    this.notifyService.showSuccess('Logged in successfully','Notification');
   }
 
   showPassword(index: any){
