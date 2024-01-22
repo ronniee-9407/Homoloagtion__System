@@ -240,7 +240,7 @@
     <div class="leftContainerClass flex-col-even">
         <div class="upperContainer flex-col-even">
             <img src="../../assets/icons/profile.png" alt="" class="smallProfileClass" >
-            <h4 class="greet" style="font-size: 12px;">Hi Admin !</h4>
+            <h4 class="greet" style="font-size: 12px;">Hi {{userDetails.designation}} !</h4>
             <!-- <p class="greet" style="font-size: 8px; width: 90%;">Employee ID : HSA12345</p> -->
         </div>
 
@@ -260,8 +260,42 @@
     <div class="rightContainerClass flex-col-even">
         <div class="wholeRightContainer flex-row-even">
             <div class="infoContainer flex-row-even">
-                <div class="profileInfo"></div>
-                <div class="profileInfo"></div>
+                <div class="profileInfo flex-col-even">
+                    <div class="profileInfoUpper flex-col-even">
+                        <img src="../../assets/icons/profile.png" alt="">
+                    </div>
+                    <div class="changePasswordContainer flex-col-even">
+                        <h3 class="greet">Name : {{userDetails.name}}</h3>
+                        <h3 class="greet">User ID : {{userDetails.userId}}</h3>
+                        <h3 class="greet">Designation : {{userDetails.designation}}</h3>
+                    </div>
+                </div>
+                <div class="profileInfo flex-col-even">
+                    <h2 class="greet">Change Password</h2>
+                    <div class="changePasswordContainerClass flex-col-even">
+                        <div class="login_input">
+                            <div class="form__group field">
+                                <input type="password" class="form__field" placeholder="Name" name="name" id='name' required autocomplete="off" />
+                                <label for="name" class="form__label">Old Password</label>
+                                <img *ngIf="!passwordView[0]" src="../../assets/icons/view.png" alt="" class="viewPasswordClass" (click)="viewPassword('name', 0)">
+                                <img *ngIf="passwordView[0]" src="../../assets/icons/close-eye.png" alt="" class="viewPasswordClass" (click)="closePassword('name', 0)">
+                            </div>
+                            <div class="password__group field">
+                                <input type="password" class="password__field" placeholder="Password" name="password1" id='password' required autocomplete="off" />
+                                <label for="password" class="form__label">New Password</label>
+                                <img *ngIf="!passwordView[1]" src="../../assets/icons/view.png" alt="" class="viewPasswordClass" (click)="viewPassword('password', 1)">
+                                <img *ngIf="passwordView[1]" src="../../assets/icons/close-eye.png" alt="" class="viewPasswordClass" (click)="closePassword('password', 1)">
+                            </div>
+                            <div class="password__group field">
+                                <input type="password" class="Cnfpassword__field" placeholder="cnfPassword" name="password2" id='password2' required autocomplete="off" />
+                                <label for="password2" class="form__label">Confirm Password</label>
+                                <img *ngIf="!passwordView[2]" src="../../assets/icons/view.png" alt="" class="viewPasswordClass" (click)="viewPassword('password2', 2)">
+                                <img *ngIf="passwordView[2]" src="../../assets/icons/close-eye.png" alt="" class="viewPasswordClass" (click)="closePassword('password2', 2)">
+                            </div>
+                        </div>
+                        <button class="changePasswordBtn" (click)="changePassword()">Submit</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

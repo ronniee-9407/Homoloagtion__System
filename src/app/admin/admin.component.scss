@@ -56,6 +56,7 @@
 .greet{
     color: white;
     margin: 0px;
+    font-family: "Inria Sans", sans-serif;
 }
 .iconsContainer{
     position: relative;
@@ -274,12 +275,12 @@ label{
 }
 
 #start-time, #end-time{
-    width:41%;
+    width:46%;
     height: 72%;
 }
 
 #start-date, #end-date{
-    width: 40%;
+    width: 45%;
     height: 70%;
 }
 #start-time:focus, #end-time:focus, #start-date:focus, #end-date:focus{
@@ -297,6 +298,10 @@ label{
     color: white;
     font-weight: bold;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+#searchButton:hover{
+    background-color: #000000de;
 }
 .btnContainer{
     height: 50%;
@@ -389,19 +394,259 @@ label{
 .infoContainer{
     height: 70%;
     width: 70%;
-    background-color: rgba(33, 33, 33, 0.64);
+    // background-color: rgb(88 88 88 / 65%);
 }
 .profileInfo{
     height: 90%;
     width: 40%;
-    background-color: #212121;
-    opacity: 67%;
+    background-color: #212121de;
+    opacity: 80%;
     border-radius: 16px;
     // backdrop-filter: blur(5px);
 }
+.profileInfo h2{
+    text-align: center;
+    height: 13%;
+    line-height: 2;
+    color: white;
+    font-family: "Inria Sans", sans-serif;
+}
+.changePasswordContainer{
+    height: 65%;
+    width: 95%;
+    // border: 1px solid black;
+}
+.profileInfoUpper{
+    height: 35%;
+    width: 100%;
+    border-radius: 16px 16px 0px 0px;
+    background-color: black;
+}
+.profileInfoUpper img{
+    height: 80%;
+    width: 30%;
+}
+.changePasswordContainerClass{
+    height: 80%;
+    width: 95%;
+    background-color: white;
+    border-radius: 0px 0px 12px 12px;
+}
 
+$primary: #5e0466;
+$secondary: #ef38e6;
+$white: #000000;
+$gray: #9b9b9b;
+.form__group {
+    position: relative;
+    padding: 10px 0 0;
+    // margin-top: 10px;
+    width: 60%;
+  }
+  
+.form__field {
+font-family: inherit;
+width: 100%;
+border: 0;
+border-bottom: 2px solid $gray;
+outline: 0;
+font-size: 130%;
+color: $white;
+padding: 7px 0;
+background: transparent;
+transition: border-color 0.2s;
+&::placeholder {
+    color: transparent;
+    }
 
+    &:placeholder-shown ~ .form__label {
+    font-size: 130%;
+    cursor: text;
+    top: 20px;
+    }
+}
+.form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 100%;
+    color: $gray;
+    font-family: "Inria Sans", sans-serif;
+  }
+  
+  .form__field:focus {
+    ~ .form__label {
+      position: absolute;
+      top: 0;
+      display: block;
+      transition: 0.2s;
+      font-size: 100%;
+      color: $primary;
+      font-weight: 400;
+    }
+    padding-bottom: 6px;
+    font-weight: 400;
+    border-width: 3px;
+    border-image: linear-gradient(to right, $primary, $secondary);
+    border-image-slice: 1;
+    font-family: "Inria Sans", sans-serif;
+  }
+  /* reset input */
+  .form__field {
+    &:required,
+    &:invalid {
+      box-shadow: none;
+    }
+  }
+  .login_input {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 8%;
+    // margin: 0 0 13% 0;
+    position: relative;
+    top: 4%;
+  }
+  .password__group {
+    position: relative;
+    padding: 10px 0 0;
+    // margin-top: 10px;
+    width: 60%;
+  }
+  
+  .password__field {
+    font-family: inherit;
+    width: 100%;
+    border: 0;
+    border-bottom: 2px solid $gray;
+    outline: 0;
+    font-size: 130%;
+    color: $white;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+  
+    &::placeholder {
+      color: transparent;
+    }
+  
+    &:placeholder-shown ~ .form__label {
+      font-size: 130%;
+      cursor: text;
+      top: 20px;
+    }
+  }
 
+  .Cnfpassword__field {
+    font-family: inherit;
+    width: 100%;
+    border: 0;
+    border-bottom: 2px solid $gray;
+    outline: 0;
+    font-size: 130%;
+    color: $white;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+  
+    &::placeholder {
+      color: transparent;
+    }
+  
+    &:placeholder-shown ~ .form__label {
+      font-size: 130%;
+      cursor: text;
+      top: 20px;
+    }
+  }
+  
+  .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 100%;
+    color: $gray;
+    font-family: "Inria Sans", sans-serif;
+  }
+  
+  .password__field:focus {
+    ~ .form__label {
+      position: absolute;
+      top: 0;
+      display: block;
+      transition: 0.2s;
+      font-size: 100%;
+      color: $primary;
+      font-weight: 400;
+    }
+    padding-bottom: 6px;
+    font-weight: 400;
+    border-width: 3px;
+    border-image: linear-gradient(to right, $primary, $secondary);
+    border-image-slice: 1;
+    font-family: "Inria Sans", sans-serif;
+  }
+  /* reset input */
+  .password__field {
+    &:required,
+    &:invalid {
+      box-shadow: none;
+    }
+  }
+  .Cnfpassword__field:focus {
+    ~ .form__label {
+      position: absolute;
+      top: 0;
+      display: block;
+      transition: 0.2s;
+      font-size: 100%;
+      color: $primary;
+      font-weight: 400;
+    }
+    padding-bottom: 6px;
+    font-weight: 400;
+    border-width: 3px;
+    border-image: linear-gradient(to right, $primary, $secondary);
+    border-image-slice: 1;
+    font-family: "Inria Sans", sans-serif;
+  }
+  /* reset input */
+  .Cnfpassword__field {
+    &:required,
+    &:invalid {
+      box-shadow: none;
+    }
+  }
+  .changePasswordBtn{
+    width: 24%;
+    height: 12%;
+    background-color: #404040;
+    color: white;
+    position: relative;
+    top: 6%;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+.changePasswordBtn:hover{
+    background-color: black;
+}
+.viewPasswordClass{
+    // height: 30%;
+    width: 8%;
+    position: relative;
+    left: 88%;
+    bottom: 46%;
+    object-fit: cover;
+    cursor: pointer;
+}
 
 
 
