@@ -420,7 +420,7 @@ $gray: #9b9b9b;
   align-items: center;
 }
 
-.toggleOptionsL {
+.toggleOptionsL_Selected {
   width: 5%;
   height: 5%;
   background: #d9d9d9;
@@ -429,6 +429,18 @@ $gray: #9b9b9b;
   font-size: 120%;
   padding: 5px;
   color: black;
+  cursor: pointer;
+}
+
+.toggleOptionsL {
+  width: 5%;
+  height: 5%;
+  background: #3c344e;
+  text-align: center;
+  border-radius: 10px 0 0 10px;
+  font-size: 120%;
+  padding: 5px;
+  color: white;
   cursor: pointer;
 }
 
@@ -444,7 +456,28 @@ $gray: #9b9b9b;
   color: white;
 }
 
-.add_delete {
+
+.toggleOptionsR_Selected {
+  width: 5%;
+  height: 5%;
+  background: #d9d9d9;
+  text-align: center;
+  border-radius: 0 10px 10px 0;
+  font-size: 120%;
+  padding: 5px;
+  cursor: pointer;
+  color: black;
+}
+
+
+
+.add_delete_Admin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add_delete_Operator {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -480,4 +513,11 @@ $gray: #9b9b9b;
   width: 37%;
   height: 71%;
   border-radius: 10px;
+}
+
+.userDetails_container{
+  background-color: #3c344e;
+    width: 100%;
+    height: 71%;
+    border-radius: 10px;
 }

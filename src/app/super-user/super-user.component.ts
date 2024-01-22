@@ -16,6 +16,11 @@ export class SuperUserComponent implements OnInit {
   addUser: boolean = false;
   addCam: boolean = false;
   report: boolean = false;
+
+  add_delete_operator_flag: boolean = true
+
+  toogleOptionsAddDel: boolean = true
+
   constructor(
     private service: BackendService,
     private sanitizer: DomSanitizer,
@@ -116,5 +121,24 @@ export class SuperUserComponent implements OnInit {
   //! Function to control the route
   logout(){
     this.router.navigate(['/login']);
+  }
+
+  //! Funciton to create the new Admin
+  createNewAdmin(){
+    console.log("create new Admin clicked.");
+  }
+
+
+
+  //! Function to edit the Admin
+  editAdmin(){
+    console.log("edit Admin clicked.");
+  }
+
+  //! Toggle Options for operator and admin
+  toogleOptions(){
+    console.log("Toggle Options");
+    this.toogleOptionsAddDel = !this.toogleOptionsAddDel
+    this.add_delete_operator_flag = !this.add_delete_operator_flag
   }
 }

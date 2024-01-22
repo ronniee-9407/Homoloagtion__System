@@ -111,21 +111,95 @@
                 </div>
             </div>
 
-            <!--! Edit/Create Users Page -->
+            <!--! Edit/Create Users Page For Admin-->
             <div class="edit_create_users" *ngIf="addUser">
                 <div class="editUsersContainer">
-                    <div class="selectToogleOptions">
-                        <div class="toggleOptionsL">Admin</div>
-                        <div class="toggleOptionsR">Operator</div>
+                    <!--! Triggers when the admin options is true  -->
+                    <div class="selectToogleOptions" *ngIf="toogleOptionsAddDel">
+                        <div class="toggleOptionsL_Selected" (click)="toogleOptions()">Admin</div>
+                        <div class="toggleOptionsR" (click)="toogleOptions()">Operator</div>
                     </div>
-                    <div class="add_delete">
+                    <!--! Triggers When then Operator options is true  -->
+                    <div class="selectToogleOptions" *ngIf="!toogleOptionsAddDel">
+                        <div class="toggleOptionsL" (click)="toogleOptions()">Admin</div>
+                        <div class="toggleOptionsR_Selected" (click)="toogleOptions()">Operator</div>
+                    </div>
+                    <!-- !This is add and delete opetator sytle  -->
+                    <div class="add_delete_Admin" *ngIf="add_delete_operator_flag">
                         <div class="add_container">
                             <div class="ec_container">
-                                <div class="cameraDetails_container">
-                                    <div class="cameraDetailsHeading">Enter Camera Details</div>
+                                <div class="userDetails_container">
+                                    <div class="cameraDetailsHeading">Create New Admin</div>
                                     <div class="cameraDetailsForm">
                                         <div class="form__group field">
-                                            <label for="name" class="form__label">Camera IP :</label>
+                                            <label for="name" class="form__label">Name :</label>
+                                            <input type="input" class="form__field" placeholder="Name" name="name" id='name' required
+                                                autocomplete="off" />
+                                        </div>
+                                        <br>
+                                        <div class="form__group field">
+                                            <label for="name" class="form__label">User ID :</label>
+                                            <input type="input" class="form__field" placeholder="Name" name="name" id='name2' required
+                                                autocomplete="off" />
+                                        </div>
+                                        <br>
+                                        <div class="form__group field">
+                                            <label for="password" class="form__label">Password</label>
+                                            <input type="password" class="form__field" placeholder="Name" name="name" id='password1' required
+                                                autocomplete="off" />
+                                        </div>
+                                        <br>
+                                        <div class="form__group field">
+                                            <label for="name" class="form__label">Confirm Password :</label>
+                                            <input type="password" class="form__field" placeholder="Name" name="name" id='password2' required
+                                                autocomplete="off" />
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <div class="login_button" (click)="createNewAdmin()">Submit</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="delete_container">
+                            <div class="ec_container">
+                                <div class="userDetails_container">
+                                    <div class="cameraDetailsHeading">Change Admin Password</div>
+                                    <div class="cameraDetailsForm">
+                                        <div class="form__group field">
+                                            <label for="name" class="form__label">Enter ID :</label>
+                                            <input type="input" class="form__field" placeholder="Name" name="name" required
+                                                autocomplete="off" />
+                                        </div>
+                                        <br>
+                                        <div class="form__group field">
+                                            <label for="password" class="form__label">Password</label>
+                                            <input type="password" class="form__field" placeholder="Name" name="name"  required
+                                                autocomplete="off" />
+                                        </div>
+                                        <br>
+                                        <div class="form__group field">
+                                            <label for="password" class="form__label">Confirm Password</label>
+                                            <input type="password" class="form__field" placeholder="Name" name="name" required
+                                                autocomplete="off" />
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <div class="login_button" (click)="editAdmin()">Create</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- !This is add and delete opetator sytle  -->
+                    <div class="add_delete_Operator" *ngIf="!add_delete_operator_flag">
+                        <div class="add_container">
+                            <div class="ec_container">
+                                <div class="userDetails_container">
+                                    <div class="cameraDetailsHeading">Create New Operator</div>
+                                    <div class="cameraDetailsForm">
+                                        <div class="form__group field">
+                                            <label for="name" class="form__label">Name :</label>
                                             <input type="input" class="form__field" placeholder="Name" name="name" id='name' required
                                                 autocomplete="off" />
                                         </div>
@@ -143,33 +217,22 @@
                                         </div>
                                         <br>
                                         <div class="form__group field">
-                                            <label for="name" class="form__label">Port :</label>
-                                            <input type="input" class="form__field" placeholder="Name" name="name" id='name' required
+                                            <label for="name" class="form__label">Confirm Password :</label>
+                                            <input type="password" class="form__field" placeholder="Name" name="name" id='name' required
                                                 autocomplete="off" />
                                         </div>
                                         <br>
-                                        <div class="form__group field">
-                                            <label for="name" class="form__label">RTSP :</label>
-                                            <input type="input" class="form__field" placeholder="Name" name="name" id='name' required
-                                                autocomplete="off" />
-                                        </div>
                                         <br>
-                                        <div class="login_button" (click)="submitCamDetails()">Submit</div>
+                                        <div class="login_button" (click)="createNewAdmin()">Submit</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="delete_container">
                             <div class="ec_container">
-                                <div class="createDetails_container">
-                                    <div class="cameraDetailsHeading">Create New Admin</div>
+                                <div class="userDetails_container">
+                                    <div class="cameraDetailsHeading">Change Operator Password</div>
                                     <div class="cameraDetailsForm">
-                                        <div class="form__group field">
-                                            <label for="name" class="form__label"> Name:</label>
-                                            <input type="input" class="form__field" placeholder="Name" name="name" id='name' required
-                                                autocomplete="off" />
-                                        </div>
-                                        <br>
                                         <div class="form__group field">
                                             <label for="name" class="form__label">Enter ID :</label>
                                             <input type="input" class="form__field" placeholder="Name" name="name" id='name' required
@@ -187,7 +250,9 @@
                                             <input type="password" class="form__field" placeholder="Name" name="name" id='name' required
                                                 autocomplete="off" />
                                         </div>
-                                        <div class="login_button" (click)="submitCamDetails()">Create</div>
+                                        <br>
+                                        <br>
+                                        <div class="login_button" (click)="editAdmin()">Create</div>
                                     </div>
                                 </div>
                             </div>
