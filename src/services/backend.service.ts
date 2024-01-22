@@ -45,4 +45,8 @@ export class BackendService {
   validateUser(data: any){
     return this.http.post("http://127.0.0.1:8000/validate_user", {'userData': data});
   }
+
+  adminPasswordReset(data: any){
+    return this.http.post("http://127.0.0.1:8000/reset_password", {'newData': data});
+  }
 }

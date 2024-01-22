@@ -29,6 +29,12 @@ export class AdminComponent implements OnInit {
     port: '',
     rtsp: ''
   };
+  userDetails = {
+    name: 'Sundram Kumar',
+    userId: 'HSA12345',
+    password: 'Deevia@123',
+    designation: 'Admin'
+  }
   startDate: any;
   endDate: any;
   startTime = "00:00";
@@ -57,6 +63,8 @@ export class AdminComponent implements OnInit {
   myChart: any;
   xAxisData = ['25-12-2023', '26-12-2023', '27-12-2023', '28-12-2023', '29-12-2023', '30-12-2023', '31-12-2023'];
   yAxisData = [5, 8, 7, 5, 9, 6, 4];
+
+  passwordView = [false, false, false];
 
   constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router){}
 
@@ -103,6 +111,8 @@ export class AdminComponent implements OnInit {
     let portValue = port.value;
     // this.rtspLink = 'rtsp://' + idValue + ':' + passValue + '@' + ipValue + ':' + portValue + '/?h264x=4';
     this.rtspLink = 'rtsp://' + idValue + ':' + passValue + '@' + ipValue + ':' + portValue + '/cam/realmonitor?channel=1&subtype=0';
+    console.log('this.rtspLink',this.rtspLink);
+    
   }
 
   addCam(){
@@ -383,5 +393,77 @@ export class AdminComponent implements OnInit {
     }
   
     this.myChart.setOption(option_1);
+  }
+
+  changePassword(){
+    let oldPass = <HTMLInputElement>document.getElementById("name");
+    let oldPassValue = oldPass.value;
+    let newPass = <HTMLInputElement>document.getElementById("password");
+    let newPassValue = newPass.value;
+    let cnfPass = <HTMLInputElement>document.getElementById("password2");
+    let cnfPassValue = cnfPass.value;
+    if(oldPassValue == '' || newPassValue == '' || cnfPassValue == ''){
+      console.log('Input fields cannot be empty');
+      return;
+    }
+
+    if(newPassValue === cnfPassValue){
+      let data = {
+        'oldPassword' : oldPassValue,
+        'newPassword' : newPassValue,
+        'userId' : this.userDetails.userId
+      };
+      console.log('new data',data);
+      
+      this.service.adminPasswordReset(data).subscribe((data: any)=>{
+        console.log('Data',data);
+        
+      })
+    }
+    else{
+      console.log('Warning! : New password and Confirm password does not match');
+      
+    }
+
+  }
+
+  viewPassword(id: any, index: any){
+    for(let i=0; i<3; i++){
+      if(i == index)
+        this.passwordView[i] = true;
+      else{
+        this.passwordView[i] = false;
+      }
+    }
+    if(id === 'name'){
+      let currId = <HTMLInputElement>document.getElementById("name");
+      let restId1 = <HTMLInputElement>document.getElementById("password");
+      let restId2 = <HTMLInputElement>document.getElementById("password2");
+      currId.type = 'text';
+      restId1.type = 'password';
+      restId2.type = 'password';
+    }
+    if(id === 'password'){
+      let currId = <HTMLInputElement>document.getElementById("password");
+      let restId1 = <HTMLInputElement>document.getElementById("name");
+      let restId2 = <HTMLInputElement>document.getElementById("password2");
+      currId.type = 'text';
+      restId1.type = 'password';
+      restId2.type = 'password';
+    }
+    if(id === 'password2'){
+      let currId = <HTMLInputElement>document.getElementById("password2");
+      let restId1 = <HTMLInputElement>document.getElementById("name");
+      let restId2 = <HTMLInputElement>document.getElementById("password");
+      currId.type = 'text';
+      restId1.type = 'password';
+      restId2.type = 'password';
+    }
+  }
+
+  closePassword(id: any, index: any){
+    this.passwordView[index] = false;
+    let currId = <HTMLInputElement>document.getElementById(id);
+    currId.type = 'password';
   }
 }
