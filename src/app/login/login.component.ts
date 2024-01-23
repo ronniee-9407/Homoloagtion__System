@@ -74,8 +74,8 @@ export class LoginComponent implements OnInit{
       }
     });
     // this.notifyService.showError('Incorrect login Credentials','Error');
-    this.router.navigate([this.curr_user]);
-    this.notifyService.showSuccess('Logged in successfully','Notification');
+    // this.router.navigate([this.curr_user]);
+    // this.notifyService.showSuccess('Logged in successfully','Notification');
   }
 
   showPassword(index: any){
