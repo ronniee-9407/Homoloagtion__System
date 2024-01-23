@@ -12,10 +12,10 @@ export class BackendService {
     console.log(camDetails);
     return this.http.post("http://192.168.68.110:5000/add_camera",{"cam_details": camDetails});
   }
-  searchDateTime(query: any, page: any, per_page: any)
+  searchDateTime(data: any)
   {
-    // console.log(query);    
-    return this.http.post("http://192.168.68.110:5000/searchDateTime",{"query": query, "page": page, "per_page": per_page});
+    // console.log('search data',data);    
+    return this.http.post("http://192.168.68.110:5000/searchDateTime",{"report_data": data});
   }
 
   searchDateTimeFull(query: any)

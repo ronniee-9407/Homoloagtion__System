@@ -175,12 +175,23 @@ export class AdminComponent implements OnInit {
     // }
     let stDate = this.startDate +" "+ this.startTime;
     let edDate = this.endDate +" "+ this.endTime;
-    let query = [stDate, edDate];
+    // let query = [stDate, edDate];
     // this.tableLoader = true;
-    console.log('searched date-time is',query);
+    // console.log('searched date-time is',query);
+    let searchData = {
+      'start_date': stDate,
+      'end_date': edDate,
+      'query_page': this.queryPage,
+      'per_page': this.per_page
+    }
+
+    let fullData = {
+      'start_date': stDate,
+      'end_date': edDate,
+    }
     
     this.report_page_flag = true;
-    this.service.searchDateTime(query, this.queryPage, this.per_page).subscribe((data: any)=>{
+    this.service.searchDateTime(searchData).subscribe((data: any)=>{
       // this.curr_admin_view = this.admin_view_list[5];
       this.data_received = false;
       this.dataFromDb = data['tableData'];
@@ -190,7 +201,7 @@ export class AdminComponent implements OnInit {
       else{
         this.errorData = false;
       }
-      this.service.searchDateTimeFull(query).subscribe((data: any) => {
+      this.service.searchDateTimeFull(fullData).subscribe((data: any) => {
         // console.log('Total data called............', data);
         this.totalDBData = data['dbdata'];
         this.totalDBDataCount = data['totalCount'];
@@ -201,6 +212,52 @@ export class AdminComponent implements OnInit {
         console.log('Total DB data', this.totalDBDataCount)
       });
     });
+  }
+
+  clickNext() {
+    this.queryPage++;
+    let stDate = this.startDate +" "+ this.startTime;
+    let edDate = this.endDate +" "+ this.endTime;
+    // let query = [stDate, edDate];
+    let searchData = {
+      'start_date': stDate,
+      'end_date': edDate,
+      'query_page': this.queryPage,
+      'per_page': this.per_page
+    }
+    this.service.searchDateTime(searchData).subscribe((data: any) => {
+      this.dataFromDb = data['tableData'];
+      this.lenOfArray = this.dataFromDb[0][0];
+    });
+
+    if (this.queryPage * this.per_page > this.totalDBDataCount) {
+      this.nextAvailable = false;
+    }
+    this.previousAvailable = true;
+  }
+
+  clickPrevious() {
+    this.queryPage--;
+    let stDate = this.startDate +" "+ this.startTime;
+    let edDate = this.endDate +" "+ this.endTime;
+    // let query = [stDate, edDate];
+    let searchData = {
+      'start_date': stDate,
+      'end_date': edDate,
+      'query_page': this.queryPage,
+      'per_page': this.per_page
+    }
+    this.service.searchDateTime(searchData).subscribe((data: any) => {
+      this.dataFromDb = data['tableData'];
+      this.lenOfArray = this.dataFromDb[0][0];
+    });
+
+    if (this.queryPage == 1)
+      this.previousAvailable = false;
+
+    if (this.queryPage * this.per_page < this.totalDBDataCount) {
+      this.nextAvailable = true;
+    }
   }
 
   goToPendingReport(){
