@@ -4,6 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import Litepicker from 'litepicker';
 import * as echarts from 'echarts';
+import { NotificationService } from 'src/services/notification.service';
 
 @Component({
   selector: 'app-admin',
@@ -66,13 +67,13 @@ export class AdminComponent implements OnInit {
 
   passwordView = [false, false, false];
 
-  constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router){}
+  constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router, private notifyService: NotificationService){}
 
   ngOnInit(): void {
     setTimeout(()=>{
       this.createChart(this.xAxisData, this.yAxisData)
       console.log('createChart called');
-    },100);
+    },10);
   }
 
   changeView(index: any){
@@ -403,7 +404,8 @@ export class AdminComponent implements OnInit {
     let cnfPass = <HTMLInputElement>document.getElementById("password2");
     let cnfPassValue = cnfPass.value;
     if(oldPassValue == '' || newPassValue == '' || cnfPassValue == ''){
-      console.log('Input fields cannot be empty');
+      // console.log('Input fields cannot be empty');
+      this.notifyService.showWarning('Input fields cannot be empty','Warning');
       return;
     }
 
@@ -417,48 +419,50 @@ export class AdminComponent implements OnInit {
       
       this.service.adminPasswordReset(data).subscribe((data: any)=>{
         console.log('Data',data);
-        
+        if(data['status'])
+          this.notifyService.showSuccess('Password changed successfully','Notification');
+        else{
+          this.notifyService.showError('Old password did not matched','Notification');
+        }
       })
     }
     else{
-      console.log('Warning! : New password and Confirm password does not match');
-      
+      // console.log('Warning! : New password and Confirm password does not match');
+      this.notifyService.showWarning('New password and Confirm password does not match','Notification');
     }
 
   }
 
   viewPassword(id: any, index: any){
-    for(let i=0; i<3; i++){
-      if(i == index)
-        this.passwordView[i] = true;
-      else{
-        this.passwordView[i] = false;
-      }
-    }
-    if(id === 'name'){
-      let currId = <HTMLInputElement>document.getElementById("name");
-      let restId1 = <HTMLInputElement>document.getElementById("password");
-      let restId2 = <HTMLInputElement>document.getElementById("password2");
-      currId.type = 'text';
-      restId1.type = 'password';
-      restId2.type = 'password';
-    }
-    if(id === 'password'){
-      let currId = <HTMLInputElement>document.getElementById("password");
-      let restId1 = <HTMLInputElement>document.getElementById("name");
-      let restId2 = <HTMLInputElement>document.getElementById("password2");
-      currId.type = 'text';
-      restId1.type = 'password';
-      restId2.type = 'password';
-    }
-    if(id === 'password2'){
-      let currId = <HTMLInputElement>document.getElementById("password2");
-      let restId1 = <HTMLInputElement>document.getElementById("name");
-      let restId2 = <HTMLInputElement>document.getElementById("password");
-      currId.type = 'text';
-      restId1.type = 'password';
-      restId2.type = 'password';
-    }
+    // for(let i=0; i<3; i++){
+    //   if(i == index)
+    //     this.passwordView[i] = true;
+    //   else{
+    //     this.passwordView[i] = false;
+    //   }
+    // }
+    this.passwordView[index] = true;
+    let currId = <HTMLInputElement>document.getElementById(id);
+    currId.type = 'text';
+    // if(id === 'name'){
+    //   let currId = <HTMLInputElement>document.getElementById(id);
+    //   currId.type = 'text';
+    // if(id === 'password'){
+    //   let currId = <HTMLInputElement>document.getElementById("password");
+    //   let restId1 = <HTMLInputElement>document.getElementById("name");
+    //   let restId2 = <HTMLInputElement>document.getElementById("password2");
+    //   currId.type = 'text';
+    //   restId1.type = 'password';
+    //   restId2.type = 'password';
+    // }
+    // if(id === 'password2'){
+    //   let currId = <HTMLInputElement>document.getElementById("password2");
+    //   let restId1 = <HTMLInputElement>document.getElementById("name");
+    //   let restId2 = <HTMLInputElement>document.getElementById("password");
+    //   currId.type = 'text';
+    //   restId1.type = 'password';
+    //   restId2.type = 'password';
+    // }
   }
 
   closePassword(id: any, index: any){
