@@ -57,4 +57,8 @@ export class BackendService {
   showPendingReports(){
     return this.http.get("http://192.168.68.110:5000/pending_reports");
   }
+
+  addUser(data: any){
+    return this.http.post("http://192.168.68.110:5000/registration", {'user_data': data});
+  }
 }

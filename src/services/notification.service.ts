@@ -10,7 +10,7 @@ export class NotificationService {
 
   showSuccess(message: any, title: any){
     this.toastr.success(message, title,{
-      timeOut: 3000,
+      timeOut: 1000,
       // positionClass: 'my-toast-top-center',
       // disableTimeOut: true,
       closeButton: true,
@@ -22,9 +22,9 @@ export class NotificationService {
    
   showError(message: any, title: any){
     this.toastr.error(message, title,{
-        // timeOut: 3000,
+        timeOut: 3000,
         // positionClass: 'my-toast-top-center',
-        disableTimeOut: true,
+        // disableTimeOut: true,
         closeButton: true,
         tapToDismiss: true,
         progressBar: true,

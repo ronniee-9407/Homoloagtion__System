@@ -65,14 +65,14 @@ export class LoginComponent implements OnInit{
     };
     this.service.validateUser(user_data).subscribe((data: any)=>{
       console.log('login data',data);
-      // let login_status = data['login_status'];
-      // if(login_status){
-      //   this.router.navigate([this.curr_user]);
-      //   this.notifyService.showSuccess('Logged in successfully','Notification');
-      // }
-      // else{
-      //   this.notifyService.showError('Incorrect login Credentials','Error')
-      // }
+      let login_status = data['status'];
+      if(login_status){
+        this.router.navigate([this.curr_user]);
+        // this.notifyService.showSuccess('Logged in successfully','Notification');
+      }
+      else{
+        this.notifyService.showError('Incorrect login Credentials','Error')
+      }
     });
     // this.notifyService.showError('Incorrect login Credentials','Error');
     // this.router.navigate([this.curr_user]);

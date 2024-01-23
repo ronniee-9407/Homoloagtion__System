@@ -3,6 +3,7 @@ import { BackendService } from 'src/services/backend.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import * as echarts from 'echarts';
+import { NotificationService } from 'src/services/notification.service';
 
 @Component({
   selector: 'app-super-user',
@@ -24,7 +25,8 @@ export class SuperUserComponent implements OnInit {
   constructor(
     private service: BackendService,
     private sanitizer: DomSanitizer,
-    private router: Router
+    private router: Router,
+    private notifyService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -126,7 +128,30 @@ export class SuperUserComponent implements OnInit {
 
   //! Funciton to create the new Admin
   createNewAdmin(){
+    let name = <HTMLInputElement> document.getElementById('name');
+    let nameValue = name.value;
+    let userId = <HTMLInputElement> document.getElementById('name2');
+    let userIdValue = userId.value;
+    let pass = <HTMLInputElement> document.getElementById('password1');
+    let password = pass.value;
+    let cnfPass = <HTMLInputElement> document.getElementById('password2');
+    let cnfPassword = cnfPass.value;
     console.log("create new Admin clicked.");
+    if(password === cnfPassword){
+      let data = {
+        'name': nameValue,
+        'employee_id': userIdValue,
+        'password': password,
+        'user_type': 'admin'
+      }
+      this.service.addUser(data).subscribe((data: any)=>{
+        console.log('Add user data',data);
+      })
+    }
+    else{
+      this.notifyService.showError('Password and coonfirm password not matched','Notification');
+    }
+    
   }
 
 
