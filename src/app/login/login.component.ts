@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit{
     let user_data = {
       'employee_id' : userId,
       'password' : password,
-      // 'curr_user' : this.curr_user
+      'current_user' : this.curr_user
     };
     this.service.validateUser(user_data).subscribe((data: any)=>{
       console.log('login data',data);
