@@ -103,6 +103,9 @@ export class SuperUserComponent implements OnInit {
       this.addUser = false;
       this.addCam = false;
       this.report = false;
+      setTimeout(()=>{
+        this.createChart()
+      },10)
     } else if (data == 'add_del') {
       this.dashboardFlag = false;
       this.addUser = true;
