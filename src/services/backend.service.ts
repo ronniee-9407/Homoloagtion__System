@@ -43,7 +43,7 @@ export class BackendService {
   }
 
   validateUser(data: any){
-    return this.http.post("http://192.168.68.110:5000/login", {'userData': data});
+    return this.http.post("http://192.168.68.110:5000/login", {'user_data': data});
   }
 
   adminPasswordReset(data: any){
