@@ -54,6 +54,10 @@
 .greet{
     color: white;
     margin: 0px;
+    font-family: "Inria Sans", sans-serif;
+}
+.ff{
+    font-family: "Inria Sans", sans-serif; 
 }
 .iconsContainer{
     position: relative;
@@ -343,6 +347,9 @@
     border-radius: 8px;
     line-height: 5vh;
 }
+.bottomBox:hover{
+    background-color: #1062c7;
+}
 .bottomBoxOP{
     height: 27%;
     width: 100%;
@@ -409,10 +416,11 @@
 }
 .textClass{
     height: 18%;
-    width: 80%;
+    width: 50%;
     position: relative;
     left: 10%;
     line-height: 36px;
+    font-family: "Inria Sans", sans-serif;
 }
 .countClassContainer{
     width: 15%;
@@ -423,6 +431,7 @@
     height: 18%;
     text-align: center;
     text-decoration: underline;
+    font-family: "Inria Sans", sans-serif;
 }
 .pending_data_container_dashboard{
     height: 70%;

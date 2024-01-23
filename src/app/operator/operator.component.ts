@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BackendService } from 'src/services/backend.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { webSocket } from 'rxjs/webSocket';
 
 @Component({
   selector: 'app-operator',
@@ -24,6 +25,10 @@ export class OperatorComponent implements OnInit {
   inspection_cc: any = '';
   reInspectFlag: boolean = false;
   abortFlag: boolean = false;
+  camFeed: any;
+  noVideo: boolean = true;
+  // inputList = ['K01ID1', 'K0YID2', 'WINGS'];
+  inputList = [];
 
   id_array = ['20028740', 'FP28E-001A', 'K0YD01'];
   status_array = ['O', 'O', 'O'];
@@ -83,10 +88,22 @@ export class OperatorComponent implements OnInit {
     this.curr_operator_view = this.operator_view_list[2];
     this.service.getDataforInspection(vehicle_info).subscribe((data: any)=>{
       console.log('Got data for inspection', data);
-      // this.curr_operator_view = this.operator_view_list[2];
+      this.curr_operator_view = this.operator_view_list[2];
+      this.liveFeed();
     });
     
   }
+
+liveFeed(){
+  let videoFeed = "ws://127.0.0.1:8000/camFeed";
+  let socketVideo = webSocket(videoFeed);
+  let ipVideo = socketVideo.subscribe((data: any)=>{
+    console.log('Websocket data', data);
+    let videoUrl = 'data:image/jpg;base64,' + data['image'];
+    this.camFeed = this.sanitizer.bypassSecurityTrustUrl(videoUrl);
+    this.noVideo = data['noVideo'];
+  });
+}
 
   reInspectToggle(){
     this.reInspectFlag = true;

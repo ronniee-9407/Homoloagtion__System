@@ -647,9 +647,39 @@ transition: border-color 0.2s;
     object-fit: cover;
     cursor: pointer;
 }
-
-
-
+.checkPointsImgClass{
+    height: 96%;
+    width: 16%;
+}
+.iconClass{
+    width: 63%;
+    height: 20%;
+}
+.checkPointsTextClass{
+    height: 96%;
+    width: 50%;
+}
+.textClass{
+    height: 18%;
+    width: 99%;
+    position: relative;
+    left: 18%;
+    // text-align: center;
+    line-height: 30px;
+    font-family: "Inria Sans", sans-serif;
+}
+.checkPointsCountClass{
+    height: 96%;
+    width: 16%;
+}
+.countClass{
+    width: 80%;
+    height: 18%;
+    text-align: center;
+    line-height: 30px;
+    text-decoration: underline;
+    font-family: "Inria Sans", sans-serif;
+}
 
 
 
