@@ -91,8 +91,22 @@
         <!-- <div></div>
         <div></div> -->
         <div class="pendingReportsDetails flex-col-even">
-            <div class="innerReportDetails">
-
+            <div class="innerReportDetails flex-row-even">
+                <div class="checkPointsImgClass flex-col-even">
+                    <img src="../../assets/icons/check.png" alt="" class="iconClass">
+                    <img src="../../assets/icons/x-button.png" alt="" class="iconClass">
+                    <img src="../../assets/icons/clipboard.png" alt="" class="iconClass">
+                </div>
+                <div class="checkPointsTextClass flex-col-even">
+                    <h3 class="textClass" style="color: #1CD667;">Success Checks</h3>
+                    <h3 class="textClass" style="color: #FF0000;">Failed Checks</h3>
+                    <h3 class="textClass" style="color: #000000;">Total Checks</h3>
+                </div>
+                <div class="checkPointsCountClass flex-col-even">
+                    <h3 class="countClass" style="color: #1CD667;">{{success_checkpoints}}</h3>
+                    <h3 class="countClass" style="color: #FF0000;">{{failed_checkpoints}}</h3>
+                    <h3 class="countClass" style="color: #000000;">{{success_checkpoints + failed_checkpoints}}</h3>
+                </div>
             </div>
             <div class="innerChartDetails flex-row-even">
                 <div class="pie_chart" id="chart2"></div>

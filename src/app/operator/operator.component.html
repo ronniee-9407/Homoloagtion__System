@@ -27,8 +27,8 @@
     </div>
     <div class="rightContainer">
         <div class="inner_dashboard flex-col-even">
-            <div class="operator_dashboard" (click)="newInspection()">New Inspection</div>
-            <div class="operator_dashboard" (click)="reInspectionOld()">Re-Inspection</div>
+            <div class="operator_dashboard greet" (click)="newInspection()">New Inspection</div>
+            <div class="operator_dashboard greet" (click)="reInspectionOld()">Re-Inspection</div>
         </div>
     </div>
 </body>
@@ -41,17 +41,17 @@
                 <div class="selectVehicleClass flex-row-even">
                     <div class="selectModel">
                         <select [(ngModel)]="inspection_model" (ngModelChange)="modelSelection()" class="dropDown">
-                            <option *ngFor="let vehicle of model_list; let i = index" value="{{vehicle}}">{{vehicle}}</option>
+                            <option *ngFor="let vehicle of model_list; let i = index" value="{{vehicle}}" class="ff">{{vehicle}}</option>
                         </select>
                     </div>
                     <div *ngIf="model_selected" class="selectModel">
                         <select [(ngModel)]="inspection_variant" (ngModelChange)="variantSelection()" class="dropDown">
-                            <option *ngFor="let variant of variant_list; let i = index" value="{{variant}}">{{variant}}</option>
+                            <option *ngFor="let variant of variant_list; let i = index" value="{{variant}}" class="ff">{{variant}}</option>
                         </select>
                     </div>
                     <div *ngIf="variant_selected" class="selectModel">
                         <select [(ngModel)]="inspection_cc" (ngModelChange)="ccSelection()" class="dropDown">
-                            <option *ngFor="let cc of cc_list; let i = index" value="{{cc}}">{{cc}}</option>
+                            <option *ngFor="let cc of cc_list; let i = index" value="{{cc}}" class="ff">{{cc}}</option>
                         </select>
                     </div>
                 </div>      
@@ -68,15 +68,16 @@
     <div class="fullBodyContainer flex-row-even">
         <div class="outer_video_container flex-col-even">
             <div class="video_feed_container flex-col-even">
-                <img src="../../assets/icons/part3.png" alt="" style="height: 35%; width: 25%;">
+                <img *ngIf="noVideo" src="../../assets/icons/part3.png" alt="" style="height: 35%; width: 25%;">
+                <img *ngIf="!noVideo" [src]="camFeed"   alt="" class="videoClass">
             </div>
             <div class="btn_container flex-row-even">
                 <div class="abortBtn bg-color_green flex-row-even" (click)="reInspectToggle()">
-                    <h3>Re-Inspect</h3>
+                    <h3 class="greet">Re-Inspect</h3>
                     <img src="../../assets/icons/synchronize (1).png" alt="" style="height: 65%; width: 16%;">
                 </div>
                 <div class="abortBtn bg-color_red flex-row-even" (click)="abortToggle()">
-                    <h3>Abort</h3>
+                    <h3 class="greet">Abort</h3>
                     <img src="../../assets/icons/prohibition.png" alt="" style="height: 65%; width: 16%;">
                 </div>
             </div>
@@ -94,7 +95,7 @@
             </div>
             <div class="middleClass flex-row-even">
                 <div class="doubleInputTextFirst flex-col-even">
-                    <input *ngFor="let data of id_array; let i = index" type="text" id="input{{i}}" placeholder="Part No." class="inputText" value="">
+                    <input *ngFor="let data of id_array; let i = index" type="text" id="input{{i}}" placeholder="Part No." class="inputText" value="{{inputList[i]}}">
                 </div>
                 <div class="arrowContainer flex-col-even">
                     <img *ngFor="let data of id_array; let i = index" src="../../assets/icons/start.png" alt="" class="rightArrow">
@@ -103,7 +104,7 @@
                     <input *ngFor="let data of id_array; let i = index" type="text" id="inputB{{i}}" class="inputTextOP blur" value="{{data}}">
                 </div>
                 <div class="btnContainer flex-col-even">
-                    <div *ngFor="let data of id_array; let i = index" class="bottomBox" (click)="checkValue(i)">Check</div>
+                    <div *ngFor="let data of id_array; let i = index" class="bottomBox ff" (click)="checkValue(i)">Check</div>
                 </div>
                 <div class="statusConatiner flex-col-even">
                     <div *ngFor="let data of id_array; let i = index" class="statusBox flex-row-even">
@@ -136,16 +137,16 @@
                         <img src="../../assets/icons/clipboard.png" alt="" class="iconClass">
                     </div>
                     <div class="textClassContainer flex-col-even">
-                        <h2 class="textClass greet" style="color: #1CD667;">Success</h2>
-                        <h2 class="textClass greet" style="color: #FF0000;">Failed</h2>
-                        <h2 class="textClass greet" style="color: #F99500;">Pending</h2>
-                        <h2 class="textClass greet" style="color: #000000;">Total</h2>
+                        <h3 class="textClass greet" style="color: #1CD667;">Success</h3>
+                        <h3 class="textClass greet" style="color: #FF0000;">Failed</h3>
+                        <h3 class="textClass greet" style="color: #F99500;">Pending</h3>
+                        <h3 class="textClass greet" style="color: #000000;">Total</h3>
                     </div>
                     <div class="countClassContainer flex-col-even">
-                        <h2 class="countClass greet" style="color: #1CD667;">55</h2>
-                        <h2 class="countClass greet" style="color: #FF0000;">11</h2>
-                        <h2 class="countClass greet" style="color: #F99500;">34</h2>
-                        <h2 class="countClass greet" style="color: #000000;">100</h2>
+                        <h3 class="countClass greet" style="color: #1CD667;">55</h3>
+                        <h3 class="countClass greet" style="color: #FF0000;">11</h3>
+                        <h3 class="countClass greet" style="color: #F99500;">34</h3>
+                        <h3 class="countClass greet" style="color: #000000;">100</h3>
                     </div>
 
                 </div>

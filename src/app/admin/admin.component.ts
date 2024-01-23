@@ -244,7 +244,7 @@ export class AdminComponent implements OnInit {
     this.service.getPendingReportDetails(jobId).subscribe((data: any) => {
       this.success_checkpoints = data['success'];
       this.failed_checkpoints = data['failed'];
-      this.inspection_report_flag = true;
+      // this.inspection_report_flag = true;
       // this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
     });
     this.inspection_report_flag = true;
@@ -275,7 +275,7 @@ export class AdminComponent implements OnInit {
       },
       legend: {
         // top: '5%',
-        left: 'center%'
+        left: 'center'
       },
       series: [
         {
