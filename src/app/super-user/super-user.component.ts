@@ -206,8 +206,35 @@ export class SuperUserComponent implements OnInit {
 
 
   //! Function to edit the Admin
-  editAdmin(){
+  editAdmin(userType: any){
     console.log("edit Admin clicked.");
+    let id = <HTMLInputElement>document.getElementById("employeeId");
+    let employee_id = id.value;
+    let newPass = <HTMLInputElement>document.getElementById("newPassword");
+    let new_password = newPass.value;
+    let cnfPass = <HTMLInputElement>document.getElementById("cnfPass");
+    let cnf_password = cnfPass.value;
+
+    if(employee_id == '' || new_password == '' || cnf_password == ''){
+      this.notifyService.showWarning('Input fields cannot be empty','Notification');
+      return;
+    }
+    else{
+      if(new_password === cnf_password){
+        let newData = {
+          'employee_id': employee_id,
+          'new_password': new_password,
+          'cnf_password': cnf_password,
+          'user_type': userType
+        }
+        this.service.modifyAdminOperatorPassword(newData).subscribe((data: any)=>{
+          console.log('Modify admin operator password', data);
+        });
+      }
+      else{
+        this.notifyService.showError('New password and Confirm password not matched','Notification');
+      }
+    }
   }
 
   //! Toggle Options for operator and admin

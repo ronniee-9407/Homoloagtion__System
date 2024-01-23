@@ -15,12 +15,12 @@ export class BackendService {
   searchDateTime(data: any)
   {
     // console.log('search data',data);    
-    return this.http.post("http://192.168.68.110:5000/searchDateTime",{"report_data": data});
+    return this.http.post("http://192.168.68.110:5000/search_date_time",{"report_data": data});
   }
 
   searchDateTimeFull(query: any)
   {
-    return this.http.post("http://192.168.68.110:5000/searchDateTimeFull",{"query": query});
+    return this.http.post("http://192.168.68.110:5000/search_date_time_full",{"query": query});
   }
 
   getDataforInspection(data: any){
@@ -68,5 +68,9 @@ export class BackendService {
 
   addUser(data: any){
     return this.http.post("http://192.168.68.110:5000/registration", {'user_data': data});
+  }
+
+  modifyAdminOperatorPassword(data: any){
+    return this.http.post("http://192.168.68.110:5000/modify_admin_opeartor_password", {'modified_data': data});
   }
 }

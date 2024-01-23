@@ -168,24 +168,24 @@
                                     <div class="cameraDetailsForm">
                                         <div class="form__group field">
                                             <label for="name" class="form__label">Enter ID :</label>
-                                            <input type="input" class="form__field" placeholder="Name" name="name" required
+                                            <input type="input" class="form__field" placeholder="Name" name="name" id="employeeId" required
                                                 autocomplete="off" />
                                         </div>
                                         <br>
                                         <div class="form__group field">
-                                            <label for="password" class="form__label">Password</label>
-                                            <input type="password" class="form__field" placeholder="Name" name="name"  required
+                                            <label for="password" class="form__label">New Password</label>
+                                            <input type="password" class="form__field" placeholder="Name" name="name" id="newPassword"  required
                                                 autocomplete="off" />
                                         </div>
                                         <br>
                                         <div class="form__group field">
                                             <label for="password" class="form__label">Confirm Password</label>
-                                            <input type="password" class="form__field" placeholder="Name" name="name" required
+                                            <input type="password" class="form__field" placeholder="Name" name="name" id="cnfPassword" required
                                                 autocomplete="off" />
                                         </div>
                                         <br>
                                         <br>
-                                        <div class="login_button" (click)="editAdmin()">Create</div>
+                                        <div class="login_button" (click)="editAdmin('admin')">Create</div>
                                     </div>
                                 </div>
                             </div>
@@ -235,24 +235,24 @@
                                     <div class="cameraDetailsForm">
                                         <div class="form__group field">
                                             <label for="name" class="form__label">Enter ID :</label>
-                                            <input type="input" class="form__field" placeholder="Name" name="name" id='name' required
+                                            <input type="input" class="form__field" placeholder="Name" name="name" id='employeeId' required
                                                 autocomplete="off" />
                                         </div>
                                         <br>
                                         <div class="form__group field">
-                                            <label for="password" class="form__label">Password</label>
-                                            <input type="password" class="form__field" placeholder="Name" name="name" id='name' required
+                                            <label for="password" class="form__label">New Password</label>
+                                            <input type="password" class="form__field" placeholder="Name" name="name" id='newPassword' required
                                                 autocomplete="off" />
                                         </div>
                                         <br>
                                         <div class="form__group field">
                                             <label for="password" class="form__label">Confirm Password</label>
-                                            <input type="password" class="form__field" placeholder="Name" name="name" id='name' required
+                                            <input type="password" class="form__field" placeholder="Name" name="name" id='cnfPassword' required
                                                 autocomplete="off" />
                                         </div>
                                         <br>
                                         <br>
-                                        <div class="login_button" (click)="editAdmin()">Create</div>
+                                        <div class="login_button" (click)="editAdmin('operator')">Create</div>
                                     </div>
                                 </div>
                             </div>
