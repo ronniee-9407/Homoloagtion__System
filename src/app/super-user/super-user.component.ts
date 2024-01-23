@@ -127,7 +127,7 @@ export class SuperUserComponent implements OnInit {
   }
 
   //! Funciton to create the new Admin
-  createNewAdmin(){
+  createNewAdmin(userType: any){
     let name = <HTMLInputElement> document.getElementById('name');
     let nameValue = name.value;
     let userId = <HTMLInputElement> document.getElementById('name2');
@@ -142,7 +142,7 @@ export class SuperUserComponent implements OnInit {
         'name': nameValue,
         'employee_id': userIdValue,
         'password': password,
-        'user_type': 'admin'
+        'user_type': userType
       }
       this.service.addUser(data).subscribe((data: any)=>{
         console.log('Add user data',data);
