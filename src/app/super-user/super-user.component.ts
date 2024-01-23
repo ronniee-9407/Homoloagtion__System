@@ -28,13 +28,15 @@ export class SuperUserComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.createChart();
+    setTimeout(()=> {
+      this.createChart();
+    },10)
   }
 
   myChart1: any;
 
   createChart() {
-    this.myChart1 = echarts.init(document.getElementById('graph_area') as any);
+    this.myChart1 = echarts.init(document.getElementById('graph_area1') as any);
 
     const option1 = {
       title: {
@@ -85,7 +87,6 @@ export class SuperUserComponent implements OnInit {
         },
       ],
     };
-
     this.myChart1.setOption(option1);
   }
 

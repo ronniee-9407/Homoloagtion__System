@@ -456,7 +456,6 @@ $gray: #9b9b9b;
   color: white;
 }
 
-
 .toggleOptionsR_Selected {
   width: 5%;
   height: 5%;
@@ -468,8 +467,6 @@ $gray: #9b9b9b;
   cursor: pointer;
   color: black;
 }
-
-
 
 .add_delete_Admin {
   display: flex;
@@ -515,9 +512,20 @@ $gray: #9b9b9b;
   border-radius: 10px;
 }
 
-.userDetails_container{
+.userDetails_container {
   background-color: #3c344e;
-    width: 100%;
-    height: 71%;
-    border-radius: 10px;
+  width: 100%;
+  height: 71%;
+  border-radius: 10px;
+}
+
+//! Styles for Report Generation
+.report_generation {
+  position: relative;
+  background-color: #1f1830;
+  border-radius: 10px;
+  height: 98%;
+  margin: 10px 10px 10px 4px;
+  display: flex;
+  flex-direction: column;
 }
