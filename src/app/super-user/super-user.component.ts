@@ -21,6 +21,14 @@ export class SuperUserComponent implements OnInit {
   add_delete_operator_flag: boolean = true
 
   toogleOptionsAddDel: boolean = true
+  rtspLink: string = '';
+  camDetails = {
+    userId: '',
+    password: '',
+    camIP: '',
+    port: '',
+    rtsp: ''
+  };
 
   constructor(
     private service: BackendService,
@@ -33,6 +41,20 @@ export class SuperUserComponent implements OnInit {
     setTimeout(()=> {
       this.createChart();
     },10)
+    this.getDashboardData();
+  }
+
+  getDashboardData(){
+    this.service.showNumberOfUsers().subscribe((data: any)=>{
+      console.log('Get number of users', data); 
+    });
+    this.service.getWeeklyReport().subscribe((data: any)=>{
+      console.log('Get weekly report', data); 
+    });
+    this.service.getQuarterlyReport().subscribe((data: any)=>{
+      console.log('Get quarterly report', data); 
+    })
+
   }
 
   myChart1: any;
@@ -95,6 +117,30 @@ export class SuperUserComponent implements OnInit {
   //! Function to fecth and store the data for the cam details
   submitCamDetails() {
     console.log('Submit cam details clicked.');
+    let id = <HTMLInputElement>document.getElementById("userId");
+    let idValue = id.value;
+    let pass = <HTMLInputElement>document.getElementById("password");
+    let passValue = pass.value;
+    let ip = <HTMLInputElement>document.getElementById("ip");
+    let ipValue = ip.value;
+    let port = <HTMLInputElement>document.getElementById("port");
+    let portValue = port.value;
+    if(idValue == '' || passValue == '' || ipValue == ''){
+      this.notifyService.showWarning('Please fill all the fields','Notification');
+      return;
+    }
+    this.camDetails.userId = idValue;
+    this.camDetails.password = passValue;
+    this.camDetails.camIP = ipValue;
+    this.camDetails.port = portValue;
+    this.camDetails.rtsp = this.rtspLink;
+    // console.log('sending cam details',this.camDetails);
+    this.service.addCamera(this.camDetails).subscribe((data: any)=>{
+      console.log('got data for addCam',data);
+      // if(data){
+      //   this.addCameraToggle = false;
+      // }
+    })
   }
 
   changeOptions(data: any) {
@@ -169,5 +215,19 @@ export class SuperUserComponent implements OnInit {
     console.log("Toggle Options");
     this.toogleOptionsAddDel = !this.toogleOptionsAddDel
     this.add_delete_operator_flag = !this.add_delete_operator_flag
+  }
+
+  generateRTSP(){
+    let id = <HTMLInputElement>document.getElementById("userId");
+    let idValue = id.value;
+    let pass = <HTMLInputElement>document.getElementById("password");
+    let passValue = pass.value;
+    let ip = <HTMLInputElement>document.getElementById("ip");
+    let ipValue = ip.value;
+    let port = <HTMLInputElement>document.getElementById("port");
+    let portValue = port.value;
+    // this.rtspLink = 'rtsp://' + idValue + ':' + passValue + '@' + ipValue + ':' + portValue + '/?h264x=4';
+    this.rtspLink = 'rtsp://' + idValue + ':' + passValue + '@' + ipValue + ':' + portValue + '/cam/realmonitor?channel=1&subtype=0';
+    console.log('this.rtspLink',this.rtspLink);
   }
 }

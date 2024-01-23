@@ -10,7 +10,7 @@ export class BackendService {
 
   addCamera(camDetails: any){
     console.log(camDetails);
-    return this.http.post("http://192.168.68.110:5000/add_camera",{"camDetails": camDetails});
+    return this.http.post("http://192.168.68.110:5000/add_camera",{"cam_details": camDetails});
   }
   searchDateTime(query: any, page: any, per_page: any)
   {
@@ -52,6 +52,14 @@ export class BackendService {
 
   showNumberOfUsers(){
     return this.http.get("http://192.168.68.110:5000/number_of_users");
+  }
+
+  getWeeklyReport(){
+    return this.http.get("http://192.168.68.110:5000/weekly_report");
+  }
+
+  getQuarterlyReport(){
+    return this.http.get("http://192.168.68.110:5000/quarterly_report");
   }
 
   showPendingReports(){
