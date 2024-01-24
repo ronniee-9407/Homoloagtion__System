@@ -31,10 +31,9 @@ export class AdminComponent implements OnInit {
     rtsp: ''
   };
   userDetails = {
-    name: 'Sundram Kumar',
-    userId: 'HSA12345',
-    password: 'Deevia@123',
-    designation: 'Admin'
+    name: 'Admin',
+    userId: '',
+    designation: ''
   }
   startDate: any;
   endDate: any;
@@ -70,10 +69,17 @@ export class AdminComponent implements OnInit {
   constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router, private notifyService: NotificationService){}
 
   ngOnInit(): void {
+    this.userDetails.userId = String(localStorage.getItem('userId'));
+    this.userDetails.name = String(localStorage.getItem('name'));
+    let userType = String(localStorage.getItem('userType'));
+    this.userDetails.designation = userType.charAt(0).toUpperCase() + userType.slice(1);
     setTimeout(()=>{
       this.createChart(this.xAxisData, this.yAxisData)
       console.log('createChart called');
     },10);
+    // this.service.getUserDetails(userId).subscribe((data: any)=>{
+    //   console.log('User data', data);
+    // });
   }
 
   changeView(index: any){
@@ -96,6 +102,7 @@ export class AdminComponent implements OnInit {
   logout(){
     localStorage.removeItem('isUserLoggedIn');
     localStorage.removeItem('userType');
+    localStorage.removeItem('userId');
     this.router.navigate(['/login']);
   }
   

@@ -35,11 +35,19 @@ export class OperatorComponent implements OnInit {
 
   inspection_count = 0;
   inspection_percentage = 66;
+  userDetails = {
+    name: 'Operator',
+    userId: '',
+    designation: ''
+  };
 
   constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router){}
 
   ngOnInit(): void {
-    
+    this.userDetails.userId = String(localStorage.getItem('userId'));
+    this.userDetails.name = String(localStorage.getItem('name'));
+    let userType = String(localStorage.getItem('userType'));
+    this.userDetails.designation = userType.charAt(0).toUpperCase() + userType.slice(1);
   }
 
   newInspection(){
@@ -146,6 +154,7 @@ liveFeed(){
   logout(){
     localStorage.removeItem('isUserLoggedIn');
     localStorage.removeItem('userType');
+    localStorage.removeItem('userId');
     this.router.navigate(['/login']);
   }
 }

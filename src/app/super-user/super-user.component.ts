@@ -29,6 +29,11 @@ export class SuperUserComponent implements OnInit {
     port: '',
     rtsp: ''
   };
+  userDetails = {
+    name: 'Super User',
+    userId: '',
+    designation: ''
+  };
 
   constructor(
     private service: BackendService,
@@ -38,6 +43,10 @@ export class SuperUserComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.userDetails.userId = String(localStorage.getItem('userId'));
+    this.userDetails.name = String(localStorage.getItem('name'));
+    let userType = String(localStorage.getItem('userType'));
+    this.userDetails.designation = userType.charAt(0).toUpperCase() + userType.slice(1);
     setTimeout(()=> {
       this.createChart();
     },10)
@@ -174,6 +183,7 @@ export class SuperUserComponent implements OnInit {
   logout(){
     localStorage.removeItem('isUserLoggedIn');
     localStorage.removeItem('userType');
+    localStorage.removeItem('userId');
     this.router.navigate(['/login']);
   }
 

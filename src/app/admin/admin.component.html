@@ -6,8 +6,8 @@
     <div class="leftContainer flex-col-even">
         <div class="upperContainer flex-col-even">
             <img src="../../assets/icons/profile.png" alt="" class="adminProfileClass" (click)="viewProfileToggle(true)">
-            <h2 class="greet">Hi Admin !</h2>
-            <p class="greet">Employee ID : HSA12345</p>
+            <h2 class="greet">Hi {{userDetails.name}} !</h2>
+            <p class="greet">Employee ID : {{userDetails.userId}}</p>
         </div>
         <div class="lowerContainer">
             <div class="adminFeatureClass flex-col-even">
@@ -38,7 +38,7 @@
         </div>
         <div class="middleRightContainer flex-row-even">
             <div class="adminDashboardChart1">
-                <h3 style="margin: 0px; text-align: center;">Past 7 days Analysis</h3>
+                <h3 class="chartHeading">Past 7 days Analysis</h3>
                 <div class="charts" id="chart1"></div>
             </div>
             <div class="adminDashboardChart2"></div>
@@ -51,7 +51,7 @@
     <div class="leftContainerClass flex-col-even">
         <div class="upperContainer flex-col-even">
             <img src="../../assets/icons/profile.png" alt="" class="smallProfileClass" >
-            <h4 class="greet" style="font-size: 12px;">Hi Admin !</h4>
+            <h4 class="greet" style="font-size: 12px;">Hi {{userDetails.name}} !</h4>
             <!-- <p class="greet" style="font-size: 8px; width: 90%;">Employee ID : HSA12345</p> -->
         </div>
 
@@ -145,7 +145,7 @@
     <div class="leftContainerClass flex-col-even">
         <div class="upperContainer flex-col-even">
             <img src="../../assets/icons/profile.png" alt="" class="smallProfileClass" >
-            <h4 class="greet" style="font-size: 12px;">Hi Admin !</h4>
+            <h4 class="greet" style="font-size: 12px;">Hi {{userDetails.name}} !</h4>
             <!-- <p class="greet" style="font-size: 8px; width: 90%;">Employee ID : HSA12345</p> -->
         </div>
 
@@ -205,7 +205,7 @@
     <div class="leftContainerClass flex-col-even">
         <div class="upperContainer flex-col-even">
             <img src="../../assets/icons/profile.png" alt="" class="smallProfileClass" >
-            <h4 class="greet" style="font-size: 12px;">Hi Admin !</h4>
+            <h4 class="greet" style="font-size: 12px;">Hi {{userDetails.name}} !</h4>
             <!-- <p class="greet" style="font-size: 8px; width: 90%;">Employee ID : HSA12345</p> -->
         </div>
 
@@ -254,7 +254,7 @@
     <div class="leftContainerClass flex-col-even">
         <div class="upperContainer flex-col-even">
             <img src="../../assets/icons/profile.png" alt="" class="smallProfileClass" >
-            <h4 class="greet" style="font-size: 12px;">Hi {{userDetails.designation}} !</h4>
+            <h4 class="greet" style="font-size: 12px;">Hi {{userDetails.name}} !</h4>
             <!-- <p class="greet" style="font-size: 8px; width: 90%;">Employee ID : HSA12345</p> -->
         </div>
 
@@ -274,7 +274,7 @@
     <div class="rightContainerClass flex-col-even">
         <div class="wholeRightContainer flex-row-even">
             <div class="infoContainer flex-row-even">
-                <div class="profileInfo flex-col-even">
+                <div class="profileInfo flex-col-even shadow">
                     <div class="profileInfoUpper flex-col-even">
                         <img src="../../assets/icons/profile.png" alt="">
                     </div>
@@ -284,7 +284,7 @@
                         <h3 class="greet">Designation : {{userDetails.designation}}</h3>
                     </div>
                 </div>
-                <div class="profileInfo flex-col-even">
+                <div class="profileInfo flex-col-even shadow">
                     <h2 class="greet">Change Password</h2>
                     <div class="changePasswordContainerClass flex-col-even">
                         <div class="login_input">

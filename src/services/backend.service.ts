@@ -73,4 +73,8 @@ export class BackendService {
   modifyAdminOperatorPassword(data: any){
     return this.http.post("http://192.168.68.110:5000/modify_admin_opeartor_password", {'modified_data': data});
   }
+
+  // getUserDetails(userId: any){
+  //   return this.http.post("http://192.168.68.110:5000/user_details", {'userId': userId})
+  // }
 }

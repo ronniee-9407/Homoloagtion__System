@@ -66,9 +66,12 @@ export class LoginComponent implements OnInit{
     this.service.validateUser(user_data).subscribe((data: any)=>{
       console.log('login data',data);
       let login_status = data['status'];
+      let name = data['name'];
       if(login_status){
         localStorage.setItem('isUserLoggedIn', 'true');
         localStorage.setItem('userType', this.curr_user);
+        localStorage.setItem('userId', userId);
+        localStorage.setItem('name', name);
         this.router.navigate([this.curr_user]);
         // this.notifyService.showSuccess('Logged in successfully','Notification');
       }
@@ -79,6 +82,7 @@ export class LoginComponent implements OnInit{
     });
     localStorage.setItem('isUserLoggedIn', 'true');
     localStorage.setItem('userType', this.curr_user);
+    localStorage.setItem('userId', userId);
     this.router.navigate([this.curr_user]);
   }
 
