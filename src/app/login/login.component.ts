@@ -58,9 +58,6 @@ export class LoginComponent implements OnInit{
       this.notifyService.showWarning('Input fiels cannot be empty','Notification');
       return;
     }
-    // console.log('UserId :', userId);
-    // console.log('Password :', password);
-    // console.log('CurrentUser', this.curr_user);
     let user_data = {
       'employee_id' : userId,
       'password' : password,
@@ -80,9 +77,9 @@ export class LoginComponent implements OnInit{
         this.notifyService.showError('Incorrect login Credentials','Error')
       }
     });
-    // localStorage.setItem('isUserLoggedIn', 'true');
-    // localStorage.setItem('userType', this.curr_user);
-    // this.router.navigate([this.curr_user]);
+    localStorage.setItem('isUserLoggedIn', 'true');
+    localStorage.setItem('userType', this.curr_user);
+    this.router.navigate([this.curr_user]);
   }
 
   showPassword(index: any){
