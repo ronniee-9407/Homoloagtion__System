@@ -77,9 +77,6 @@ export class AdminComponent implements OnInit {
       this.createChart(this.xAxisData, this.yAxisData)
       console.log('createChart called');
     },10);
-    // this.service.getUserDetails(userId).subscribe((data: any)=>{
-    //   console.log('User data', data);
-    // });
   }
 
   changeView(index: any){

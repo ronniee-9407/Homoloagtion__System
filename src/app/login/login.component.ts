@@ -80,10 +80,10 @@ export class LoginComponent implements OnInit{
         this.notifyService.showError('Incorrect login Credentials','Error')
       }
     });
-    localStorage.setItem('isUserLoggedIn', 'true');
-    localStorage.setItem('userType', this.curr_user);
-    localStorage.setItem('userId', userId);
-    this.router.navigate([this.curr_user]);
+    // localStorage.setItem('isUserLoggedIn', 'true');
+    // localStorage.setItem('userType', this.curr_user);
+    // localStorage.setItem('userId', userId);
+    // this.router.navigate([this.curr_user]);
   }
 
   showPassword(index: any){
