@@ -144,6 +144,8 @@ liveFeed(){
   }
 
   logout(){
+    localStorage.removeItem('isUserLoggedIn');
+    localStorage.removeItem('userType');
     this.router.navigate(['/login']);
   }
 }

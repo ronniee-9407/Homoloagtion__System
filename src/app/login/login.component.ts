@@ -10,7 +10,10 @@ import { NotificationService } from 'src/services/notification.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit{
-  constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router, private notifyService: NotificationService){}
+  constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router, private notifyService: NotificationService){
+    // localStorage.setItem('isUserLoggedIn', '');
+    // localStorage.setItem('userType', '');
+  }
 
   ngOnInit(): void {
     
@@ -67,16 +70,19 @@ export class LoginComponent implements OnInit{
       console.log('login data',data);
       let login_status = data['status'];
       if(login_status){
+        localStorage.setItem('isUserLoggedIn', 'true');
+        localStorage.setItem('userType', this.curr_user);
         this.router.navigate([this.curr_user]);
         // this.notifyService.showSuccess('Logged in successfully','Notification');
       }
       else{
+        // localStorage.setItem('isUserLoggedIn', 'false');
         this.notifyService.showError('Incorrect login Credentials','Error')
       }
     });
-    // this.notifyService.showError('Incorrect login Credentials','Error');
+    // localStorage.setItem('isUserLoggedIn', 'true');
+    // localStorage.setItem('userType', this.curr_user);
     // this.router.navigate([this.curr_user]);
-    // this.notifyService.showSuccess('Logged in successfully','Notification');
   }
 
   showPassword(index: any){

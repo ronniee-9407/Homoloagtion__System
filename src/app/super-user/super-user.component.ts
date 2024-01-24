@@ -172,6 +172,8 @@ export class SuperUserComponent implements OnInit {
 
   //! Function to control the route
   logout(){
+    localStorage.removeItem('isUserLoggedIn');
+    localStorage.removeItem('userType');
     this.router.navigate(['/login']);
   }
 
