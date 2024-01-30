@@ -176,6 +176,9 @@ export class AdminComponent implements OnInit {
       console.log('got data for addCam',data);
       if(data['status']){
         this.notifyService.showSuccess('Camera added successfully','Notification');
+        id.value = '';
+        pass.value = '';
+        ip.value = '';
       }
       else{
         this.notifyService.showError('Invalid Camera credentials','Notification');
@@ -523,8 +526,12 @@ export class AdminComponent implements OnInit {
       // console.log('new data',data);
       this.service.adminPasswordReset(data).subscribe((data: any)=>{
         console.log('Data',data);
-        if(data['status'])
+        if(data['status']){
           this.notifyService.showSuccess('Password changed successfully','Notification');
+          oldPass.value = '';
+          newPass.value = '';
+          cnfPass.value = '';
+        }
         else{
           this.notifyService.showError('Old password did not matched','Notification');
         }

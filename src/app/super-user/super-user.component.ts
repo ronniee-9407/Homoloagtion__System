@@ -153,9 +153,15 @@ export class SuperUserComponent implements OnInit {
     // console.log('sending cam details',this.camDetails);
     this.service.addCamera(this.camDetails).subscribe((data: any)=>{
       console.log('got data for addCam',data);
-      // if(data){
-      //   this.addCameraToggle = false;
-      // }
+      if(data['status']){
+        this.notifyService.showSuccess('Camera added successfully','Notification');
+        id.value = '';
+        pass.value = '';
+        ip.value = '';
+      }
+      else{
+        this.notifyService.showError('Invalid Camera credentials','Notification');
+      }
     },(error: any) => {
       this.notifyService.showError('Please check your Server', 'Server Connection Error');
     })
@@ -206,7 +212,7 @@ export class SuperUserComponent implements OnInit {
   }
 
   //! Funciton to create the new Admin
-  createNewAdmin(userType: any){
+  createNewUser(userType: any){
     let name = <HTMLInputElement> document.getElementById('name');
     let nameValue = name.value;
     let userId = <HTMLInputElement> document.getElementById('name2');
@@ -231,6 +237,10 @@ export class SuperUserComponent implements OnInit {
         console.log('Add user data',data);
         if(data['status']){
           this.notifyService.showSuccess('User added successfully','Notification');
+          name.value = '';
+          userId.value = '';
+          pass.value = '';
+          cnfPass.value = '';
         }
         else{
           this.notifyService.showError('Adding new User denied','Notification');
@@ -273,6 +283,9 @@ export class SuperUserComponent implements OnInit {
           // console.log('Modify admin operator password', data);
           if(data['status']){
             this.notifyService.showSuccess('Password updated successfully','Notification');
+            id.value = '';
+            newPass.value = '';
+            cnfPass.value = '';
           }
           else{
             this.notifyService.showError('Update password denied','Notification');
