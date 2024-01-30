@@ -5,7 +5,7 @@
 <body *ngIf="curr_admin_view == 'Dashboard'" class="bodyClass flex-row-even">
     <div class="leftContainer flex-col-even">
         <div class="upperContainer flex-col-even">
-            <img src="../../assets/icons/profile.png" alt="" class="adminProfileClass" (click)="viewProfileToggle(true)">
+            <img src="../../assets/icons/profile.png" alt="" class="adminProfileClass" (click)="changeView(4)">
             <h2 class="greet">Hi {{userDetails.name}} !</h2>
             <p class="greet">Employee ID : {{userDetails.userId}}</p>
         </div>
@@ -113,7 +113,85 @@
                 <div class=""></div>
             </div>
         </div>
-        <div class="pendingReportTable bg-color_white"></div>
+        <div class="pendingReportTable">
+            <div *ngFor="let data of pending_report_list; let i = index" class="partContainer">
+                <h3 class="ff partName">
+                    <input type="checkbox" id="part_name" name="part_name" (click)="toggleSubParts()">
+                    Part Name
+                </h3><br>
+        
+                <div class="subPartContainer flex-row-even">
+                    <input type="checkbox" id="sub_part_1" name="sub_part_1" value="sub_part_1" class="pending_report_checkbox">
+                    <p class="pending_report_subPartName">Sub-Part 1</p>
+                    <p class="pending_report_subPartStatus">True</p>
+                </div>
+        
+                <div class="subPartContainer flex-row-even">
+                    <input type="checkbox" id="sub_part_2" name="sub_part_2" value="sub_part_2" class="pending_report_checkbox">
+                    <p class="pending_report_subPartName">Sub-Part 2</p>
+                    <p class="pending_report_subPartStatus">True</p>
+                </div>
+        
+                <div class="subPartContainer flex-row-even">
+                    <input type="checkbox" id="sub_part_3" name="sub_part_3" value="sub_part_3" class="pending_report_checkbox">
+                    <p class="pending_report_subPartName">Sub-Part 3</p>
+                    <p class="pending_report_subPartStatus">True</p>
+                </div>
+        
+                <div class="subPartContainer flex-row-even">
+                    <input type="checkbox" id="sub_part_4" name="sub_part_4" value="sub_part_4" class="pending_report_checkbox">
+                    <p class="pending_report_subPartName">Sub-Part 4</p>
+                    <p class="pending_report_subPartStatus">True</p>
+                </div>
+        
+                <div class="subPartContainer flex-row-even">
+                    <input type="checkbox" id="sub_part_5" name="sub_part_5" value="sub_part_5" class="pending_report_checkbox">
+                    <p class="pending_report_subPartName">Sub-Part 5</p>
+                    <p class="pending_report_subPartStatus">True</p>
+                </div>
+                <div class="subPartContainer flex-row-even">
+                    <input type="checkbox" id="sub_part_6" name="sub_part_6" value="sub_part_6" class="pending_report_checkbox">
+                    <p class="pending_report_subPartName">Sub-Part 6</p>
+                    <p class="pending_report_subPartStatus">True</p>
+                </div>
+            </div>
+            <!-- <form action="#" method="post">
+
+                <fieldset>
+                    <legend>
+                            <input type="checkbox" id="part_name" name="part_name" (click)="toggleSubParts()">
+                            Part Name<br>
+                    </legend>
+            
+                    <label for="sub_part_1">
+                        <input type="checkbox" id="sub_part_1" name="sub_part_1" value="sub_part_1">
+                        Sub-Part 1
+                    </label><br>
+            
+                    <label for="sub_part_2">
+                        <input type="checkbox" id="sub_part_2" name="sub_part_2" value="sub_part_2">
+                        Sub-Part 2
+                    </label><br>
+            
+                    <label for="sub_part_3">
+                        <input type="checkbox" id="sub_part_3" name="sub_part_3" value="sub_part_3">
+                        Sub-Part 3
+                    </label><br>
+            
+                    <label for="sub_part_4">
+                        <input type="checkbox" id="sub_part_4" name="sub_part_4" value="sub_part_4">
+                        Sub-Part 4
+                    </label><br>
+            
+                    <label for="sub_part_5">
+                        <input type="checkbox" id="sub_part_5" name="sub_part_5" value="sub_part_5" >
+                        Sub-Part 5
+                    </label><br>
+            
+                </fieldset>
+                
+            </form> -->
+        </div>
         <button class="backBtnSize bg-color_black" (click)="goToPendingReport()">Back</button>
     </div>
 
@@ -227,15 +305,15 @@
             <h2 class="greet camera_header">Enter Camera Credentials</h2>
             <div class="flex-row w-50">
                 <label for="user">User ID : </label>
-                <input type="text" name="user" id="user" class="inputClass" value="admin" required (input)="generateRTSP()">
+                <input type="text" name="user" id="user" class="inputClass" value="admin" required>
             </div>
             <div class="flex-row w-50">
                 <label for="pass">Password : </label>
-                <input type="password" name="pass" id="pass" class="inputClass" value="Deevia@123" required (input)="generateRTSP()">
+                <input type="password" name="pass" id="pass" class="inputClass" value="Deevia@123" required>
             </div>
             <div class="flex-row w-50">
                 <label for="ip">Cam IP : </label>
-                <input type="text" name="ip" id="ip" class="inputClass" placeholder="192.168.1.2" required (input)="generateRTSP()">
+                <input type="text" name="ip" id="ip" class="inputClass" placeholder="192.168.1.2" required>
             </div>
             <div class="flex-row w-50">
                 <label for="port">Port : </label>

@@ -15,7 +15,7 @@ export class AdminComponent implements OnInit {
   admin_view_list = ['Dashboard', 'Pending Report', 'Report Analysis', 'Camera', 'Profile'];
   feature_logo_list = ['home.png', 'checklist.png', 'report.png', 'video.png', 'user.png'];
   curr_admin_view = this.admin_view_list[0];
-  pending_report_list = [1, 2, 3, 4, 5, 6, 7, 8];
+  pending_report_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
   report_page_flag : boolean = false;
   inspection_report_flag : boolean = false;
   approval_flag: boolean = false;
@@ -27,8 +27,7 @@ export class AdminComponent implements OnInit {
     userId: '',
     password: '',
     camIP: '',
-    port: '',
-    rtsp: ''
+    port: ''
   };
   userDetails = {
     name: 'Admin',
@@ -69,14 +68,36 @@ export class AdminComponent implements OnInit {
   constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router, private notifyService: NotificationService){}
 
   ngOnInit(): void {
-    this.userDetails.userId = String(localStorage.getItem('userId'));
-    this.userDetails.name = String(localStorage.getItem('name'));
-    let userType = String(localStorage.getItem('userType'));
+    this.userDetails.userId = String(sessionStorage.getItem('userId'));
+    this.userDetails.name = String(sessionStorage.getItem('name'));
+    let userType = String(sessionStorage.getItem('userType'));
     this.userDetails.designation = userType.charAt(0).toUpperCase() + userType.slice(1);
     setTimeout(()=>{
       this.createChart(this.xAxisData, this.yAxisData)
-      console.log('createChart called');
     },10);
+    this.getDashboardData();
+  }
+
+  getDashboardData(){
+    this.service.getWeeklyReport().subscribe((data: any)=>{
+      console.log('Get weekly report', data); 
+    },
+    (error: any) => {
+      this.notifyService.showError('Please check your Server', 'Server Connection Error');
+    });
+
+    this.service.getQuarterlyReport().subscribe((data: any)=>{
+      console.log('Get quarterly report', data); 
+    },
+    (error: any) => {
+      this.notifyService.showError('Please check your Server', 'Server Connection Error');
+    });
+
+    this.service.getPendingReport(this.userDetails.userId).subscribe((data: any)=>{
+      console.log('Pending reports',data);
+    },(error: any)=>{
+      this.notifyService.showError('Please check your Server', 'Server Connection Error');
+    });
   }
 
   changeView(index: any){
@@ -85,10 +106,17 @@ export class AdminComponent implements OnInit {
       setTimeout(() => this.initializingDatePicker(), 0);
     }
     if(index == 0){
+      this.getDashboardData();
       setTimeout(()=>{
         this.createChart(this.xAxisData, this.yAxisData)
-        console.log('createChart called');
       },100);
+    }
+    if(index == 1){
+      this.service.getPendingReport(this.userDetails.userId).subscribe((data: any)=>{
+        console.log('Pending reports',data);
+      },(error: any)=>{
+        this.notifyService.showError('Please check your Server', 'Server Connection Error');
+      });
     }
   }
   goToSearchReport(){
@@ -97,30 +125,34 @@ export class AdminComponent implements OnInit {
   }
 
   logout(){
-    localStorage.removeItem('isUserLoggedIn');
-    localStorage.removeItem('userType');
-    localStorage.removeItem('userId');
+    sessionStorage.removeItem('isUserLoggedIn');
+    sessionStorage.removeItem('userType');
+    sessionStorage.removeItem('userId');
+    sessionStorage.removeItem('name');
+    this.service.logout(this.userDetails.userId).subscribe((data: any)=>{
+      console.log('Logged out', data);
+      // this.router.navigate(['/login']);
+      this.notifyService.showInfo('Logged out successfully','Notification');
+    },(error: any)=>{
+      this.notifyService.showError('Please check your Server', 'Server Connection Error');
+    });
     this.router.navigate(['/login']);
   }
-  
-  viewProfileToggle(data: any){
-    this.view_profiile = data;
-  }
 
-  generateRTSP(){
-    let id = <HTMLInputElement>document.getElementById("user");
-    let idValue = id.value;
-    let pass = <HTMLInputElement>document.getElementById("pass");
-    let passValue = pass.value;
-    let ip = <HTMLInputElement>document.getElementById("ip");
-    let ipValue = ip.value;
-    let port = <HTMLInputElement>document.getElementById("port");
-    let portValue = port.value;
-    // this.rtspLink = 'rtsp://' + idValue + ':' + passValue + '@' + ipValue + ':' + portValue + '/?h264x=4';
-    this.rtspLink = 'rtsp://' + idValue + ':' + passValue + '@' + ipValue + ':' + portValue + '/cam/realmonitor?channel=1&subtype=0';
-    console.log('this.rtspLink',this.rtspLink);
+  // generateRTSP(){
+  //   let id = <HTMLInputElement>document.getElementById("user");
+  //   let idValue = id.value;
+  //   let pass = <HTMLInputElement>document.getElementById("pass");
+  //   let passValue = pass.value;
+  //   let ip = <HTMLInputElement>document.getElementById("ip");
+  //   let ipValue = ip.value;
+  //   let port = <HTMLInputElement>document.getElementById("port");
+  //   let portValue = port.value;
+  //   this.rtspLink = 'rtsp://' + idValue + ':' + passValue + '@' + ipValue + ':' + portValue + '/?h264x=4';
+  //   this.rtspLink = 'rtsp://' + idValue + ':' + passValue + '@' + ipValue + ':' + portValue + '/cam/realmonitor?channel=1&subtype=0';
+  //   console.log('this.rtspLink',this.rtspLink);
     
-  }
+  // }
 
   addCam(){
     let id = <HTMLInputElement>document.getElementById("user");
@@ -132,19 +164,24 @@ export class AdminComponent implements OnInit {
     let port = <HTMLInputElement>document.getElementById("port");
     let portValue = port.value;
     if(idValue == '' || passValue == '' || ipValue == ''){
-      alert('Please fill all the fields');
+      this.notifyService.showWarning('Please fill all the fields','Notification');
+      return;
     }
     this.camDetails.userId = idValue;
     this.camDetails.password = passValue;
     this.camDetails.camIP = ipValue;
     this.camDetails.port = portValue;
-    this.camDetails.rtsp = this.rtspLink;
     // console.log('sending cam details',this.camDetails);
     this.service.addCamera(this.camDetails).subscribe((data: any)=>{
       console.log('got data for addCam',data);
-      // if(data){
-      //   this.addCameraToggle = false;
-      // }
+      if(data['status']){
+        this.notifyService.showSuccess('Camera added successfully','Notification');
+      }
+      else{
+        this.notifyService.showError('Invalid Camera credentials','Notification');
+      }
+    },(error: any)=>{
+      this.notifyService.showError('Please check your Server', 'Server Connection Error');
     })
   }
 
@@ -174,16 +211,12 @@ export class AdminComponent implements OnInit {
     this.endDate = tempEndDate.value;
     this.startTime = tempStartTime.value;
     this.endTime = tempEndTime.value;
-    // if (this.startDate == "" && this.endDate == "") {
-    //   console.log('select date first............');
-    //   this.notifyService.showInfo("Select Date First!", "Notification");
-    //   return;
-    // }
+    if (this.startDate == "" && this.endDate == "") {
+      this.notifyService.showInfo("Select Date First!", "Notification");
+      return;
+    }
     let stDate = this.startDate +" "+ this.startTime;
     let edDate = this.endDate +" "+ this.endTime;
-    // let query = [stDate, edDate];
-    // this.tableLoader = true;
-    // console.log('searched date-time is',query);
     let searchData = {
       'start_date': stDate,
       'end_date': edDate,
@@ -198,25 +231,19 @@ export class AdminComponent implements OnInit {
     
     this.report_page_flag = true;
     this.service.searchDateTime(searchData).subscribe((data: any)=>{
-      // this.curr_admin_view = this.admin_view_list[5];
-      this.data_received = false;
+      // this.data_received = false;
       this.dataFromDb = data['tableData'];
-      if(this.dataFromDb.length == 0){
-        this.errorData = true;
-      }
-      else{
-        this.errorData = false;
-      }
-      this.service.searchDateTimeFull(fullData).subscribe((data: any) => {
-        // console.log('Total data called............', data);
-        this.totalDBData = data['dbdata'];
-        this.totalDBDataCount = data['totalCount'];
-        this.data_received = true;
-        if (this.queryPage * this.per_page < this.totalDBDataCount) {
-          this.nextAvailable = true;
-        }
-        console.log('Total DB data', this.totalDBDataCount)
-      });
+    },(error: any)=>{
+      this.notifyService.showError('Please check your Server', 'Server Connection Error');
+      return
+    });
+    this.service.searchDateTimeFull(fullData).subscribe((data: any) => {
+      this.totalDBData = data['dbdata'];
+      this.totalDBDataCount = data['totalCount'];
+      // console.log('Total DB data', this.totalDBDataCount)
+    },(error: any)=>{
+      this.notifyService.showError('Please check your Server', 'Server Connection Error');
+      return;
     });
   }
 
@@ -234,6 +261,9 @@ export class AdminComponent implements OnInit {
     this.service.searchDateTime(searchData).subscribe((data: any) => {
       this.dataFromDb = data['tableData'];
       this.lenOfArray = this.dataFromDb[0][0];
+    },(error: any)=>{
+      this.notifyService.showError('Please check your Server', 'Server Connection Error');
+      return;
     });
 
     if (this.queryPage * this.per_page > this.totalDBDataCount) {
@@ -256,6 +286,9 @@ export class AdminComponent implements OnInit {
     this.service.searchDateTime(searchData).subscribe((data: any) => {
       this.dataFromDb = data['tableData'];
       this.lenOfArray = this.dataFromDb[0][0];
+    },(error: any)=>{
+      this.notifyService.showError('Please check your Server', 'Server Connection Error');
+      return;
     });
 
     if (this.queryPage == 1)
@@ -271,14 +304,19 @@ export class AdminComponent implements OnInit {
     this.inspection_report_flag = false;
     this.approval_flag = false;
     this.reject_flag = false;
+    this.service.getPendingReport(this.userDetails.userId).subscribe((data: any)=>{
+      console.log('Pending reports',data);
+    },(error: any)=>{
+      this.notifyService.showError('Please check your Server', 'Server Connection Error');
+    });
   }
   approveToggle(data: any){
-    console.log('index for approval...',data);
+    // console.log('index for approval...',data);
     this.approval_flag = true;
     this.index_for_approve_reject = data;
   }
   rejectToggle(data: any){
-    console.log('index for rejection...',data);
+    // console.log('index for rejection...',data);
     this.reject_flag = true;
     this.index_for_approve_reject = data;
   }
@@ -288,7 +326,7 @@ export class AdminComponent implements OnInit {
       this.approval_flag = false;
     }
     else{
-      console.log('Report Approved');
+      // console.log('Report Approved');
       this.approval_flag = false;
     }
   }
@@ -297,7 +335,7 @@ export class AdminComponent implements OnInit {
       this.reject_flag = false;
     }
     else{
-      console.log('Report Rejected');
+      // console.log('Report Rejected');
       this.reject_flag = false;
     }
   }
@@ -309,6 +347,9 @@ export class AdminComponent implements OnInit {
       this.failed_checkpoints = data['failed'];
       // this.inspection_report_flag = true;
       // this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
+    },(error: any)=>{
+      this.notifyService.showError('Please check your Server', 'Server Connection Error');
+      return;
     });
     this.inspection_report_flag = true;
     setTimeout(()=>{
@@ -322,6 +363,9 @@ export class AdminComponent implements OnInit {
       this.failed_checkpoints = data['failed'];
       this.inspection_report_flag = true;
       // this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
+    },(error: any)=>{
+      this.notifyService.showError('Please check your Server', 'Server Connection Error');
+      return;
     });
     this.inspection_report_flag = true;
     this.curr_admin_view = this.admin_view_list[1];
@@ -454,8 +498,7 @@ export class AdminComponent implements OnInit {
         },
       },
     ]
-    }
-  
+    } 
     this.myChart.setOption(option_1);
   }
 
@@ -467,7 +510,6 @@ export class AdminComponent implements OnInit {
     let cnfPass = <HTMLInputElement>document.getElementById("password2");
     let cnfPassValue = cnfPass.value;
     if(oldPassValue == '' || newPassValue == '' || cnfPassValue == ''){
-      // console.log('Input fields cannot be empty');
       this.notifyService.showWarning('Input fields cannot be empty','Warning');
       return;
     }
@@ -478,8 +520,7 @@ export class AdminComponent implements OnInit {
         'newPassword' : newPassValue,
         'userId' : this.userDetails.userId
       };
-      console.log('new data',data);
-      
+      // console.log('new data',data);
       this.service.adminPasswordReset(data).subscribe((data: any)=>{
         console.log('Data',data);
         if(data['status'])
@@ -487,50 +528,29 @@ export class AdminComponent implements OnInit {
         else{
           this.notifyService.showError('Old password did not matched','Notification');
         }
+      },(error: any)=>{
+        this.notifyService.showError('Please check your Server', 'Server Connection Error');
       })
     }
     else{
-      // console.log('Warning! : New password and Confirm password does not match');
       this.notifyService.showWarning('New password and Confirm password does not match','Notification');
     }
 
   }
 
   viewPassword(id: any, index: any){
-    // for(let i=0; i<3; i++){
-    //   if(i == index)
-    //     this.passwordView[i] = true;
-    //   else{
-    //     this.passwordView[i] = false;
-    //   }
-    // }
     this.passwordView[index] = true;
     let currId = <HTMLInputElement>document.getElementById(id);
     currId.type = 'text';
-    // if(id === 'name'){
-    //   let currId = <HTMLInputElement>document.getElementById(id);
-    //   currId.type = 'text';
-    // if(id === 'password'){
-    //   let currId = <HTMLInputElement>document.getElementById("password");
-    //   let restId1 = <HTMLInputElement>document.getElementById("name");
-    //   let restId2 = <HTMLInputElement>document.getElementById("password2");
-    //   currId.type = 'text';
-    //   restId1.type = 'password';
-    //   restId2.type = 'password';
-    // }
-    // if(id === 'password2'){
-    //   let currId = <HTMLInputElement>document.getElementById("password2");
-    //   let restId1 = <HTMLInputElement>document.getElementById("name");
-    //   let restId2 = <HTMLInputElement>document.getElementById("password");
-    //   currId.type = 'text';
-    //   restId1.type = 'password';
-    //   restId2.type = 'password';
-    // }
   }
 
   closePassword(id: any, index: any){
     this.passwordView[index] = false;
     let currId = <HTMLInputElement>document.getElementById(id);
     currId.type = 'password';
+  }
+
+  toggleSubParts(){
+
   }
 }

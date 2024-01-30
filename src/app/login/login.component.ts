@@ -11,8 +11,6 @@ import { NotificationService } from 'src/services/notification.service';
 })
 export class LoginComponent implements OnInit{
   constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router, private notifyService: NotificationService){
-    // localStorage.setItem('isUserLoggedIn', '');
-    // localStorage.setItem('userType', '');
   }
 
   ngOnInit(): void {
@@ -24,6 +22,8 @@ export class LoginComponent implements OnInit{
   flag_operator_page: boolean = false
   curr_user: any = 'super_user';
   viewPassword = [false, false, false];
+  login_clicked: boolean = false;
+
 
 
 
@@ -58,20 +58,22 @@ export class LoginComponent implements OnInit{
       this.notifyService.showWarning('Input fiels cannot be empty','Notification');
       return;
     }
+    this.login_clicked  = true;
     let user_data = {
       'employee_id' : userId,
       'password' : password,
-      'current_user' : this.curr_user
+      'user_type' : this.curr_user
     };
     this.service.validateUser(user_data).subscribe((data: any)=>{
-      console.log('login data',data);
+      // console.log('login data',data);
       let login_status = data['status'];
       let name = data['name'];
+      this.login_clicked = false;
       if(login_status){
-        localStorage.setItem('isUserLoggedIn', 'true');
-        localStorage.setItem('userType', this.curr_user);
-        localStorage.setItem('userId', userId);
-        localStorage.setItem('name', name);
+        sessionStorage.setItem('isUserLoggedIn', 'true');
+        sessionStorage.setItem('userType', this.curr_user);
+        sessionStorage.setItem('userId', userId);
+        sessionStorage.setItem('name', name);
         this.router.navigate([this.curr_user]);
         // this.notifyService.showSuccess('Logged in successfully','Notification');
       }
@@ -79,11 +81,15 @@ export class LoginComponent implements OnInit{
         // localStorage.setItem('isUserLoggedIn', 'false');
         this.notifyService.showError('Incorrect login Credentials','Error')
       }
+    },
+    (error: any) => {
+      this.login_clicked = false;
+      this.notifyService.showError('Please check your Server', 'Server Connection Error');
     });
-    // localStorage.setItem('isUserLoggedIn', 'true');
-    // localStorage.setItem('userType', this.curr_user);
-    // localStorage.setItem('userId', userId);
-    // this.router.navigate([this.curr_user]);
+    sessionStorage.setItem('isUserLoggedIn', 'true');
+    sessionStorage.setItem('userType', this.curr_user);
+    sessionStorage.setItem('userId', userId);
+    this.router.navigate([this.curr_user]);
   }
 
   showPassword(index: any){

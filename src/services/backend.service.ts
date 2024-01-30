@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,73 +9,81 @@ export class BackendService {
 
   constructor(private http: HttpClient) { }
 
-  addCamera(camDetails: any){
+  addCamera(camDetails: any): Observable<any>{
     console.log(camDetails);
-    return this.http.post("http://192.168.68.110:5000/add_camera",{"cam_details": camDetails});
+    return this.http.post("http://192.168.68.129:5000/add_camera",{"cam_details": camDetails});
   }
-  searchDateTime(data: any)
+  searchDateTime(data: any): Observable<any>
   {
     // console.log('search data',data);    
-    return this.http.post("http://192.168.68.110:5000/search_date_time",{"report_data": data});
+    return this.http.post("http://192.168.68.129:5000/search_date_time",{"report_data": data});
   }
 
-  searchDateTimeFull(query: any)
+  searchDateTimeFull(query: any): Observable<any>
   {
-    return this.http.post("http://192.168.68.110:5000/search_date_time_full",{"query": query});
+    return this.http.post("http://192.168.68.129:5000/search_date_time_full",{"query": query});
   }
 
-  getDataforInspection(data: any){
+  getDataforInspection(data: any): Observable<any>{
     console.log(data);
-    return this.http.post("http://192.168.68.110:5000/vehicle_details",{"data": data});
+    return this.http.post("http://192.168.68.129:5000/vehicle_details",{"data": data});
   }
 
-  getVehicleModels(){
-    return this.http.get("http://192.168.68.110:5000/model_list");
+  getVehicleModels(): Observable<any>{
+    return this.http.get("http://192.168.68.129:5000/model_list");
   }
-  getVehicleVariants(model: any){
-    return this.http.post("http://192.168.68.110:5000/variant_list", {'model': model});
+  getVehicleVariants(model: any): Observable<any>{
+    return this.http.post("http://192.168.68.129:5000/variant_list", {'model': model});
   }
   getVehicleCc(data: any){
-    return this.http.post("http://192.168.68.110:5000/cc_list", {'data': data});
+    return this.http.post("http://192.168.68.129:5000/cc_list", {'data': data});
   }
 
-  getPendingReportDetails(jobId: any){
-    return this.http.post("http://192.168.68.110:5000/report_details", {'jobId': jobId});
+  getPendingReport(employeeId: any){
+    return this.http.post("http://192.168.68.129:5000/pending_report", {'employeeId': employeeId});
   }
 
-  validateUser(data: any){
-    return this.http.post("http://192.168.68.110:5000/login", {'user_data': data});
+  getPendingReportDetails(jobId: any): Observable<any>{
+    return this.http.post("http://192.168.68.129:5000/report_details", {'jobId': jobId});
   }
 
-  adminPasswordReset(data: any){
-    return this.http.post("http://192.168.68.110:5000/modify_admin_password", {'newData': data});
+  validateUser(data: any): Observable<any>{
+    console.log('login data',data);
+    return this.http.post("http://192.168.68.129:5000/login", {'user_data': data});
   }
 
-  showNumberOfUsers(){
-    return this.http.get("http://192.168.68.110:5000/number_of_users");
+  adminPasswordReset(data: any): Observable<any>{
+    return this.http.post("http://192.168.68.129:5000/modify_admin_password", {'newData': data});
   }
 
-  getWeeklyReport(){
-    return this.http.get("http://192.168.68.110:5000/weekly_report");
+  showNumberOfUsers(): Observable<any>{
+    return this.http.get("http://192.168.68.129:5000/number_of_users");
   }
 
-  getQuarterlyReport(){
-    return this.http.get("http://192.168.68.110:5000/quarterly_report");
+  getWeeklyReport(): Observable<any>{
+    return this.http.get("http://192.168.68.129:5000/weekly_report");
   }
 
-  showPendingReports(){
-    return this.http.get("http://192.168.68.110:5000/pending_reports");
+  getQuarterlyReport(): Observable<any>{
+    return this.http.get("http://192.168.68.129:5000/quarterly_report");
   }
 
-  addUser(data: any){
-    return this.http.post("http://192.168.68.110:5000/registration", {'user_data': data});
+  showPendingReports(): Observable<any>{
+    return this.http.get("http://192.168.68.129:5000/pending_reports");
   }
 
-  modifyAdminOperatorPassword(data: any){
-    return this.http.post("http://192.168.68.110:5000/modify_admin_opeartor_password", {'modified_data': data});
+  addUser(data: any): Observable<any>{
+    return this.http.post("http://192.168.68.129:5000/registration", {'user_data': data});
   }
 
+  modifyAdminOperatorPassword(data: any): Observable<any>{
+    return this.http.post("http://192.168.68.129:5000/modify_admin_opeartor_password", {'modified_data': data});
+  }
+
+  logout(employeeId: any){
+    return this.http.post("http://192.168.68.129:5000/logout", {'employeeId': employeeId});
+  }
   // getUserDetails(userId: any){
-  //   return this.http.post("http://192.168.68.110:5000/user_details", {'userId': userId})
+  //   return this.http.post("http://192.168.68.129:5000/user_details", {'userId': userId})
   // }
 }

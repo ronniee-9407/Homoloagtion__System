@@ -26,8 +26,7 @@ export class SuperUserComponent implements OnInit {
     userId: '',
     password: '',
     camIP: '',
-    port: '',
-    rtsp: ''
+    port: ''
   };
   userDetails = {
     name: 'Super User',
@@ -43,9 +42,9 @@ export class SuperUserComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userDetails.userId = String(localStorage.getItem('userId'));
-    this.userDetails.name = String(localStorage.getItem('name'));
-    let userType = String(localStorage.getItem('userType'));
+    this.userDetails.userId = String(sessionStorage.getItem('userId'));
+    this.userDetails.name = String(sessionStorage.getItem('name'));
+    let userType = String(sessionStorage.getItem('userType'));
     this.userDetails.designation = userType.charAt(0).toUpperCase() + userType.slice(1);
     setTimeout(()=> {
       this.createChart();
@@ -56,13 +55,22 @@ export class SuperUserComponent implements OnInit {
   getDashboardData(){
     this.service.showNumberOfUsers().subscribe((data: any)=>{
       console.log('Get number of users', data); 
+    },
+    (error: any) => {
+      this.notifyService.showError('Please check your Server', 'Server Connection Error');
     });
     this.service.getWeeklyReport().subscribe((data: any)=>{
       console.log('Get weekly report', data); 
+    },
+    (error: any) => {
+      this.notifyService.showError('Please check your Server', 'Server Connection Error');
     });
     this.service.getQuarterlyReport().subscribe((data: any)=>{
       console.log('Get quarterly report', data); 
-    })
+    },
+    (error: any) => {
+      this.notifyService.showError('Please check your Server', 'Server Connection Error');
+    } )
 
   }
 
@@ -142,13 +150,14 @@ export class SuperUserComponent implements OnInit {
     this.camDetails.password = passValue;
     this.camDetails.camIP = ipValue;
     this.camDetails.port = portValue;
-    this.camDetails.rtsp = this.rtspLink;
     // console.log('sending cam details',this.camDetails);
     this.service.addCamera(this.camDetails).subscribe((data: any)=>{
       console.log('got data for addCam',data);
       // if(data){
       //   this.addCameraToggle = false;
       // }
+    },(error: any) => {
+      this.notifyService.showError('Please check your Server', 'Server Connection Error');
     })
   }
 
@@ -160,7 +169,8 @@ export class SuperUserComponent implements OnInit {
       this.report = false;
       setTimeout(()=>{
         this.createChart()
-      },10)
+      },10);
+      this.getDashboardData();
     } else if (data == 'add_del') {
       this.dashboardFlag = false;
       this.addUser = true;
@@ -181,9 +191,17 @@ export class SuperUserComponent implements OnInit {
 
   //! Function to control the route
   logout(){
-    localStorage.removeItem('isUserLoggedIn');
-    localStorage.removeItem('userType');
-    localStorage.removeItem('userId');
+    sessionStorage.removeItem('isUserLoggedIn');
+    sessionStorage.removeItem('userType');
+    sessionStorage.removeItem('userId');
+    sessionStorage.removeItem('name');
+    this.service.logout(this.userDetails.userId).subscribe((data: any)=>{
+      console.log('Logged out', data);
+      // this.router.navigate(['/login']);
+      this.notifyService.showInfo('Logged out successfully','Notification');
+    },(error: any)=>{
+      this.notifyService.showError('Please check your Server', 'Server Connection Error');
+    });
     this.router.navigate(['/login']);
   }
 
@@ -197,7 +215,11 @@ export class SuperUserComponent implements OnInit {
     let password = pass.value;
     let cnfPass = <HTMLInputElement> document.getElementById('password2');
     let cnfPassword = cnfPass.value;
-    console.log("create new Admin clicked.");
+    // console.log("create new Admin clicked.");
+    if(nameValue == '' || userIdValue == '' || password == '' || cnfPassword == ''){
+      this.notifyService.showWarning('Input fields cannot be empty','Notification');
+      return;
+    }
     if(password === cnfPassword){
       let data = {
         'name': nameValue,
@@ -207,10 +229,18 @@ export class SuperUserComponent implements OnInit {
       }
       this.service.addUser(data).subscribe((data: any)=>{
         console.log('Add user data',data);
+        if(data['status']){
+          this.notifyService.showSuccess('User added successfully','Notification');
+        }
+        else{
+          this.notifyService.showError('Adding new User denied','Notification');
+        }
+      },(error: any)=>{
+        this.notifyService.showError('Please check your Server', 'Server Connection Error');
       })
     }
     else{
-      this.notifyService.showError('Password and coonfirm password not matched','Notification');
+      this.notifyService.showWarning('Password and Confirm password not matched','Notification');
     }
     
   }
@@ -219,14 +249,13 @@ export class SuperUserComponent implements OnInit {
 
   //! Function to edit the Admin
   editAdmin(userType: any){
-    console.log("edit Admin clicked.");
     let id = <HTMLInputElement>document.getElementById("employeeId");
     let employee_id = id.value;
     let newPass = <HTMLInputElement>document.getElementById("newPassword");
     let new_password = newPass.value;
-    let cnfPass = <HTMLInputElement>document.getElementById("cnfPass");
+    let cnfPass = <HTMLInputElement>document.getElementById("cnfPassword");
     let cnf_password = cnfPass.value;
-
+    
     if(employee_id == '' || new_password == '' || cnf_password == ''){
       this.notifyService.showWarning('Input fields cannot be empty','Notification');
       return;
@@ -239,8 +268,17 @@ export class SuperUserComponent implements OnInit {
           'cnf_password': cnf_password,
           'user_type': userType
         }
+        console.log("edit Admin clicked.", newData);
         this.service.modifyAdminOperatorPassword(newData).subscribe((data: any)=>{
-          console.log('Modify admin operator password', data);
+          // console.log('Modify admin operator password', data);
+          if(data['status']){
+            this.notifyService.showSuccess('Password updated successfully','Notification');
+          }
+          else{
+            this.notifyService.showError('Update password denied','Notification');
+          }
+        },(error: any)=>{
+          this.notifyService.showError('Please check your Server', 'Server Connection Error');
         });
       }
       else{
@@ -256,17 +294,4 @@ export class SuperUserComponent implements OnInit {
     this.add_delete_operator_flag = !this.add_delete_operator_flag
   }
 
-  generateRTSP(){
-    let id = <HTMLInputElement>document.getElementById("userId");
-    let idValue = id.value;
-    let pass = <HTMLInputElement>document.getElementById("password");
-    let passValue = pass.value;
-    let ip = <HTMLInputElement>document.getElementById("ip");
-    let ipValue = ip.value;
-    let port = <HTMLInputElement>document.getElementById("port");
-    let portValue = port.value;
-    // this.rtspLink = 'rtsp://' + idValue + ':' + passValue + '@' + ipValue + ':' + portValue + '/?h264x=4';
-    this.rtspLink = 'rtsp://' + idValue + ':' + passValue + '@' + ipValue + ':' + portValue + '/cam/realmonitor?channel=1&subtype=0';
-    console.log('this.rtspLink',this.rtspLink);
-  }
 }

@@ -34,7 +34,12 @@
                             <img *ngIf="viewPassword[0]" src="../../assets/icons/close-eye.png" alt="" class="viewPasswordClass" (click)="hidePassword(0)">
                         </div>
                     </div>
-                    <div class="login_button" (click)="login('su')">Login</div>
+                    <div class="login_button" (click)="login('su')">
+                        <p *ngIf="!login_clicked">Login</p>
+                        <div *ngIf="login_clicked" class="loader flex-col-even">
+                            <div class="justify-content-center jimu-primary-loading"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -87,7 +92,12 @@
                             <img *ngIf="viewPassword[1]" src="../../assets/icons/close-eye.png" alt="" class="viewPasswordClass" (click)="hidePassword(1)">
                         </div>
                     </div>
-                    <div class="login_button" (click)="login('admin')">Login</div>
+                    <div class="login_button" (click)="login('admin')">
+                        <p *ngIf="!login_clicked">Login</p>
+                        <div *ngIf="login_clicked" class="loader flex-col-even">
+                            <div class="justify-content-center jimu-primary-loading"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -141,7 +151,12 @@
                             <img *ngIf="viewPassword[2]" src="../../assets/icons/close-eye.png" alt="" class="viewPasswordClass" (click)="hidePassword(2)">
                         </div>
                     </div>
-                    <div class="login_button" (click)="login('op')">Login</div>
+                    <div class="login_button" (click)="login('op')">
+                        <p *ngIf="!login_clicked">Login</p>
+                        <div *ngIf="login_clicked" class="loader flex-col-even">
+                            <div class="justify-content-center jimu-primary-loading"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

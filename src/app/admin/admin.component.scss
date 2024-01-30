@@ -369,26 +369,72 @@ label{
 }
 .pendingReportsDetails{
     height: 99%;
-    width: 30%;
+    width: 25%;
 }
 .innerReportDetails{
     height: 30%;
     width: 100%;
     border-radius: 15px;
-    background-color: white;
+    background-color: #ffffffb7;
 }
 .innerChartDetails{
     height: 30%;
     width: 100%;
     border-radius: 15px;
-    background-color: white;
+    background-color: #ffffffb7;
 }
 .pendingReportTable{
     position: relative;
     height: 88%;
-    width: 66%;
-    border-style: ridge;
-    top: -3%;
+    width: 70%;
+    // border-style: ridge;
+    top: -4%;
+    background-color: #ffffffb7;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 10px;
+    overflow: auto;
+}
+.partContainer{
+    height: 24.75vh;
+    width: 91%;
+    // border: 1px solid black;
+    position: relative;
+    left: 4%;
+    top: 7%;
+    background-color: #131212a6;
+    overflow: auto;
+}
+.partName{
+    position: relative;
+    left: 2%;
+    display: inline;
+    font-family: "Inria Sans", sans-serif; 
+}
+.subPartContainer{
+    position: relative;
+    margin-top: 2%;
+    // left: 5%;
+    // padding: 10px;
+}
+// .pending_report_checkbox{
+//     position: relative;
+//     left: 5%;
+// }
+.pending_report_subPartName{
+    position: relative;
+    right: 5%;
+    display: inline;
+    font-family: "Inria Sans", sans-serif; 
+}
+.pending_report_subPartStatus{
+    position: relative;
+    left: 5%;
+    display: inline;
+    font-family: "Inria Sans", sans-serif; 
+}
+.ff{
+    font-family: "Inria Sans", sans-serif; 
 }
 .wholeRightContainer{
     height: 100%;

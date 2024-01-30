@@ -3,6 +3,7 @@ import { BackendService } from 'src/services/backend.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { webSocket } from 'rxjs/webSocket';
+import { NotificationService } from 'src/services/notification.service';
 
 @Component({
   selector: 'app-operator',
@@ -41,12 +42,12 @@ export class OperatorComponent implements OnInit {
     designation: ''
   };
 
-  constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router){}
+  constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router, private notifyService: NotificationService){}
 
   ngOnInit(): void {
-    this.userDetails.userId = String(localStorage.getItem('userId'));
-    this.userDetails.name = String(localStorage.getItem('name'));
-    let userType = String(localStorage.getItem('userType'));
+    this.userDetails.userId = String(sessionStorage.getItem('userId'));
+    this.userDetails.name = String(sessionStorage.getItem('name'));
+    let userType = String(sessionStorage.getItem('userType'));
     this.userDetails.designation = userType.charAt(0).toUpperCase() + userType.slice(1);
   }
 
@@ -152,9 +153,17 @@ liveFeed(){
   }
 
   logout(){
-    localStorage.removeItem('isUserLoggedIn');
-    localStorage.removeItem('userType');
-    localStorage.removeItem('userId');
+    sessionStorage.removeItem('isUserLoggedIn');
+    sessionStorage.removeItem('userType');
+    sessionStorage.removeItem('userId');
+    sessionStorage.removeItem('name');
+    this.service.logout(this.userDetails.userId).subscribe((data: any)=>{
+      console.log('Logged out', data);
+      // this.router.navigate(['/login']);
+      this.notifyService.showInfo('Logged out successfully','Notification');
+    },(error: any)=>{
+      this.notifyService.showError('Please check your Server', 'Server Connection Error');
+    });
     this.router.navigate(['/login']);
   }
 }

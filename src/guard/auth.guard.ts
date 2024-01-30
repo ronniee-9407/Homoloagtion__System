@@ -4,8 +4,8 @@ import { CanActivateFn, Router } from '@angular/router';
 export const authGuard: CanActivateFn = (route, state) => {
   let router = inject(Router);
 
-  let checkLoggedIn = localStorage.getItem('isUserLoggedIn');
-  let curr_user = localStorage.getItem('userType');
+  let checkLoggedIn = sessionStorage.getItem('isUserLoggedIn');
+  let curr_user = sessionStorage.getItem('userType');
 
   let url = state.url;
   let new_url = url.substring(1);
