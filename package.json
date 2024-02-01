@@ -20,6 +20,7 @@
     "@angular/router": "^17.1.0",
     "litepicker": "^2.0.12",
     "ng-circle-progress": "^1.7.1",
+    "ngx-cookie-service": "^17.0.1",
     "ngx-echarts": "^17.1.0",
     "ngx-toastr": "^18.0.0",
     "rxjs": "~7.8.0",

@@ -197,16 +197,19 @@ export class SuperUserComponent implements OnInit {
 
   //! Function to control the route
   logout(){
-    sessionStorage.removeItem('isUserLoggedIn');
-    sessionStorage.removeItem('userType');
-    sessionStorage.removeItem('userId');
-    sessionStorage.removeItem('name');
+    
     this.service.logout(this.userDetails.userId).subscribe((data: any)=>{
       console.log('Logged out', data);
-      // this.router.navigate(['/login']);
+      this.router.navigate(['/login']);
+      sessionStorage.removeItem('isUserLoggedIn');
+      sessionStorage.removeItem('userType');
+      sessionStorage.removeItem('userId');
+      sessionStorage.removeItem('name');
       this.notifyService.showInfo('Logged out successfully','Notification');
     },(error: any)=>{
-      this.notifyService.showError('Please check your Server', 'Server Connection Error');
+      console.log('logout error',error);
+      this.notifyService.showError('Logout unsuccessful', 'Server Connection Error');
+      return;
     });
     this.router.navigate(['/login']);
   }

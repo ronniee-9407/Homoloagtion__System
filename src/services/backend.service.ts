@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class BackendService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   addCamera(camDetails: any): Observable<any>{
     console.log(camDetails);
-    return this.http.post("http://192.168.68.129:5000/add_camera",{"cam_details": camDetails});
+    return this.http.post("http://192.168.68.129:5000/add_camera",{"cam_details": camDetails, withCredentials: true});
   }
   searchDateTime(data: any): Observable<any>
   {
@@ -40,7 +42,7 @@ export class BackendService {
   }
 
   getPendingReport(employeeId: any){
-    return this.http.post("http://192.168.68.129:5000/pending_report", {'employeeId': employeeId});
+    return this.http.get("http://192.168.68.129:5000/get_pending_reports?userId=" + employeeId);
   }
 
   getPendingReportDetails(jobId: any): Observable<any>{
@@ -49,7 +51,7 @@ export class BackendService {
 
   validateUser(data: any): Observable<any>{
     console.log('login data',data);
-    return this.http.post("http://192.168.68.129:5000/login", {'user_data': data});
+    return this.http.post("http://192.168.68.129:5000/login", {'user_data': data,  withCredentials: true });
   }
 
   adminPasswordReset(data: any): Observable<any>{
@@ -65,12 +67,10 @@ export class BackendService {
   }
 
   getQuarterlyReport(): Observable<any>{
-    return this.http.get("http://192.168.68.129:5000/quarterly_report");
+
+    return this.http.get("http://192.168.68.129:5000/quarterly_report", { withCredentials: true });
   }
 
-  showPendingReports(): Observable<any>{
-    return this.http.get("http://192.168.68.129:5000/pending_reports");
-  }
 
   addUser(data: any): Observable<any>{
     return this.http.post("http://192.168.68.129:5000/registration", {'user_data': data});
@@ -83,7 +83,4 @@ export class BackendService {
   logout(employeeId: any){
     return this.http.post("http://192.168.68.129:5000/logout", {'employeeId': employeeId});
   }
-  // getUserDetails(userId: any){
-  //   return this.http.post("http://192.168.68.129:5000/user_details", {'userId': userId})
-  // }
 }

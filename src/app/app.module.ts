@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SuperUserComponent } from './super-user/super-user.component';
 import { AdminComponent } from './admin/admin.component';
 import { OperatorComponent } from './operator/operator.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { NgxEchartsModule } from "ngx-echarts";
@@ -20,7 +19,7 @@ import { ToastrModule } from 'ngx-toastr';
     LoginComponent,
     SuperUserComponent,
     AdminComponent,
-    OperatorComponent
+    OperatorComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,6 +28,10 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       preventDuplicates: true
+    }),
+    HttpClientXsrfModule.withOptions({
+      cookieName: 'XSRF-TOKEN',
+      headerName: 'X-XSRF-TOKEN'
     }),
     FormsModule,
     NgxEchartsModule.forRoot({

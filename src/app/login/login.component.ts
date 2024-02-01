@@ -3,6 +3,7 @@ import { BackendService } from 'src/services/backend.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NotificationService } from 'src/services/notification.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ import { NotificationService } from 'src/services/notification.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit{
-  constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router, private notifyService: NotificationService){
+  constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router, private notifyService: NotificationService,private cookieService: CookieService){
   }
 
   ngOnInit(): void {
@@ -65,10 +66,11 @@ export class LoginComponent implements OnInit{
       'user_type' : this.curr_user
     };
     this.service.validateUser(user_data).subscribe((data: any)=>{
-      // console.log('login data',data);
+      console.log('login data',data);
       let login_status = data['status'];
       let name = data['name'];
       this.login_clicked = false;
+      this.cookieService.set('session', 'cookie_value');
       if(login_status){
         sessionStorage.setItem('isUserLoggedIn', 'true');
         sessionStorage.setItem('userType', this.curr_user);
@@ -86,10 +88,10 @@ export class LoginComponent implements OnInit{
       this.login_clicked = false;
       this.notifyService.showError('Please check your Server', 'Server Connection Error');
     });
-    sessionStorage.setItem('isUserLoggedIn', 'true');
-    sessionStorage.setItem('userType', this.curr_user);
-    sessionStorage.setItem('userId', userId);
-    this.router.navigate([this.curr_user]);
+    // sessionStorage.setItem('isUserLoggedIn', 'true');
+    // sessionStorage.setItem('userType', this.curr_user);
+    // sessionStorage.setItem('userId', userId);
+    // this.router.navigate([this.curr_user]);
   }
 
   showPassword(index: any){
