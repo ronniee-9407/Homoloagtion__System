@@ -47,11 +47,20 @@ export class BackendService {
   }
 
   getPendingReportDetails(jobId: any): Observable<any>{
-    return this.http.post("http://192.168.68.129:5000/report_details", {'jobId': jobId});
+    const token = sessionStorage.getItem('authorizationCode')
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.post("http://192.168.68.129:5000/report_details", { 
+      headers: headers,
+      'jobId': jobId,
+      withCredentials: true 
+    });
   }
 
   validateUser(data: any): Observable<any>{
-    console.log('login data',data);
     return this.http.post("http://192.168.68.129:5000/login", {'user_data': data,  withCredentials: true });
   }
 
@@ -84,23 +93,43 @@ export class BackendService {
   }
 
   showNumberOfUsers(): Observable<any>{
-    return this.http.get("http://192.168.68.129:5000/number_of_users");
+    const token = sessionStorage.getItem('authorizationCode')
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get("http://192.168.68.129:5000/number_of_users", { 
+      headers: headers,
+      withCredentials: true 
+    });
+
   }
 
   getWeeklyReport(): Observable<any>{
-    return this.http.get("http://192.168.68.129:5000/weekly_report");
+    const token = sessionStorage.getItem('authorizationCode')
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get("http://192.168.68.129:5000/weekly_report", { 
+      headers: headers,
+      withCredentials: true 
+    });
   }
 
   getQuarterlyReport(): Observable<any>{
-    const csrfToken = this.cookieService.get('XSRF-TOKEN');
+    const token = sessionStorage.getItem('authorizationCode')
 
-    // Set headers including the CSRF token
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'X-CSRFToken': csrfToken
+      'Authorization': `Bearer ${token}`
     });
 
-    return this.http.get("http://192.168.68.129:5000/quarterly_report", { withCredentials: true });
+    return this.http.get("http://192.168.68.129:5000/quarterly_report", { 
+      headers: headers,
+      withCredentials: true 
+    });
   }
 
 
@@ -113,7 +142,18 @@ export class BackendService {
   }
 
   logout(employeeId: any){
-    return this.http.post("http://192.168.68.129:5000/logout", {'employeeId': employeeId});
+
+    const token = sessionStorage.getItem('authorizationCode')
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });    
+
+    return this.http.post("http://192.168.68.129:5000/logout", { 
+      headers: headers,
+      'employeeId': employeeId,
+      withCredentials: true 
+    });
   }
 
   searchByJobId(jobID: any): Observable<any>{
