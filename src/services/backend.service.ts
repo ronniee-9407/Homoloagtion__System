@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse  } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
+import { tap } from 'rxjs/operators';
 
 
 @Injectable({
@@ -54,6 +55,30 @@ export class BackendService {
     return this.http.post("http://192.168.68.129:5000/login", {'user_data': data,  withCredentials: true });
   }
 
+  // validateUser(data: any): Observable<HttpResponse<any>> {
+  //   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  
+  //   // Use observe: 'response' to get the full response including headers
+  //   return this.http.post(
+  //     "http://192.168.68.129:5000/login",
+  //     {'user_data': data},
+  //     { headers, observe: 'response', withCredentials: true }
+  //   )
+  //   .pipe(
+  //     // Assuming the CSRF token is set in the 'XSRF-TOKEN' cookie
+  //     tap((response: HttpResponse<any>) => {
+  //       console.log('Reached the tap function');  // Debugging line
+  //       const csrfToken = response.headers.get('XSRF-TOKEN');
+  //       if (csrfToken) {
+  //         // Print the CSRF token to the console
+  //         console.log('The token', csrfToken);
+  //         // You can store the CSRF token in a cookie if needed
+  //         // this.cookieService.set('XSRF-TOKEN', csrfToken);
+  //       }
+  //     })
+  //   );
+  // }
+
   adminPasswordReset(data: any): Observable<any>{
     return this.http.post("http://192.168.68.129:5000/modify_admin_password", {'newData': data});
   }
@@ -67,6 +92,13 @@ export class BackendService {
   }
 
   getQuarterlyReport(): Observable<any>{
+    const csrfToken = this.cookieService.get('XSRF-TOKEN');
+
+    // Set headers including the CSRF token
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrfToken
+    });
 
     return this.http.get("http://192.168.68.129:5000/quarterly_report", { withCredentials: true });
   }
@@ -82,5 +114,9 @@ export class BackendService {
 
   logout(employeeId: any){
     return this.http.post("http://192.168.68.129:5000/logout", {'employeeId': employeeId});
+  }
+
+  searchByJobId(jobID: any): Observable<any>{
+    return this.http.post("http://192.168.68.129:5000/search_jobId", {'jobID': jobID});
   }
 }

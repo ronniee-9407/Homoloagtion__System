@@ -16,9 +16,11 @@ export class AdminComponent implements OnInit {
   admin_view_list = ['Dashboard', 'Pending Report', 'Report Analysis', 'Camera', 'Profile'];
   feature_logo_list = ['home.png', 'checklist.png', 'report.png', 'video.png', 'user.png'];
   curr_admin_view = this.admin_view_list[0];
-  pending_report_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  // pending_report_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  pending_report_list: any[] = this.generatePendingReportList(11, 5);
   report_page_flag : boolean = false;
   inspection_report_flag : boolean = false;
+  report_page_flag_detail: boolean = false;
   approval_flag: boolean = false;
   reject_flag: boolean = false;
   index_for_approve_reject: any = 0;
@@ -66,7 +68,7 @@ export class AdminComponent implements OnInit {
 
   passwordView = [false, false, false];
 
-  constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router, private notifyService: NotificationService, private cookieService: CookieService){}
+  constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router, private notifyService: NotificationService){}
 
   ngOnInit(): void {
     this.userDetails.userId = String(sessionStorage.getItem('userId'));
@@ -78,7 +80,30 @@ export class AdminComponent implements OnInit {
     },10);
     this.getDashboardData();
   }
+  generatePendingReportList(numParts: number, numSubparts: number): any[] {
+    const pendingReportList: any[] = [];
 
+    for (let i = 1; i <= numParts; i++) {
+      const part = {
+        name: 'Part ' + i,
+        checked: false,
+        subparts: [] as { id: string; name: string; checked: boolean; status: string }[]
+      };
+
+      for (let j = 1; j <= numSubparts; j++) {
+        part.subparts.push({
+          id: 'sub_part_' + j,
+          name: 'Sub-Part ' + j,
+          checked: false,
+          status: 'True'
+        });
+      }
+
+      pendingReportList.push(part);
+    }
+
+    return pendingReportList;
+  }
   getDashboardData(){
     this.service.getWeeklyReport().subscribe((data: any)=>{
       // this.cookieService.set('session', 'cookie_value');
@@ -123,6 +148,12 @@ export class AdminComponent implements OnInit {
   }
   goToSearchReport(){
     this.report_page_flag = false;
+    this.report_page_flag_detail = false;
+    setTimeout(() => this.initializingDatePicker(), 0);
+  }
+  goToSearchReportDashboard(){
+    this.report_page_flag = false;
+    this.report_page_flag_detail = false;
     setTimeout(() => this.initializingDatePicker(), 0);
   }
 
@@ -559,7 +590,49 @@ export class AdminComponent implements OnInit {
     currId.type = 'password';
   }
 
-  toggleSubParts(){
+  toggleSubParts(partIndex: number) {
+    const part = this.pending_report_list[partIndex];
+    part.checked = !part.checked;
+    part.subparts.forEach((subpart: any) => subpart.checked = part.checked);
+  }
+  submitPendingReport() {
+    const checkedSubparts: any[] = [];
 
+    this.pending_report_list.forEach(part => {
+      part.subparts.forEach((subpart: any) => {
+        if (subpart.checked) {
+          checkedSubparts.push({
+            partName: part.name,
+            subpart
+          });
+        }
+      });
+    });
+    console.log('Checked Subparts:', checkedSubparts);
+  }
+    
+  searchByJobId(){
+    let jobId = <HTMLInputElement> document.getElementById('jobID');
+    let idValue = jobId.value;
+    // console.log('Job id is', idValue);
+    if(idValue === ''){
+      this.notifyService.showInfo('Please enter JobID','Notification');
+      return;
+    }
+    this.report_page_flag = false;
+    this.report_page_flag_detail = true;
+    this.service.searchByJobId(idValue).subscribe((data: any)=>{
+      if(data['status']){
+        // this.report_page_flag = false;
+        // this.report_page_flag_detail = true;
+        jobId.value = '';
+      }
+      else{
+        this.notifyService.showInfo('JOB ID not found','Notification');
+      }
+    },
+    (error: any)=>{
+      this.notifyService.showError('Please check your Server', 'Server Connection Error');
+    });
   }
 }
