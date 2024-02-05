@@ -81,7 +81,7 @@ export class AdminComponent implements OnInit {
 
   getDashboardData(){
     this.service.getWeeklyReport().subscribe((data: any)=>{
-      // this.cookieService.set('session', 'cookie_value');
+      this.cookieService.set('session', 'cookie_value');
       console.log('Get weekly report', data); 
     },
     (error: any) => {
@@ -89,6 +89,7 @@ export class AdminComponent implements OnInit {
     });
 
     this.service.getQuarterlyReport().subscribe((data: any)=>{
+      // this.cookieService.set('session', 'cookie_value');
       console.log('Get quarterly report', data); 
     },
     (error: any) => {
@@ -140,21 +141,6 @@ export class AdminComponent implements OnInit {
     });
     this.router.navigate(['/login']);
   }
-
-  // generateRTSP(){
-  //   let id = <HTMLInputElement>document.getElementById("user");
-  //   let idValue = id.value;
-  //   let pass = <HTMLInputElement>document.getElementById("pass");
-  //   let passValue = pass.value;
-  //   let ip = <HTMLInputElement>document.getElementById("ip");
-  //   let ipValue = ip.value;
-  //   let port = <HTMLInputElement>document.getElementById("port");
-  //   let portValue = port.value;
-  //   this.rtspLink = 'rtsp://' + idValue + ':' + passValue + '@' + ipValue + ':' + portValue + '/?h264x=4';
-  //   this.rtspLink = 'rtsp://' + idValue + ':' + passValue + '@' + ipValue + ':' + portValue + '/cam/realmonitor?channel=1&subtype=0';
-  //   console.log('this.rtspLink',this.rtspLink);
-    
-  // }
 
   addCam(){
     let id = <HTMLInputElement>document.getElementById("user");
