@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -67,6 +67,8 @@ export class BackendService {
   }
 
   getQuarterlyReport(): Observable<any>{
+
+
 
     return this.http.get("http://192.168.68.129:5000/quarterly_report", { withCredentials: true });
   }
