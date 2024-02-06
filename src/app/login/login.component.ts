@@ -11,7 +11,7 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit{
-  constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router, private notifyService: NotificationService,private cookieService: CookieService){
+  constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router, private notifyService: NotificationService){
   }
 
   ngOnInit(): void {
@@ -70,12 +70,12 @@ export class LoginComponent implements OnInit{
       let login_status = data['status'];
       let name = data['name'];
       this.login_clicked = false;
-      this.cookieService.set('session', 'cookie_value');
       if(login_status){
         sessionStorage.setItem('isUserLoggedIn', 'true');
         sessionStorage.setItem('userType', this.curr_user);
         sessionStorage.setItem('userId', userId);
         sessionStorage.setItem('name', name);
+        sessionStorage.setItem('authorizationCode', data['access_token']);
         this.router.navigate([this.curr_user]);
         // this.notifyService.showSuccess('Logged in successfully','Notification');
       }

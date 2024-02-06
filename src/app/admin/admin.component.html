@@ -114,14 +114,14 @@
             </div>
         </div>
         <div class="pendingReportTable">
-            <div *ngFor="let data of pending_report_list; let i = index" class="partContainer">
+            <!-- <div *ngFor="let data of pending_report_list; let i = index" class="partContainer">
                 <h3 class="ff partName">
-                    <input type="checkbox" id="part_name" name="part_name" (click)="toggleSubParts()">
+                    <input type="checkbox" id="part_name" name="part_name" (click)="toggleSubParts(i)">
                     Part Name
                 </h3><br>
         
                 <div class="subPartContainer flex-row-even">
-                    <input type="checkbox" id="sub_part_1" name="sub_part_1" value="sub_part_1" class="pending_report_checkbox">
+                    <input type="checkbox" id="sub_part_1" name="sub_part_1" value="sub_part_1" [(ngModel)]="subpart.checked" class="pending_report_checkbox">
                     <p class="pending_report_subPartName">Sub-Part 1</p>
                     <p class="pending_report_subPartStatus">True</p>
                 </div>
@@ -154,44 +154,21 @@
                     <p class="pending_report_subPartName">Sub-Part 6</p>
                     <p class="pending_report_subPartStatus">True</p>
                 </div>
-            </div>
-            <!-- <form action="#" method="post">
-
-                <fieldset>
-                    <legend>
-                            <input type="checkbox" id="part_name" name="part_name" (click)="toggleSubParts()">
-                            Part Name<br>
-                    </legend>
-            
-                    <label for="sub_part_1">
-                        <input type="checkbox" id="sub_part_1" name="sub_part_1" value="sub_part_1">
-                        Sub-Part 1
-                    </label><br>
-            
-                    <label for="sub_part_2">
-                        <input type="checkbox" id="sub_part_2" name="sub_part_2" value="sub_part_2">
-                        Sub-Part 2
-                    </label><br>
-            
-                    <label for="sub_part_3">
-                        <input type="checkbox" id="sub_part_3" name="sub_part_3" value="sub_part_3">
-                        Sub-Part 3
-                    </label><br>
-            
-                    <label for="sub_part_4">
-                        <input type="checkbox" id="sub_part_4" name="sub_part_4" value="sub_part_4">
-                        Sub-Part 4
-                    </label><br>
-            
-                    <label for="sub_part_5">
-                        <input type="checkbox" id="sub_part_5" name="sub_part_5" value="sub_part_5" >
-                        Sub-Part 5
-                    </label><br>
-            
-                </fieldset>
-                
-            </form> -->
+            </div> -->
+            <div *ngFor="let data of pending_report_list; let i = index" class="partContainer">
+                <h3 class="ff partName">
+                  <input type="checkbox" id="part_name" name="part_name" [(ngModel)]="data.checked" (click)="toggleSubParts(i)">
+                  {{data.name}}
+                </h3><br><br>
+              
+                <div *ngFor="let subpart of data.subparts" class="subPartContainer flex-row-even">
+                  <input type="checkbox" id="{{subpart.id}}" name="{{subpart.name}}" [(ngModel)]="subpart.checked" class="pending_report_checkbox">
+                  <p class="pending_report_subPartName">{{subpart.name}}</p>
+                  <p class="pending_report_subPartStatus">{{subpart.status}}</p>
+                </div>
+              </div>
         </div>
+        <button class="submitBtnSize bg-color_green" (click)="submitPendingReport()">Re-Inspect</button>
         <button class="backBtnSize bg-color_black" (click)="goToPendingReport()">Back</button>
     </div>
 
@@ -242,7 +219,7 @@
     </div>
     <div class="rightContainerClass flex-col-even">
         <div class="searchContainer flex-col-even">
-            <div *ngIf="!report_page_flag" class="searchByDate">
+            <div *ngIf="!report_page_flag && !report_page_flag_detail" class="searchByDate">
                 <h2 id="subHeading1">Search By Date</h2>
                 <div id="datePick">
                     <div id="date">
@@ -270,9 +247,94 @@
             
                 <button id="searchButton" class="btn btn-primary" (click)="searchDateTime()">Search</button>
             </div>
-            <div *ngIf="report_page_flag" class="reportDataClass">
-                <div *ngIf="report_page_flag" class="rightContainerClass bg-color_white">
-                    <button class="backBtnSize bg-color_black" (click)="goToSearchReport()">Back</button>
+            <div *ngIf="!report_page_flag && !report_page_flag_detail" class="searchById flex-col-even">
+                <h2 id="subHeadingId">Search By JOB ID</h2>
+                <div class="idSearchContainer flex-row-even">
+                    <div class="innerSearchContainer flex-row-even">
+                        <p style="font-size: 1.4rem;">JOB ID : </p>
+                        <div class="input-container">
+                            <input type="text" name="text" class="input" placeholder="Job ID..." id="jobID">
+                            <span class="icon" (click)="searchByJobId()"> 
+                            <svg width="19px" height="19px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path opacity="1" d="M14 5H20" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path opacity="1" d="M14 8H17" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M21 11.5C21 16.75 16.75 21 11.5 21C6.25 21 2 16.75 2 11.5C2 6.25 6.25 2 11.5 2" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path> <path opacity="1" d="M22 22L20 20" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="report_page_flag && !report_page_flag_detail" class="reportDataClass">
+                <button class="backBtnSize bg-color_black" (click)="goToSearchReport()">Back</button>
+            </div>
+
+            <div *ngIf="report_page_flag_detail && !report_page_flag" class="reportDataClass flex-col-even">
+                <div class="report_table_class">
+                    <table>
+                        <thead style="text-align: center; background-color: #0575E6; color: white; position: sticky; top: 0%; height: 37px; z-index: 10;">
+                            <tr style="background-color: #0575E6;">
+                                <th>PartName</th>
+                                <th>ID</th>
+                                <th>Subparts</th>
+                                <th>Status</th>
+                                <th>Image</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let part of pending_report_list">
+                                <td>
+                                    {{ part.name }}
+                                </td>
+                                <td>
+                                    <ng-container *ngFor="let subpart of part.subparts">
+                                        <div class="subparts">{{ subpart.id }}</div>
+                                    </ng-container>
+                                </td>
+                                <td>
+                                    <ng-container *ngFor="let subpart of part.subparts">
+                                        <div class="subparts">{{ subpart.name }}</div>
+                                    </ng-container>
+                                </td>
+                                <td>
+                                    <ng-container *ngFor="let subpart of part.subparts">
+                                        <div *ngIf="subpart.status" class="subparts">Success</div>
+                                        <div *ngIf="!subpart.status" class="subparts">Failed</div>
+                                    </ng-container>
+                                </td>
+                                <td>
+                                    logo.png
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="buttonContainer">
+                    <!-- <button class="backBtnSizeToReport bg-color_black" (click)="goToSearchReport()">Back</button> -->
+                    <button class="Btn">
+                        <div class="sign">
+                            <svg viewBox="0 0 512 512">
+                                <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
+                            </svg>
+                        </div>
+                        <div class="text" (click)="goToSearchReportDashboard()">Back</div>
+                    </button>
+
+                    <!-- <div class="button" data-tooltip="Size: 20Mb">
+                        <div class="button-wrapper">
+                          <div class="pdfText">Download</div>
+                            <span class="icon">
+                              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"></path></svg>
+                            </span>
+                        </div>
+                    </div> -->
+                    <button class="botao">
+                        <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="mysvg"><g id="SVGRepo_bgCarrier" stroke-width="0">
+                          </g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
+                             <g id="Interface / Download"> 
+                             <path id="Vector" d="M6 21H18M12 3V17M12 17L17 12M12 17L7 12" stroke="#f1f1f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                             </path>
+                          </g> </g>
+                        </svg>
+                        <span class="texto">Excel</span>
+                      </button>
                 </div>
             </div>
         </div>

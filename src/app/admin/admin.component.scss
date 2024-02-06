@@ -223,7 +223,7 @@ label{
 .searchContainer{
     background-color: white;
     height: 99.1%;
-    width: 99.6%;
+    width: 99.5%;
     position: relative;
     // left: 0.1%;
     border-top: 5px solid #080808ad;
@@ -233,8 +233,25 @@ label{
     position: relative;
     border-radius: 20px;
     width: 60%;
-    height: 90%;
-    // top: -2%;
+    height: 65%;
+    // bottom: 15%;
+}
+.searchById{
+    position: relative;
+    border-radius: 20px;
+    width: 60%;
+    height: 28%;
+    // bottom: 15%;
+}
+.idSearchContainer{
+    height: 55%;
+    width: 90%;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+.innerSearchContainer{
+    height: 100%;
+    width: 60%;
 }
 #subHeading1{
     display: inline;
@@ -243,6 +260,18 @@ label{
     top: 5%;
     font-size: 2.5rem;
 }
+#subHeadingId{
+    display: inline;
+    position: relative;
+    // left: 36%;
+    // top: 5%;
+    font-size: 2rem;
+}
+.jobId_input{
+    height: 36%;
+    width: 36%;
+    font-size: 16px;
+}
 #datePick{
     position: relative;
     display: flex;
@@ -250,9 +279,9 @@ label{
     justify-content: space-between;
     align-items: center;
     width: 90%;
-    top: 22%;
+    top: 18%;
     left: 5%;
-    height: 8%;
+    height: 10%;
 }
 
 #date{
@@ -268,9 +297,9 @@ label{
     justify-content: space-between;
     align-items: center;
     width: 89%;
-    top: 41%;
+    top: 36%;
     left: 5%;
-    height: 8%;
+    height: 10%;
 }
 
 #time{
@@ -293,9 +322,9 @@ label{
 }
 #searchButton{
     position: relative;
-    top: 55%;
+    top: 50%;
     left: 47%;
-    height: 8%;
+    height: 10%;
     width: 12%;
     background-color: #4e4e4e;
     border: none;
@@ -341,6 +370,32 @@ label{
     border-radius: 10px;
     cursor: pointer;
 }
+.backBtnSizeToReport{
+    position: absolute;
+    bottom: 92%;
+    left: 90%;
+    height: 7%;
+    width: 8%;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}.buttonContainer{
+    height: 8.5%;
+    position: relative;
+    bottom: 90.7%;
+    // border: 1px solid black;
+    width: 99.6%;
+}
+.submitBtnSize{
+    position: absolute;
+    top: 92%;
+    left: 75%;
+    height: 7%;
+    width: 8%;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
 .adminDashboardChart1{
     height: 97%;
     width: 49%;
@@ -365,7 +420,16 @@ label{
 .reportDataClass{
     height: 100%;
     width: 99.9%;
+    // overflow: auto;
     // border: 1px solid black;
+}
+.report_table_class{
+    position: relative;
+    height: 90%;
+    width: 100%;
+    top: 9%;
+    overflow: auto;
+    border: 1px solid black;
 }
 .pendingReportsDetails{
     height: 99%;
@@ -402,12 +466,14 @@ label{
     position: relative;
     left: 4%;
     top: 7%;
-    background-color: #131212a6;
+    background-color: #afcfd3;
     overflow: auto;
+    border-radius: 10px;
 }
 .partName{
     position: relative;
-    left: 2%;
+    left: 5%;
+    top: 5%;
     display: inline;
     font-family: "Inria Sans", sans-serif; 
 }
@@ -899,4 +965,364 @@ transition: border-color 0.2s;
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(to top, #0575E6 0%, #021B79  100%);
+  }
+
+
+
+
+
+
+
+
+  /* app.component.css */
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th, td {
+    border: 1px solid black;
+    text-align: center;
+
+  }
+  
+  th {
+    // background-color: #f2f2f2;
+    padding: 8px;
+  }
+  
+  .subparts {
+    // padding-left: 20px;
+    border: 1px solid #f2f2f2;
+  }
+  .subparts:hover{
+    background-color: #5e5e5e;
+  }
+
+//   .subparts div {
+//     border: 1px solid black; /* Add a border to each subpart */
+//     margin-bottom: 2px; /* Adjust the margin for better spacing */
+//   }
+
+
+#tableContentNotAvailable{
+    height: 100%;
+    width: 100%;
+}
+// th, tr, td{
+//     border: 1px solid rgb(201, 200, 200);
+//     padding: 1%;
+// }
+
+table tr:nth-child(odd){background-color: #F8F7FF;}
+
+table tr:hover {background-color: #ddd;}
+
+
+.Btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    left: 3%;
+    top: 11%;
+    overflow: hidden;
+    transition-duration: .3s;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+    /* background-color: rgb(255, 65, 65); */
+    /* background-image: linear-gradient(to left, #190A05 0%, #870000  100%); */
+    /* background-image: linear-gradient(to left, #021B79 0%, #0575E6  100%); */
+    background-image: linear-gradient(to bottom, #000000e0 0%, #314755  100%);
+  }
+  
+  /* plus sign */
+  .sign {
+    width: 100%;
+    transition-duration: .3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    rotate: 270deg;
+    position: relative;
+    bottom: 3%;
+  }
+  
+  .sign svg {
+    width: 17px;
+  }
+  
+  .sign svg path {
+    fill: white;
+  }
+  /* text */
+  .text {
+    position: absolute;
+    right: 0%;
+    width: 0%;
+    opacity: 0;
+    color: white;
+    font-size: 1em;
+    font-weight: 600;
+    transition-duration: .3s;
+  }
+  /* hover effect on button width */
+  .Btn:hover {
+    width: 125px;
+    border-radius: 10px;
+    transition-duration: .3s;
+  }
+  
+  .Btn:hover .sign {
+    width: 30%;
+    transition-duration: .3s;
+    padding-left: 3px;
+    padding-top: 30px;
+  }
+  /* hover effect button's text */
+  .Btn:hover .text {
+    opacity: 1;
+    width: 70%;
+    transition-duration: .3s;
+    padding-right: 10px;
+  }
+  /* button click effect*/
+  .Btn:active {
+    transform: translate(2px ,2px);
+  }
+
+
+
+
+//   .button {
+//     --width: 100px;
+//     --height: 35px;
+//     --tooltip-height: 35px;
+//     --tooltip-width: 90px;
+//     --gap-between-tooltip-to-button: 18px;
+//     --button-color: #1163ff;
+//     --tooltip-color: #fff;
+//     width: var(--width);
+//     height: var(--height);
+//     background: var(--button-color);
+//     position: relative;
+//     bottom: 60%;
+//     left: 90%;
+//     text-align: center;
+//     border-radius: 0.45em;
+//     font-family: "Arial";
+//     transition: background 0.3s;
+//   }
+  
+//   .button::before {
+//     position: absolute;
+//     content: attr(data-tooltip);
+//     width: var(--tooltip-width);
+//     height: var(--tooltip-height);
+//     background-color: var(--tooltip-color);
+//     font-size: 0.9rem;
+//     color: #111;
+//     border-radius: .25em;
+//     line-height: var(--tooltip-height);
+//     bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) + 10px);
+//     left: calc(50% - var(--tooltip-width) / 2);
+//   }
+  
+//   .button::after {
+//     position: absolute;
+//     content: '';
+//     width: 0;
+//     height: 0;
+//     border: 10px solid transparent;
+//     border-top-color: var(--tooltip-color);
+//     left: calc(50% - 10px);
+//     bottom: calc(100% + var(--gap-between-tooltip-to-button) - 10px);
+//   }
+  
+//   .button::after,.button::before {
+//     opacity: 0;
+//     visibility: hidden;
+//     transition: all 0.5s;
+//   }
+  
+//   .pdfText {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//   }
+  
+//   .button-wrapper,.pdfText,.icon {
+//     overflow: hidden;
+//     position: absolute;
+//     width: 100%;
+//     height: 100%;
+//     left: 0;
+//     color: #fff;
+//   }
+  
+//   .pdfText {
+//     top: 0
+//   }
+  
+//   .pdfText,.icon {
+//     transition: top 0.5s;
+//   }
+  
+//   .icon {
+//     color: #fff;
+//     top: 100%;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//   }
+  
+//   .icon svg {
+//     width: 24px;
+//     height: 24px;
+//   }
+  
+//   .button:hover {
+//     background: #6c18ff;
+//   }
+  
+//   .button:hover .pdfText {
+//     top: -100%;
+//   }
+  
+//   .button:hover .icon {
+//     top: 0;
+//   }
+  
+//   .button:hover:before,.button:hover:after {
+//     opacity: 1;
+//     visibility: visible;
+//   }
+  
+//   .button:hover:after {
+//     bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) - 20px);
+//   }
+  
+//   .button:hover:before {
+//     bottom: calc(var(--height) + var(--gap-between-tooltip-to-button));
+//   }
+  
+
+.botao {
+    width: 8%;
+    height: 80%;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 1px 1px rgba(107, 221, 215, 0.37);
+    padding: 5px 10px;
+    background: rgb(47,93,197);
+    // background: linear-gradient(160deg, rgba(47,93,197,1) 0%, rgba(46,86,194,1) 5%, rgba(47,93,197,1) 11%, rgba(59,190,230,1) 57%, rgba(0,212,255,1) 71%);
+    background: linear-gradient(160deg, #5e5e5e 0%, #848484 5%, #515151 11%, #1d1d1d 57%, #000000 71%);
+    color: #fff;
+    font-family: Roboto, sans-serif;
+    font-weight: 505;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.199));
+    transition: .3s linear;
+    position: relative;
+    bottom: 76%;
+    left: 90%;
+  }
+  
+  .botao .mysvg {
+    display: none;
+  }
+  
+  .botao:hover {
+    width: 3%;
+    height: 80%;
+    border-radius: 50%;
+    transition: .3s linear;
+  }
+  
+  .botao:hover .texto {
+    display: none;
+  }
+  
+  .botao:hover .mysvg {
+    display: inline;
+    position: relative;
+    right: 7%;
+  }
+  
+  .botao:hover::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    width: 100%;
+    height: 100%;
+    border: 3.5px solid transparent;
+    border-top: 3.5px solid #fff;
+    border-right: 3.5px solid #fff;
+    border-radius: 50%;
+    animation: animateC 1s linear infinite;
+  }
+  
+  @keyframes animateC {
+    0% {
+      transform: rotate(0deg);
+    }
+  
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+
+
+  .input-container {
+    width: 45%;
+    position: relative;
+  }
+  
+  .icon {
+    position: absolute;
+    left: 96%;
+    cursor: pointer;
+    top: calc(50% + 5px);
+    transform: translateY(calc(-50% - 5px));
+  }
+  
+  .input {
+    width: 100%;
+    // height: 40px;
+    padding: 10px;
+    transition: .2s linear;
+    // border: 2.5px solid black;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  .input:focus {
+    outline: none;
+    border: 0.5px solid black;
+    box-shadow: -1px -1px 0px black;
+  }
+  
+  .input-container:hover > .icon {
+    animation: anim 1s linear infinite;
+  }
+  
+  @keyframes anim {
+    0%,
+    100% {
+      transform: translateY(calc(-50% - 5px)) scale(1);
+    }
+  
+    50% {
+      transform: translateY(calc(-50% - 5px)) scale(1.3);
+    }
   }

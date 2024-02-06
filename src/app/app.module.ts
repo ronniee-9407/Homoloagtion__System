@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { NgxEchartsModule } from "ngx-echarts";
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { ToastrModule } from 'ngx-toastr';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,7 @@ import { ToastrModule } from 'ngx-toastr';
       "showBackground": false,
       "startFromZero": false})
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
