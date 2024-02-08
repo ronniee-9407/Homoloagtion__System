@@ -11,7 +11,7 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit{
-  constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router, private notifyService: NotificationService,private cookieService: CookieService){
+  constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router, private notifyService: NotificationService){
   }
 
   ngOnInit(): void {

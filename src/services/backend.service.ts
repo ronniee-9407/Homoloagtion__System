@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
+import { tap } from 'rxjs/operators';
 
 
 @Injectable({
@@ -85,6 +86,30 @@ export class BackendService {
   validateUser(data: any): Observable<any>{
     return this.http.post("http://192.168.68.129:5000/login", {'user_data': data,  withCredentials: true });
   }
+
+  // validateUser(data: any): Observable<HttpResponse<any>> {
+  //   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  
+  //   // Use observe: 'response' to get the full response including headers
+  //   return this.http.post(
+  //     "http://192.168.68.129:5000/login",
+  //     {'user_data': data},
+  //     { headers, observe: 'response', withCredentials: true }
+  //   )
+  //   .pipe(
+  //     // Assuming the CSRF token is set in the 'XSRF-TOKEN' cookie
+  //     tap((response: HttpResponse<any>) => {
+  //       console.log('Reached the tap function');  // Debugging line
+  //       const csrfToken = response.headers.get('XSRF-TOKEN');
+  //       if (csrfToken) {
+  //         // Print the CSRF token to the console
+  //         console.log('The token', csrfToken);
+  //         // You can store the CSRF token in a cookie if needed
+  //         // this.cookieService.set('XSRF-TOKEN', csrfToken);
+  //       }
+  //     })
+  //   );
+  // }
 
   adminPasswordReset(data: any): Observable<any>{
     const token = sessionStorage.getItem('authorizationCode')
@@ -191,5 +216,9 @@ export class BackendService {
       headers: headers,
       withCredentials: true 
     });
+  }
+
+  searchByJobId(jobID: any): Observable<any>{
+    return this.http.post("http://192.168.68.129:5000/search_jobId", {'jobID': jobID});
   }
 }
