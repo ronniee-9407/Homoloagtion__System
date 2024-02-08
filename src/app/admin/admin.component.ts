@@ -10,15 +10,27 @@ import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.scss']
+  styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent implements OnInit {
-  admin_view_list = ['Dashboard', 'Pending Report', 'Report Analysis', 'Camera', 'Profile'];
-  feature_logo_list = ['home.png', 'checklist.png', 'report.png', 'video.png', 'user.png'];
+  admin_view_list = [
+    'Dashboard',
+    'Pending Report',
+    'Report Analysis',
+    'Camera',
+    'Profile',
+  ];
+  feature_logo_list = [
+    'home.png',
+    'checklist.png',
+    'report.png',
+    'video.png',
+    'user.png',
+  ];
   curr_admin_view = this.admin_view_list[0];
   pending_report_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-  report_page_flag : boolean = false;
-  inspection_report_flag : boolean = false;
+  report_page_flag: boolean = false;
+  inspection_report_flag: boolean = false;
   approval_flag: boolean = false;
   reject_flag: boolean = false;
   index_for_approve_reject: any = 0;
@@ -28,17 +40,17 @@ export class AdminComponent implements OnInit {
     userId: '',
     password: '',
     camIP: '',
-    port: ''
+    port: '',
   };
   userDetails = {
     name: 'Admin',
     userId: '',
-    designation: ''
-  }
+    designation: '',
+  };
   startDate: any;
   endDate: any;
-  startTime = "00:00";
-  endTime = "23:59";
+  startTime = '00:00';
+  endTime = '23:59';
   picker: Litepicker | undefined;
 
   dataFromDb: any = [];
@@ -61,98 +73,151 @@ export class AdminComponent implements OnInit {
   failed_checkpoints: any = 16;
 
   myChart: any;
-  xAxisData = ['25-12-2023', '26-12-2023', '27-12-2023', '28-12-2023', '29-12-2023', '30-12-2023', '31-12-2023'];
+  xAxisData = [
+    '25-12-2023',
+    '26-12-2023',
+    '27-12-2023',
+    '28-12-2023',
+    '29-12-2023',
+    '30-12-2023',
+    '31-12-2023',
+  ];
   yAxisData = [5, 8, 7, 5, 9, 6, 4];
 
   passwordView = [false, false, false];
 
-  constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router, private notifyService: NotificationService, private cookieService: CookieService){}
+  constructor(
+    private service: BackendService,
+    private sanitizer: DomSanitizer,
+    private router: Router,
+    private notifyService: NotificationService,
+    private cookieService: CookieService
+  ) {}
 
   ngOnInit(): void {
     this.userDetails.userId = String(sessionStorage.getItem('userId'));
     this.userDetails.name = String(sessionStorage.getItem('name'));
     let userType = String(sessionStorage.getItem('userType'));
-    this.userDetails.designation = userType.charAt(0).toUpperCase() + userType.slice(1);
-    setTimeout(()=>{
-      this.createChart(this.xAxisData, this.yAxisData)
-    },10);
+    this.userDetails.designation =
+      userType.charAt(0).toUpperCase() + userType.slice(1);
+    setTimeout(() => {
+      this.createChart(this.xAxisData, this.yAxisData);
+    }, 10);
     this.getDashboardData();
   }
 
-  getDashboardData(){
-    this.service.getWeeklyReport().subscribe((data: any)=>{
-      this.cookieService.set('session', 'cookie_value');
-      console.log('Get weekly report', data); 
-    },
-    (error: any) => {
-      this.notifyService.showError('Please check your Server', 'Server Connection Error');
-    });
+  getDashboardData() {
+    this.service.getWeeklyReport().subscribe(
+      (data: any) => {
+        this.cookieService.set('session', 'cookie_value');
+        console.log('Get weekly report', data);
+      },
+      (error: any) => {
+        this.notifyService.showError(
+          'Please check your Server',
+          'Server Connection Error'
+        );
+      }
+    );
 
-    this.service.getQuarterlyReport().subscribe((data: any)=>{
-      // this.cookieService.set('session', 'cookie_value');
-      console.log('Get quarterly report', data); 
-    },
-    (error: any) => {
-      this.notifyService.showError('Please check your Server', 'Server Connection Error');
-    });
+    this.service.getQuarterlyReport().subscribe(
+      (data: any) => {
+        // this.cookieService.set('session', 'cookie_value');
+        console.log('Get quarterly report', data);
+      },
+      (error: any) => {
+        this.notifyService.showError(
+          'Please check your Server',
+          'Server Connection Error'
+        );
+      }
+    );
 
-    this.service.getPendingReport(this.userDetails.userId).subscribe((data: any)=>{
-      console.log('Pending reports',data);
-    },(error: any)=>{
-      this.notifyService.showError('Please check your Server', 'Server Connection Error');
-    });
+    this.service.getPendingReport(this.userDetails.userId).subscribe(
+      (data: any) => {
+        console.log('Pending reports', data);
+      },
+      (error: any) => {
+        this.notifyService.showError(
+          'Please check your Server',
+          'Server Connection Error'
+        );
+      }
+    );
   }
 
-  changeView(index: any){
+  changeView(index: any) {
     this.curr_admin_view = this.admin_view_list[index];
-    if(index == 2){
+    if (index == 2) {
       setTimeout(() => this.initializingDatePicker(), 0);
     }
-    if(index == 0){
+    if (index == 0) {
       this.getDashboardData();
-      setTimeout(()=>{
-        this.createChart(this.xAxisData, this.yAxisData)
-      },100);
+      setTimeout(() => {
+        this.createChart(this.xAxisData, this.yAxisData);
+      }, 100);
     }
-    if(index == 1){
-      this.service.getPendingReport(this.userDetails.userId).subscribe((data: any)=>{
-        console.log('Pending reports',data);
-      },(error: any)=>{
-        this.notifyService.showError('Please check your Server', 'Server Connection Error');
-      });
+    if (index == 1) {
+      this.service.getPendingReport(this.userDetails.userId).subscribe(
+        (data: any) => {
+          console.log('Pending reports', data);
+        },
+        (error: any) => {
+          this.notifyService.showError(
+            'Please check your Server',
+            'Server Connection Error'
+          );
+        }
+      );
     }
   }
-  goToSearchReport(){
+  goToSearchReport() {
     this.report_page_flag = false;
     setTimeout(() => this.initializingDatePicker(), 0);
   }
 
-  logout(){
-    this.service.logout(this.userDetails.userId).subscribe((data: any)=>{
-      console.log('Logged out', data);
+  logout() {
+    try {
+      this.service.logout(this.userDetails.userId).subscribe(
+        (data: any) => {
+          console.log('Logged out', data);
+          this.router.navigate(['/login']);
+          sessionStorage.removeItem('isUserLoggedIn');
+          sessionStorage.removeItem('userType');
+          sessionStorage.removeItem('userId');
+          sessionStorage.removeItem('name');
+          this.notifyService.showInfo(
+            'Logged out successfully',
+            'Notification'
+          );
+        },
+        (error: any) => {
+          this.notifyService.showError(
+            'Please check your Server',
+            'Server Connection Error'
+          );
+        }
+      );
       this.router.navigate(['/login']);
-      sessionStorage.removeItem('isUserLoggedIn');
-      sessionStorage.removeItem('userType');
-      sessionStorage.removeItem('userId');
-      sessionStorage.removeItem('name');
-      this.notifyService.showInfo('Logged out successfully','Notification');
-    },(error: any)=>{
-      this.notifyService.showError('Please check your Server', 'Server Connection Error');
-    });
-    this.router.navigate(['/login']);
+    } catch (error) {
+      console.log(`Print_error`, error);
+    }
   }
 
-  addCam(){
-    let id = <HTMLInputElement>document.getElementById("user");
+  addCam() {
+    let id = <HTMLInputElement>document.getElementById('user');
     let idValue = id.value;
-    let pass = <HTMLInputElement>document.getElementById("pass");
+    let pass = <HTMLInputElement>document.getElementById('pass');
     let passValue = pass.value;
-    let ip = <HTMLInputElement>document.getElementById("ip");
+    let ip = <HTMLInputElement>document.getElementById('ip');
     let ipValue = ip.value;
-    let port = <HTMLInputElement>document.getElementById("port");
+    let port = <HTMLInputElement>document.getElementById('port');
     let portValue = port.value;
-    if(idValue == '' || passValue == '' || ipValue == ''){
-      this.notifyService.showWarning('Please fill all the fields','Notification');
+    if (idValue == '' || passValue == '' || ipValue == '') {
+      this.notifyService.showWarning(
+        'Please fill all the fields',
+        'Notification'
+      );
       return;
     }
     this.camDetails.userId = idValue;
@@ -160,102 +225,138 @@ export class AdminComponent implements OnInit {
     this.camDetails.camIP = ipValue;
     this.camDetails.port = portValue;
     // console.log('sending cam details',this.camDetails);
-    this.service.addCamera(this.camDetails).subscribe((data: any)=>{
-      console.log('got data for addCam',data);
-      if(data['status']){
-        this.notifyService.showSuccess('Camera added successfully','Notification');
-        id.value = '';
-        pass.value = '';
-        ip.value = '';
+    this.service.addCamera(this.camDetails).subscribe(
+      (data: any) => {
+        console.log('got data for addCam', data);
+        if (data['status']) {
+          this.notifyService.showSuccess(
+            'Camera added successfully',
+            'Notification'
+          );
+          id.value = '';
+          pass.value = '';
+          ip.value = '';
+        } else {
+          this.notifyService.showError(
+            'Invalid Camera credentials',
+            'Notification'
+          );
+        }
+      },
+      (error: any) => {
+        this.notifyService.showError(
+          'Please check your Server',
+          'Server Connection Error'
+        );
       }
-      else{
-        this.notifyService.showError('Invalid Camera credentials','Notification');
-      }
-    },(error: any)=>{
-      this.notifyService.showError('Please check your Server', 'Server Connection Error');
-    })
+    );
   }
 
   initializingDatePicker() {
-    const startDateElement = document.getElementById('start-date') as HTMLInputElement;
-    const endDateElement = document.getElementById('end-date') as HTMLInputElement;
+    const startDateElement = document.getElementById(
+      'start-date'
+    ) as HTMLInputElement;
+    const endDateElement = document.getElementById(
+      'end-date'
+    ) as HTMLInputElement;
     if (startDateElement && endDateElement) {
       this.picker = new Litepicker({
         element: startDateElement,
         elementEnd: endDateElement,
         singleMode: false,
         allowRepick: true,
-        dropdowns: { "minYear": 2020, "maxYear": null, "months": true, "years": true }
+        dropdowns: { minYear: 2020, maxYear: null, months: true, years: true },
       });
-    } 
-    else{
+    } else {
       console.log('Litepicker not initialised........');
     }
   }
 
   searchDateTime() {
-    let tempStartDate = document.getElementById("start-date") as HTMLInputElement;
-    let tempEndDate = document.getElementById("end-date") as HTMLInputElement;
-    let tempStartTime = document.getElementById("start-time") as HTMLInputElement;
-    let tempEndTime = document.getElementById("end-time") as HTMLInputElement;
+    let tempStartDate = document.getElementById(
+      'start-date'
+    ) as HTMLInputElement;
+    let tempEndDate = document.getElementById('end-date') as HTMLInputElement;
+    let tempStartTime = document.getElementById(
+      'start-time'
+    ) as HTMLInputElement;
+    let tempEndTime = document.getElementById('end-time') as HTMLInputElement;
     this.startDate = tempStartDate.value;
     this.endDate = tempEndDate.value;
     this.startTime = tempStartTime.value;
     this.endTime = tempEndTime.value;
-    if (this.startDate == "" && this.endDate == "") {
-      this.notifyService.showInfo("Select Date First!", "Notification");
+    if (this.startDate == '' && this.endDate == '') {
+      this.notifyService.showInfo('Select Date First!', 'Notification');
       return;
     }
-    let stDate = this.startDate +" "+ this.startTime;
-    let edDate = this.endDate +" "+ this.endTime;
+    let stDate = this.startDate + ' ' + this.startTime;
+    let edDate = this.endDate + ' ' + this.endTime;
     let searchData = {
-      'start_date': stDate,
-      'end_date': edDate,
-      'query_page': this.queryPage,
-      'per_page': this.per_page
-    }
+      start_date: stDate,
+      end_date: edDate,
+      query_page: this.queryPage,
+      per_page: this.per_page,
+    };
 
     let fullData = {
-      'start_date': stDate,
-      'end_date': edDate,
-    }
-    
+      start_date: stDate,
+      end_date: edDate,
+    };
+
     this.report_page_flag = true;
-    this.service.searchDateTime(searchData).subscribe((data: any)=>{
-      // this.data_received = false;
-      this.dataFromDb = data['tableData'];
-    },(error: any)=>{
-      this.notifyService.showError('Please check your Server', 'Server Connection Error');
-      return
-    });
-    this.service.searchDateTimeFull(fullData).subscribe((data: any) => {
-      this.totalDBData = data['dbdata'];
-      this.totalDBDataCount = data['totalCount'];
-      // console.log('Total DB data', this.totalDBDataCount)
-    },(error: any)=>{
-      this.notifyService.showError('Please check your Server', 'Server Connection Error');
-      return;
-    });
+    this.service.searchDateTime(searchData).subscribe(
+      (data: any) => {
+        // this.data_received = false;
+        this.dataFromDb = data['tableData'];
+      },
+      (error: any) => {
+        this.notifyService.showError(
+          'Please check your Server',
+          'Server Connection Error'
+        );
+        return;
+      }
+    );
+    this.service.searchDateTimeFull(fullData).subscribe(
+      (data: any) => {
+        this.totalDBData = data['dbdata'];
+        this.totalDBDataCount = data['totalCount'];
+        // console.log('Total DB data', this.totalDBDataCount)
+      },
+      (error: any) => {
+        this.notifyService.showError(
+          'Please check your Server',
+          'Server Connection Error'
+        );
+        return;
+      }
+    );
   }
 
   clickNext() {
     this.queryPage++;
-    let stDate = this.startDate +" "+ this.startTime;
-    let edDate = this.endDate +" "+ this.endTime;
+    let stDate = this.startDate + ' ' + this.startTime;
+    let edDate = this.endDate + ' ' + this.endTime;
     // let query = [stDate, edDate];
     let searchData = {
-      'start_date': stDate,
-      'end_date': edDate,
-      'query_page': this.queryPage,
-      'per_page': this.per_page
-    }
-    this.service.searchDateTime(searchData).subscribe((data: any) => {
-      this.dataFromDb = data['tableData'];
-      this.lenOfArray = this.dataFromDb[0][0];
-    },(error: any)=>{
-      this.notifyService.showError('Please check your Server', 'Server Connection Error');
-      return;
-    });
+      start_date: stDate,
+      end_date: edDate,
+      query_page: this.queryPage,
+      per_page: this.per_page,
+    };
+    this.service.searchDateTime(searchData).subscribe(
+      (data: any) => {
+        this.dataFromDb = data['tableData'];
+        this.lenOfArray = this.dataFromDb[0][0];
+      },
+      (error: any) => {
+        this.notifyService.showError(
+          'Please check your Server',
+          'Server Connection Error'
+        );
+        return;
+      }
+    );
 
     if (this.queryPage * this.per_page > this.totalDBDataCount) {
       this.nextAvailable = false;
@@ -265,115 +366,138 @@ export class AdminComponent implements OnInit {
 
   clickPrevious() {
     this.queryPage--;
-    let stDate = this.startDate +" "+ this.startTime;
-    let edDate = this.endDate +" "+ this.endTime;
+    let stDate = this.startDate + ' ' + this.startTime;
+    let edDate = this.endDate + ' ' + this.endTime;
     // let query = [stDate, edDate];
     let searchData = {
-      'start_date': stDate,
-      'end_date': edDate,
-      'query_page': this.queryPage,
-      'per_page': this.per_page
-    }
-    this.service.searchDateTime(searchData).subscribe((data: any) => {
-      this.dataFromDb = data['tableData'];
-      this.lenOfArray = this.dataFromDb[0][0];
-    },(error: any)=>{
-      this.notifyService.showError('Please check your Server', 'Server Connection Error');
-      return;
-    });
+      start_date: stDate,
+      end_date: edDate,
+      query_page: this.queryPage,
+      per_page: this.per_page,
+    };
+    this.service.searchDateTime(searchData).subscribe(
+      (data: any) => {
+        this.dataFromDb = data['tableData'];
+        this.lenOfArray = this.dataFromDb[0][0];
+      },
+      (error: any) => {
+        this.notifyService.showError(
+          'Please check your Server',
+          'Server Connection Error'
+        );
+        return;
+      }
+    );
 
-    if (this.queryPage == 1)
-      this.previousAvailable = false;
+    if (this.queryPage == 1) this.previousAvailable = false;
 
     if (this.queryPage * this.per_page < this.totalDBDataCount) {
       this.nextAvailable = true;
     }
   }
 
-  goToPendingReport(){
+  goToPendingReport() {
     this.curr_admin_view = this.admin_view_list[1];
     this.inspection_report_flag = false;
     this.approval_flag = false;
     this.reject_flag = false;
-    this.service.getPendingReport(this.userDetails.userId).subscribe((data: any)=>{
-      console.log('Pending reports',data);
-    },(error: any)=>{
-      this.notifyService.showError('Please check your Server', 'Server Connection Error');
-    });
+    this.service.getPendingReport(this.userDetails.userId).subscribe(
+      (data: any) => {
+        console.log('Pending reports', data);
+      },
+      (error: any) => {
+        this.notifyService.showError(
+          'Please check your Server',
+          'Server Connection Error'
+        );
+      }
+    );
   }
-  approveToggle(data: any){
+  approveToggle(data: any) {
     // console.log('index for approval...',data);
     this.approval_flag = true;
     this.index_for_approve_reject = data;
   }
-  rejectToggle(data: any){
+  rejectToggle(data: any) {
     // console.log('index for rejection...',data);
     this.reject_flag = true;
     this.index_for_approve_reject = data;
   }
 
-  reportApproved(data: any){
-    if(!data){
+  reportApproved(data: any) {
+    if (!data) {
       this.approval_flag = false;
-    }
-    else{
+    } else {
       // console.log('Report Approved');
       this.approval_flag = false;
     }
   }
-  reportRejected(data: any){
-    if(!data){
+  reportRejected(data: any) {
+    if (!data) {
       this.reject_flag = false;
-    }
-    else{
+    } else {
       // console.log('Report Rejected');
       this.reject_flag = false;
     }
   }
 
-  viewReport(data: any){
+  viewReport(data: any) {
     let jobId = 12345;
-    this.service.getPendingReportDetails(jobId).subscribe((data: any) => {
-      this.success_checkpoints = data['success'];
-      this.failed_checkpoints = data['failed'];
-      // this.inspection_report_flag = true;
-      // this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
-    },(error: any)=>{
-      this.notifyService.showError('Please check your Server', 'Server Connection Error');
-      return;
-    });
+    this.service.getPendingReportDetails(jobId).subscribe(
+      (data: any) => {
+        this.success_checkpoints = data['success'];
+        this.failed_checkpoints = data['failed'];
+        // this.inspection_report_flag = true;
+        // this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
+      },
+      (error: any) => {
+        this.notifyService.showError(
+          'Please check your Server',
+          'Server Connection Error'
+        );
+        return;
+      }
+    );
     this.inspection_report_flag = true;
-    setTimeout(()=>{
+    setTimeout(() => {
       this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
-    },10);
+    }, 10);
   }
-  viewReportFromdashboard(){
+  viewReportFromdashboard() {
     let jobId = 12345;
-    this.service.getPendingReportDetails(jobId).subscribe((data: any) => {
-      this.success_checkpoints = data['success'];
-      this.failed_checkpoints = data['failed'];
-      this.inspection_report_flag = true;
-      // this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
-    },(error: any)=>{
-      this.notifyService.showError('Please check your Server', 'Server Connection Error');
-      return;
-    });
+    this.service.getPendingReportDetails(jobId).subscribe(
+      (data: any) => {
+        this.success_checkpoints = data['success'];
+        this.failed_checkpoints = data['failed'];
+        this.inspection_report_flag = true;
+        // this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
+      },
+      (error: any) => {
+        this.notifyService.showError(
+          'Please check your Server',
+          'Server Connection Error'
+        );
+        return;
+      }
+    );
     this.inspection_report_flag = true;
     this.curr_admin_view = this.admin_view_list[1];
-    setTimeout(()=>{
+    setTimeout(() => {
       this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
-    },10);
+    }, 10);
   }
 
-  createPieChart(xData: any, yData: any){
-    let myChart2 = echarts.init(document.getElementById('chart2') as HTMLDivElement);
+  createPieChart(xData: any, yData: any) {
+    let myChart2 = echarts.init(
+      document.getElementById('chart2') as HTMLDivElement
+    );
     const option = {
       tooltip: {
-        trigger: 'item'
+        trigger: 'item',
       },
       legend: {
         // top: '5%',
-        left: 'center'
+        left: 'center',
       },
       series: [
         {
@@ -385,167 +509,177 @@ export class AdminComponent implements OnInit {
           itemStyle: {
             borderRadius: 10,
             borderColor: '#fff',
-            borderWidth: 2
+            borderWidth: 2,
           },
           label: {
             show: false,
-            position: 'center'
+            position: 'center',
           },
           emphasis: {
             label: {
               show: true,
               fontSize: 10,
-              fontWeight: 'bold'
-            }
+              fontWeight: 'bold',
+            },
           },
           labelLine: {
-            show: false
+            show: false,
           },
           data: [
-            { value: xData, name: 'Success', itemStyle: { color: '#1bf372' }},
-            { value: yData, name: 'Failed',  itemStyle: { color: '#ff4545' }} 
-          ]
-        }
-      ]
+            { value: xData, name: 'Success', itemStyle: { color: '#1bf372' } },
+            { value: yData, name: 'Failed', itemStyle: { color: '#ff4545' } },
+          ],
+        },
+      ],
     };
     myChart2.setOption(option);
   }
 
-  createChart(xData: any, yData: any){
+  createChart(xData: any, yData: any) {
     const maxValue = Math.max(...yData);
     this.myChart = echarts.init(document.getElementById('chart1') as any);
     const option_1 = {
-    color: [ '#70b3e2 '],
-    tooltip: {
-      trigger: 'axis',
-      showContent: true,
-      axisPointer: {
-        type: "cross",
-        crossStyle: {
-          color: "#ccc",
-        },
-      }
-    },
-    toolbox: {
-      show: true,
-      feature: {
-        dataZoom: {
-          yAxisIndex: 'none'
-        },
-        dataView: {show: true, readOnly: false},
-        // magicType: {show: true, type: ["bar", "line"]},
-        saveAsImage: {show: true},
-      }
-    },
-    grid: {
-      top: '25%',
-      bottom: '15%',
-      left: '15%'
-    },
-    xAxis: {
-      name: 'Date',
-      nameLocation: 'middle',
-      nameGap: 38,
-      type: 'category',
-      boundaryGap: true,
-      data: xData,
-      axisPointer: {
-        type: "shadow",
-      },
-      nameTextStyle: { 
-        fontWeight: 'bold',
-        fontSize: 14, 
-        color: 'black' ,
-        padding: [20,0,0,0],
-        verticalAlign: 'bottom'
-      },
-      // position: 'bottom'
-    },
-    yAxis: {
-      type: 'value',
-      name: "Inspected Vehicle",
-      nameGap: 35,
-      max: Math.floor(maxValue + 1),
-      axisLabel: {
-        formatter: '{value}'
-      },
-      nameTextStyle: { 
-        fontWeight: 'bold',
-        fontSize: 14, 
-        color: 'black' 
-      }
-    },
-    series: [
-      {
-        // name: 'Top',
-        type: 'bar',
-        data: yData,
-        emphasis: { focus: 'series' },
-        markPoint: {
-          data: [
-            { type: 'max', name: 'Max' },
-            { type: 'min', name: 'Min' }
-          ]
+      color: ['#70b3e2 '],
+      tooltip: {
+        trigger: 'axis',
+        showContent: true,
+        axisPointer: {
+          type: 'cross',
+          crossStyle: {
+            color: '#ccc',
+          },
         },
       },
-    ]
-    } 
+      toolbox: {
+        show: true,
+        feature: {
+          dataZoom: {
+            yAxisIndex: 'none',
+          },
+          dataView: { show: true, readOnly: false },
+          // magicType: {show: true, type: ["bar", "line"]},
+          saveAsImage: { show: true },
+        },
+      },
+      grid: {
+        top: '25%',
+        bottom: '15%',
+        left: '15%',
+      },
+      xAxis: {
+        name: 'Date',
+        nameLocation: 'middle',
+        nameGap: 38,
+        type: 'category',
+        boundaryGap: true,
+        data: xData,
+        axisPointer: {
+          type: 'shadow',
+        },
+        nameTextStyle: {
+          fontWeight: 'bold',
+          fontSize: 14,
+          color: 'black',
+          padding: [20, 0, 0, 0],
+          verticalAlign: 'bottom',
+        },
+        // position: 'bottom'
+      },
+      yAxis: {
+        type: 'value',
+        name: 'Inspected Vehicle',
+        nameGap: 35,
+        max: Math.floor(maxValue + 1),
+        axisLabel: {
+          formatter: '{value}',
+        },
+        nameTextStyle: {
+          fontWeight: 'bold',
+          fontSize: 14,
+          color: 'black',
+        },
+      },
+      series: [
+        {
+          // name: 'Top',
+          type: 'bar',
+          data: yData,
+          emphasis: { focus: 'series' },
+          markPoint: {
+            data: [
+              { type: 'max', name: 'Max' },
+              { type: 'min', name: 'Min' },
+            ],
+          },
+        },
+      ],
+    };
     this.myChart.setOption(option_1);
   }
 
-  changePassword(){
-    let oldPass = <HTMLInputElement>document.getElementById("name");
+  changePassword() {
+    let oldPass = <HTMLInputElement>document.getElementById('name');
     let oldPassValue = oldPass.value;
-    let newPass = <HTMLInputElement>document.getElementById("password");
+    let newPass = <HTMLInputElement>document.getElementById('password');
     let newPassValue = newPass.value;
-    let cnfPass = <HTMLInputElement>document.getElementById("password2");
+    let cnfPass = <HTMLInputElement>document.getElementById('password2');
     let cnfPassValue = cnfPass.value;
-    if(oldPassValue == '' || newPassValue == '' || cnfPassValue == ''){
-      this.notifyService.showWarning('Input fields cannot be empty','Warning');
+    if (oldPassValue == '' || newPassValue == '' || cnfPassValue == '') {
+      this.notifyService.showWarning('Input fields cannot be empty', 'Warning');
       return;
     }
 
-    if(newPassValue === cnfPassValue){
+    if (newPassValue === cnfPassValue) {
       let data = {
-        'oldPassword' : oldPassValue,
-        'newPassword' : newPassValue,
-        'userId' : this.userDetails.userId
+        oldPassword: oldPassValue,
+        newPassword: newPassValue,
+        userId: this.userDetails.userId,
       };
       // console.log('new data',data);
-      this.service.adminPasswordReset(data).subscribe((data: any)=>{
-        console.log('Data',data);
-        if(data['status']){
-          this.notifyService.showSuccess('Password changed successfully','Notification');
-          oldPass.value = '';
-          newPass.value = '';
-          cnfPass.value = '';
+      this.service.adminPasswordReset(data).subscribe(
+        (data: any) => {
+          console.log('Data', data);
+          if (data['status']) {
+            this.notifyService.showSuccess(
+              'Password changed successfully',
+              'Notification'
+            );
+            oldPass.value = '';
+            newPass.value = '';
+            cnfPass.value = '';
+          } else {
+            this.notifyService.showError(
+              'Old password did not matched',
+              'Notification'
+            );
+          }
+        },
+        (error: any) => {
+          this.notifyService.showError(
+            'Please check your Server',
+            'Server Connection Error'
+          );
         }
-        else{
-          this.notifyService.showError('Old password did not matched','Notification');
-        }
-      },(error: any)=>{
-        this.notifyService.showError('Please check your Server', 'Server Connection Error');
-      })
+      );
+    } else {
+      this.notifyService.showWarning(
+        'New password and Confirm password does not match',
+        'Notification'
+      );
     }
-    else{
-      this.notifyService.showWarning('New password and Confirm password does not match','Notification');
-    }
-
   }
 
-  viewPassword(id: any, index: any){
+  viewPassword(id: any, index: any) {
     this.passwordView[index] = true;
     let currId = <HTMLInputElement>document.getElementById(id);
     currId.type = 'text';
   }
 
-  closePassword(id: any, index: any){
+  closePassword(id: any, index: any) {
     this.passwordView[index] = false;
     let currId = <HTMLInputElement>document.getElementById(id);
     currId.type = 'password';
   }
 
-  toggleSubParts(){
-
-  }
+  toggleSubParts() {}
 }

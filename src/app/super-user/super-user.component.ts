@@ -283,7 +283,7 @@ export class SuperUserComponent implements OnInit {
         }
         console.log("edit Admin clicked.", newData);
         this.service.modifyAdminOperatorPassword(newData).subscribe((data: any)=>{
-          // console.log('Modify admin operator password', data);
+          console.log('Modify admin operator password', data);
           if(data['status']){
             this.notifyService.showSuccess('Password updated successfully','Notification');
             id.value = '';
