@@ -13,19 +13,14 @@ export class BackendService {
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   addCamera(camDetails: any): Observable<any>{
-    console.log('camDetails____',camDetails);
     const token = sessionStorage.getItem('authorizationCode')
 
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
 
-    console.log(`token_____`, token);
-
-    return this.http.post("http://192.168.68.129:5000/add_camera", { 
+    return this.http.post("http://192.168.68.129:5000/add_camera", {camDetails}, { 
       headers: headers,
-      "cam_details": camDetails,
-      withCredentials: true 
     });
   }
 
@@ -120,12 +115,24 @@ export class BackendService {
 
     console.log("token_____", token);
     
-    console.log(`newData`, data);
-    return this.http.post("http://192.168.68.129:5000/modify_admin_password", { 
-      headers: headers,
-      'newData': data,
-      withCredentials: true 
+    return this.http.put("http://192.168.68.129:5000/modify_admin_password", {data} ,{ 
+      headers
     });
+  }
+
+  modifyAdminOperatorPassword(data: any): Observable<any>{
+    const token = sessionStorage.getItem('authorizationCode')
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    console.log(`token______`, token);
+
+    return this.http.put("http://192.168.68.129:5000/modify_password", {data} ,{ 
+      headers
+    });
+
   }
 
   showNumberOfUsers(): Observable<any>{
@@ -180,29 +187,15 @@ export class BackendService {
 
     return this.http.post(
       'http://192.168.68.129:5000/registration',
+      {data},
       {
         headers: headers,
-        'user_data': data,
-        withCredentials: true,
       }
     );
 
     }
 
-  modifyAdminOperatorPassword(data: any): Observable<any>{
-    const token = sessionStorage.getItem('authorizationCode')
 
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
-    return this.http.post("http://192.168.68.129:5000/modify_admin_opeartor_password", { 
-      headers: headers,
-      'modified_data': data,
-      withCredentials: true 
-    });
-
-  }
 
   logout(employeeId: any){
 
@@ -212,9 +205,8 @@ export class BackendService {
       'Authorization': `Bearer ${token}`
     });    
     console.log(`token____`, token);
-    return this.http.post("http://192.168.68.129:5000/logout", { 
-      headers: headers,
-      withCredentials: true 
+    return this.http.get("http://192.168.68.129:5000/logout", { 
+      headers
     });
   }
 
