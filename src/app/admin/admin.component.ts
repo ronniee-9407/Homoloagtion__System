@@ -68,7 +68,13 @@ export class AdminComponent implements OnInit {
 
   passwordView = [false, false, false];
 
-  constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router, private notifyService: NotificationService){}
+  constructor(
+      private service: BackendService, 
+      private sanitizer: DomSanitizer, 
+      private router: Router, 
+      private notifyService: NotificationService, 
+      private cookieService: CookieService
+    ){}
 
   ngOnInit(): void {
     this.userDetails.userId = String(sessionStorage.getItem('userId'));
@@ -161,15 +167,21 @@ export class AdminComponent implements OnInit {
   logout(){
     this.service.logout(this.userDetails.userId).subscribe((data: any)=>{
       console.log('Logged out', data);
-      this.router.navigate(['/login']);
-      sessionStorage.removeItem('isUserLoggedIn');
-      sessionStorage.removeItem('userType');
-      sessionStorage.removeItem('userId');
-      sessionStorage.removeItem('name');
+      // sessionStorage.removeItem('isUserLoggedIn');
+      // sessionStorage.removeItem('userType');
+      // sessionStorage.removeItem('userId');
+      // sessionStorage.removeItem('name');
+      // sessionStorage.removeItem('authorizationCode');
+      // this.router.navigate(['/login']);
       this.notifyService.showInfo('Logged out successfully','Notification');
     },(error: any)=>{
       this.notifyService.showError('Please check your Server', 'Server Connection Error');
     });
+    sessionStorage.removeItem('isUserLoggedIn');
+    sessionStorage.removeItem('userType');
+    sessionStorage.removeItem('userId');
+    sessionStorage.removeItem('name');
+    sessionStorage.removeItem('authorizationCode');
     this.router.navigate(['/login']);
   }
 
