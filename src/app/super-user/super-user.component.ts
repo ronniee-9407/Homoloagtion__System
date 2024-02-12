@@ -283,12 +283,12 @@ export class SuperUserComponent implements OnInit {
     
     this.service.logout(this.userDetails.userId).subscribe((data: any)=>{
       console.log('Logged out', data);
-      // sessionStorage.removeItem('isUserLoggedIn');
-      // sessionStorage.removeItem('userType');
-      // sessionStorage.removeItem('userId');
-      // sessionStorage.removeItem('name');
-      // sessionStorage.removeItem('authorizationCode');
-      // this.router.navigate(['/login']);
+      sessionStorage.removeItem('isUserLoggedIn');
+      sessionStorage.removeItem('userType');
+      sessionStorage.removeItem('userId');
+      sessionStorage.removeItem('name');
+      sessionStorage.removeItem('authorizationCode');
+      this.router.navigate(['/login']);
       this.notifyService.showInfo('Logged out successfully','Notification');
     },
     (error: any)=>{
@@ -296,12 +296,12 @@ export class SuperUserComponent implements OnInit {
       this.notifyService.showError('Logout unsuccessful', 'Server Connection Error');
       return;
     });
-    sessionStorage.removeItem('isUserLoggedIn');
-    sessionStorage.removeItem('userType');
-    sessionStorage.removeItem('userId');
-    sessionStorage.removeItem('name');
-    sessionStorage.removeItem('authorizationCode');
-    this.router.navigate(['/login']);
+    // sessionStorage.removeItem('isUserLoggedIn');
+    // sessionStorage.removeItem('userType');
+    // sessionStorage.removeItem('userId');
+    // sessionStorage.removeItem('name');
+    // sessionStorage.removeItem('authorizationCode');
+    // this.router.navigate(['/login']);
   }
 
   //! Funciton to create the new Admin
