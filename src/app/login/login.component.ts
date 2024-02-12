@@ -64,6 +64,7 @@ export class LoginComponent implements OnInit{
       'password' : password,
       'user_type' : this.curr_user
     };
+    console.log('User logging data',user_data);
     this.service.validateUser(user_data).subscribe((data: any)=>{
       let login_status = data['status'];
       let name = data['name'];

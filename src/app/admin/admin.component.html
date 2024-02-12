@@ -225,7 +225,7 @@
                 <button class="backBtnSize bg-color_black" (click)="goToSearchReport()">Back</button>
             </div>
 
-            <div *ngIf="report_page_flag_detail && !report_page_flag" class="reportDataClass flex-col-even">
+            <div *ngIf="!report_page_flag && report_page_flag_detail" class="reportDataClass flex-col-even">
                 <div class="report_table_class">
                     <table>
                         <thead style="text-align: center; background-color: #0575E6; color: white; position: sticky; top: 0%; height: 37px; z-index: 10;">
@@ -405,7 +405,7 @@
                                 <img *ngIf="!passwordView[1]" src="../../assets/icons/view.png" alt="" class="viewPasswordClass" (click)="viewPassword('password', 1)">
                                 <img *ngIf="passwordView[1]" src="../../assets/icons/close-eye.png" alt="" class="viewPasswordClass" (click)="closePassword('password', 1)">
                             </div>
-                            <div class="password__group field">
+                            <div class="password__group field" (keydown.enter)="changePassword()">
                                 <input type="password" class="Cnfpassword__field" placeholder="cnfPassword" name="password2" id='password2' required autocomplete="off" />
                                 <label for="password2" class="form__label">Confirm Password</label>
                                 <img *ngIf="!passwordView[2]" src="../../assets/icons/view.png" alt="" class="viewPasswordClass" (click)="viewPassword('password2', 2)">
