@@ -12,8 +12,10 @@
             <div class="nav-bar-container">
                 <div class="allOptions">
                     <img class="icon-home" src="../../assets/home.png" alt="home" (click)="changeOptions('home')">
-                    <img class="icon-add-friend" src="../../assets/add-friend.png" alt="add-friend" (click)="changeOptions('add_del')">
-                    <img class="icon-video" src="../../assets/video (1).png" alt="video" (click)="changeOptions('cam_details')">
+                    <img class="icon-add-friend" src="../../assets/add-friend.png" alt="add-friend"
+                        (click)="changeOptions('add_del')">
+                    <img class="icon-video" src="../../assets/video (1).png" alt="video"
+                        (click)="changeOptions('cam_details')">
                     <img class="icon-clock" src="../../assets/clock.png" alt="clock" (click)="changeOptions('report')">
                 </div>
                 <div class="logout">
@@ -33,7 +35,7 @@
                                 <span class="head_text">No. of Admin</span>
                             </div>
                             <div class="card_data">
-                                <span class="card_value">21</span>
+                                <span class="card_value">{{totalAdmin}}</span>
                             </div>
                         </div>
                         <div class="active_card">
@@ -42,7 +44,7 @@
                                 <span class="head_text">No. of Operator</span>
                             </div>
                             <div class="card_data">
-                                <span class="card_value">42</span>
+                                <span class="card_value">{{totalOperator}}</span>
                             </div>
                         </div>
                     </div>
@@ -63,10 +65,26 @@
                 </div>
                 <div class="bottom_container">
                     <div class="overall_report">
-                        <div class="report_head"></div>
+                        <div class="graph_title">Overall Inspection Report</div>
                         <div class="report_container">
-                            <div class="report_graph"></div>
-                            <div class="report_data"></div>
+                            <div id="graph_area2" style="position:relative; height: 32vh; width: 40%; z-index: 3"></div>
+                            <div class="report_data">
+                                <div class="report_data_title">
+                                    <span class="report_data_line">
+                                        
+                                    </span><span class="report_data_line"></span>
+                                </div>
+                                <div class="report_data_title">
+                                    <span class="report_data_line">
+                                        
+                                    </span><span class="report_data_line"></span>
+                                </div>
+                                <div class="report_data_title">
+                                    <span class="report_data_line">
+                                        
+                                    </span><span class="report_data_line"></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="tabular_data"></div>
@@ -91,14 +109,14 @@
                         <br>
                         <div class="form__group field">
                             <label for="password" class="form__label">Password</label>
-                            <input type="password" class="form__field" placeholder="Name" name="name" id='password' required
-                                autocomplete="off">
+                            <input type="password" class="form__field" placeholder="Name" name="name" id='password'
+                                required autocomplete="off">
                         </div>
                         <br>
                         <div class="form__group field">
                             <label for="name" class="form__label">Port :</label>
-                            <input type="input" class="form__field" placeholder="Name" name="name" id='port' value="554" readonly required
-                                autocomplete="off">
+                            <input type="input" class="form__field" placeholder="Name" name="name" id='port' value="554"
+                                readonly required autocomplete="off">
                         </div>
                         <br>
                         <!-- <div class="form__group field">
@@ -134,26 +152,26 @@
                                     <div class="cameraDetailsForm">
                                         <div class="form__group field">
                                             <label for="name" class="form__label">Name :</label>
-                                            <input type="input" class="form__field" placeholder="Name" name="name" id='name' required
-                                                autocomplete="off" />
+                                            <input type="input" class="form__field" placeholder="Name" name="name"
+                                                id='name' required autocomplete="off" />
                                         </div>
                                         <br>
                                         <div class="form__group field">
                                             <label for="name" class="form__label">User ID :</label>
-                                            <input type="input" class="form__field" placeholder="Name" name="name" id='name2' required
-                                                autocomplete="off" />
+                                            <input type="input" class="form__field" placeholder="Name" name="name"
+                                                id='name2' required autocomplete="off" />
                                         </div>
                                         <br>
                                         <div class="form__group field">
                                             <label for="password" class="form__label">Password</label>
-                                            <input type="password" class="form__field" placeholder="Name" name="name" id='password1' required
-                                                autocomplete="off" />
+                                            <input type="password" class="form__field" placeholder="Name" name="name"
+                                                id='password1' required autocomplete="off" />
                                         </div>
                                         <br>
                                         <div class="form__group field">
                                             <label for="name" class="form__label">Confirm Password :</label>
-                                            <input type="password" class="form__field" placeholder="Name" name="name" id='password2' required
-                                                autocomplete="off" />
+                                            <input type="password" class="form__field" placeholder="Name" name="name"
+                                                id='password2' required autocomplete="off" />
                                         </div>
                                         <br>
                                         <br>
@@ -169,20 +187,20 @@
                                     <div class="cameraDetailsForm">
                                         <div class="form__group field">
                                             <label for="name" class="form__label">Enter ID :</label>
-                                            <input type="input" class="form__field" placeholder="Name" name="name" id="employeeId" required
-                                                autocomplete="off" />
+                                            <input type="input" class="form__field" placeholder="Name" name="name"
+                                                id="employeeId" required autocomplete="off" />
                                         </div>
                                         <br>
                                         <div class="form__group field">
                                             <label for="password" class="form__label">New Password</label>
-                                            <input type="password" class="form__field" placeholder="Name" name="name" id="newPassword"  required
-                                                autocomplete="off" />
+                                            <input type="password" class="form__field" placeholder="Name" name="name"
+                                                id="newPassword" required autocomplete="off" />
                                         </div>
                                         <br>
                                         <div class="form__group field">
                                             <label for="password" class="form__label">Confirm Password</label>
-                                            <input type="password" class="form__field" placeholder="Name" name="name" id="cnfPassword" required
-                                                autocomplete="off" />
+                                            <input type="password" class="form__field" placeholder="Name" name="name"
+                                                id="cnfPassword" required autocomplete="off" />
                                         </div>
                                         <br>
                                         <br>
@@ -201,26 +219,26 @@
                                     <div class="cameraDetailsForm">
                                         <div class="form__group field">
                                             <label for="name" class="form__label">Name :</label>
-                                            <input type="input" class="form__field" placeholder="Name" name="name" id='name' required
-                                                autocomplete="off" />
+                                            <input type="input" class="form__field" placeholder="Name" name="name"
+                                                id='name' required autocomplete="off" />
                                         </div>
                                         <br>
                                         <div class="form__group field">
                                             <label for="name" class="form__label">User ID :</label>
-                                            <input type="input" class="form__field" placeholder="Name" name="name" id='name2' required
-                                                autocomplete="off" />
+                                            <input type="input" class="form__field" placeholder="Name" name="name"
+                                                id='name2' required autocomplete="off" />
                                         </div>
                                         <br>
                                         <div class="form__group field">
                                             <label for="password" class="form__label">Password</label>
-                                            <input type="password" class="form__field" placeholder="Name" name="name" id='password1' required
-                                                autocomplete="off" />
+                                            <input type="password" class="form__field" placeholder="Name" name="name"
+                                                id='password1' required autocomplete="off" />
                                         </div>
                                         <br>
                                         <div class="form__group field">
                                             <label for="name" class="form__label">Confirm Password :</label>
-                                            <input type="password" class="form__field" placeholder="Name" name="name" id='password2' required
-                                                autocomplete="off" />
+                                            <input type="password" class="form__field" placeholder="Name" name="name"
+                                                id='password2' required autocomplete="off" />
                                         </div>
                                         <br>
                                         <br>
@@ -236,20 +254,20 @@
                                     <div class="cameraDetailsForm">
                                         <div class="form__group field">
                                             <label for="name" class="form__label">Enter ID :</label>
-                                            <input type="input" class="form__field" placeholder="Name" name="name" id='employeeId' required
-                                                autocomplete="off" />
+                                            <input type="input" class="form__field" placeholder="Name" name="name"
+                                                id='employeeId' required autocomplete="off" />
                                         </div>
                                         <br>
                                         <div class="form__group field">
                                             <label for="password" class="form__label">New Password</label>
-                                            <input type="password" class="form__field" placeholder="Name" name="name" id='newPassword' required
-                                                autocomplete="off" />
+                                            <input type="password" class="form__field" placeholder="Name" name="name"
+                                                id='newPassword' required autocomplete="off" />
                                         </div>
                                         <br>
                                         <div class="form__group field">
                                             <label for="password" class="form__label">Confirm Password</label>
-                                            <input type="password" class="form__field" placeholder="Name" name="name" id='cnfPassword' required
-                                                autocomplete="off" />
+                                            <input type="password" class="form__field" placeholder="Name" name="name"
+                                                id='cnfPassword' required autocomplete="off" />
                                         </div>
                                         <br>
                                         <br>
