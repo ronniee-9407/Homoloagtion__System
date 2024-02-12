@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit{
       'user_type' : this.curr_user
     };
     this.service.validateUser(user_data).subscribe((data: any)=>{
-      console.log('login data',data);
+      // console.log('login data',data);
       let login_status = data['status'];
       let name = data['name'];
       this.login_clicked = false;
@@ -80,7 +80,6 @@ export class LoginComponent implements OnInit{
         // this.notifyService.showSuccess('Logged in successfully','Notification');
       }
       else{
-        // localStorage.setItem('isUserLoggedIn', 'false');
         this.notifyService.showError('Incorrect login Credentials','Error')
       }
     },

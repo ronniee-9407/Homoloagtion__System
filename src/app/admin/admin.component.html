@@ -6,8 +6,8 @@
     <div class="leftContainer flex-col-even">
         <div class="upperContainer flex-col-even">
             <img src="../../assets/icons/profile.png" alt="" class="adminProfileClass" (click)="changeView(4)">
-            <h2 class="greet">Hi {{userDetails.name}} !</h2>
-            <p class="greet">Employee ID : {{userDetails.userId}}</p>
+            <h2 class="greet">Hi {{userDetails.name}}</h2>
+            <p class="greet" style="font-size: 13px;">Employee ID : {{userDetails.userId}}</p>
         </div>
         <div class="lowerContainer">
             <div class="adminFeatureClass flex-col-even">
@@ -51,7 +51,7 @@
     <div class="leftContainerClass flex-col-even">
         <div class="upperContainer flex-col-even">
             <img src="../../assets/icons/profile.png" alt="" class="smallProfileClass" >
-            <h4 class="greet" style="font-size: 12px;">Hi {{userDetails.name}} !</h4>
+            <h4 class="greet" style="font-size: 12px; text-align: center;">Hi {{userDetails.name}}</h4>
             <!-- <p class="greet" style="font-size: 8px; width: 90%;">Employee ID : HSA12345</p> -->
         </div>
 
@@ -74,10 +74,10 @@
             <div *ngFor="let value of pending_report_list; let i = index" class="pending_report_container flex-row-even">
                 <div class="pending_data_container flex-row-even">
                     <!-- <h4 class="greet w-25">Date/Time</h4> -->
-                    <h3 class="greet w-15">JOB ID</h3>
-                    <h3 class="greet w-30">26-12-2023  05:00 PM</h3>
-                    <h3 class="greet w-45">Inspection of Activa 125cc</h3>
-                    <h4 class="greet w-10 link" (click)="viewReport(i+1)">Preview</h4>
+                    <h3 class="greet w-15">{{value.job_id}}</h3>
+                    <h3 class="greet w-30">{{value['date_time']}}</h3>
+                    <h3 class="greet w-45">Inspection of {{value.vehicle_name}} 125cc</h3>
+                    <h4 class="greet w-10 link" (click)="viewReport(i)">Preview</h4>
                 </div>
                 <div class="btnContainer flex-row-even">
                     <img class="h-100" src="../../assets/icons/yes.png" alt="" (click)="approveToggle(i+1)">
@@ -114,47 +114,6 @@
             </div>
         </div>
         <div class="pendingReportTable">
-            <!-- <div *ngFor="let data of pending_report_list; let i = index" class="partContainer">
-                <h3 class="ff partName">
-                    <input type="checkbox" id="part_name" name="part_name" (click)="toggleSubParts(i)">
-                    Part Name
-                </h3><br>
-        
-                <div class="subPartContainer flex-row-even">
-                    <input type="checkbox" id="sub_part_1" name="sub_part_1" value="sub_part_1" [(ngModel)]="subpart.checked" class="pending_report_checkbox">
-                    <p class="pending_report_subPartName">Sub-Part 1</p>
-                    <p class="pending_report_subPartStatus">True</p>
-                </div>
-        
-                <div class="subPartContainer flex-row-even">
-                    <input type="checkbox" id="sub_part_2" name="sub_part_2" value="sub_part_2" class="pending_report_checkbox">
-                    <p class="pending_report_subPartName">Sub-Part 2</p>
-                    <p class="pending_report_subPartStatus">True</p>
-                </div>
-        
-                <div class="subPartContainer flex-row-even">
-                    <input type="checkbox" id="sub_part_3" name="sub_part_3" value="sub_part_3" class="pending_report_checkbox">
-                    <p class="pending_report_subPartName">Sub-Part 3</p>
-                    <p class="pending_report_subPartStatus">True</p>
-                </div>
-        
-                <div class="subPartContainer flex-row-even">
-                    <input type="checkbox" id="sub_part_4" name="sub_part_4" value="sub_part_4" class="pending_report_checkbox">
-                    <p class="pending_report_subPartName">Sub-Part 4</p>
-                    <p class="pending_report_subPartStatus">True</p>
-                </div>
-        
-                <div class="subPartContainer flex-row-even">
-                    <input type="checkbox" id="sub_part_5" name="sub_part_5" value="sub_part_5" class="pending_report_checkbox">
-                    <p class="pending_report_subPartName">Sub-Part 5</p>
-                    <p class="pending_report_subPartStatus">True</p>
-                </div>
-                <div class="subPartContainer flex-row-even">
-                    <input type="checkbox" id="sub_part_6" name="sub_part_6" value="sub_part_6" class="pending_report_checkbox">
-                    <p class="pending_report_subPartName">Sub-Part 6</p>
-                    <p class="pending_report_subPartStatus">True</p>
-                </div>
-            </div> -->
             <div *ngFor="let data of pending_report_list; let i = index" class="partContainer">
                 <h3 class="ff partName">
                   <input type="checkbox" id="part_name" name="part_name" [(ngModel)]="data.checked" (click)="toggleSubParts(i)">
@@ -200,7 +159,7 @@
     <div class="leftContainerClass flex-col-even">
         <div class="upperContainer flex-col-even">
             <img src="../../assets/icons/profile.png" alt="" class="smallProfileClass" >
-            <h4 class="greet" style="font-size: 12px;">Hi {{userDetails.name}} !</h4>
+            <h4 class="greet" style="font-size: 12px; text-align: center;">Hi {{userDetails.name}}</h4>
             <!-- <p class="greet" style="font-size: 8px; width: 90%;">Employee ID : HSA12345</p> -->
         </div>
 
@@ -279,33 +238,36 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let part of pending_report_list">
+                            <tr *ngFor="let key of pending_report_list_details | keyvalue">
                                 <td>
-                                    {{ part.name }}
+                                    {{ key.key  }}
                                 </td>
                                 <td>
-                                    <ng-container *ngFor="let subpart of part.subparts">
-                                        <div class="subparts">{{ subpart.id }}</div>
+                                    <ng-container *ngFor="let item of key.value">
+                                        <div class="subparts">{{ item.id }}</div>
                                     </ng-container>
                                 </td>
                                 <td>
-                                    <ng-container *ngFor="let subpart of part.subparts">
-                                        <div class="subparts">{{ subpart.name }}</div>
+                                    <ng-container *ngFor="let item of key.value">
+                                        <div class="subparts">{{ item.part_code_name }}</div>
                                     </ng-container>
                                 </td>
                                 <td>
-                                    <ng-container *ngFor="let subpart of part.subparts">
-                                        <div *ngIf="subpart.status" class="subparts">Success</div>
-                                        <div *ngIf="!subpart.status" class="subparts">Failed</div>
+                                    <ng-container *ngFor="let item of key.value">
+                                        <div *ngIf="item.result" class="subparts">Success</div>
+                                        <div *ngIf="!item.result" class="subparts">Failed</div>
                                     </ng-container>
                                 </td>
                                 <td>
-                                    logo.png
+                                    <ng-container *ngFor="let item of key.value">
+                                        <div class="subparts img_class" style="cursor: pointer;" (click)="view_image(item.image)">Preview</div>
+                                    </ng-container>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+
                 <div class="buttonContainer">
                     <!-- <button class="backBtnSizeToReport bg-color_black" (click)="goToSearchReport()">Back</button> -->
                     <button class="Btn">
@@ -338,6 +300,9 @@
                 </div>
             </div>
         </div>
+        <div *ngIf="previewFlag" class="bigger_image flex-col-even" (click)="(previewFlag = false)">
+                <img [src]="curr_view_image" alt="" class="zoomed_image" (click)="$event.stopPropagation()" style="cursor: auto;">
+        </div>
     </div>
 </body>
 
@@ -345,7 +310,7 @@
     <div class="leftContainerClass flex-col-even">
         <div class="upperContainer flex-col-even">
             <img src="../../assets/icons/profile.png" alt="" class="smallProfileClass" >
-            <h4 class="greet" style="font-size: 12px;">Hi {{userDetails.name}} !</h4>
+            <h4 class="greet" style="font-size: 12px; text-align: center;">Hi {{userDetails.name}}</h4>
             <!-- <p class="greet" style="font-size: 8px; width: 90%;">Employee ID : HSA12345</p> -->
         </div>
 
@@ -394,7 +359,7 @@
     <div class="leftContainerClass flex-col-even">
         <div class="upperContainer flex-col-even">
             <img src="../../assets/icons/profile.png" alt="" class="smallProfileClass" >
-            <h4 class="greet" style="font-size: 12px;">Hi {{userDetails.name}} !</h4>
+            <h4 class="greet" style="font-size: 12px; text-align: center;">Hi {{userDetails.name}}</h4>
             <!-- <p class="greet" style="font-size: 8px; width: 90%;">Employee ID : HSA12345</p> -->
         </div>
 

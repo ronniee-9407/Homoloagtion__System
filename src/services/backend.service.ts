@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
-import { tap } from 'rxjs/operators';
 
 
 @Injectable({
@@ -13,32 +12,41 @@ export class BackendService {
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   addCamera(camDetails: any): Observable<any>{
-    console.log('camDetails____',camDetails);
     const token = sessionStorage.getItem('authorizationCode')
 
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
 
-    console.log(`token_____`, token);
-
-    return this.http.post("http://192.168.68.129:5000/add_camera", { 
+    return this.http.post("http://192.168.68.129:5000/add_camera", {camDetails}, { 
       headers: headers,
-      "cam_details": camDetails,
-      withCredentials: true 
     });
   }
 
   searchDateTime(data: any): Observable<any>
   {
-    // console.log('search data',data);    
-    return this.http.post("http://192.168.68.129:5000/search_date_time",{"report_data": data});
+    console.log('data',data);
+    
+    const token = sessionStorage.getItem('authorizationCode')
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.post("http://192.168.68.129:5000/report_analysis", { 
+      'report_data': data,
+      withCredentials: true 
+    },{headers});
   }
 
-  searchDateTimeFull(query: any): Observable<any>
-  {
-    return this.http.post("http://192.168.68.129:5000/search_date_time_full",{"query": query});
-  }
+  // searchDateTimeFull(query: any): Observable<any>
+  // {
+  //   const token = sessionStorage.getItem('authorizationCode')
+
+  //   const headers = new HttpHeaders({
+  //     'Authorization': `Bearer ${token}`
+  //   });
+  //   return this.http.post("http://192.168.68.129:5000/search_date_time_full",{headers: headers, "query": query, withCredentials: true });
+  // }
 
   getDataforInspection(data: any): Observable<any>{
     console.log(data);
@@ -87,30 +95,6 @@ export class BackendService {
     return this.http.post("http://192.168.68.129:5000/login", {'user_data': data,  withCredentials: true });
   }
 
-  // validateUser(data: any): Observable<HttpResponse<any>> {
-  //   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  
-  //   // Use observe: 'response' to get the full response including headers
-  //   return this.http.post(
-  //     "http://192.168.68.129:5000/login",
-  //     {'user_data': data},
-  //     { headers, observe: 'response', withCredentials: true }
-  //   )
-  //   .pipe(
-  //     // Assuming the CSRF token is set in the 'XSRF-TOKEN' cookie
-  //     tap((response: HttpResponse<any>) => {
-  //       console.log('Reached the tap function');  // Debugging line
-  //       const csrfToken = response.headers.get('XSRF-TOKEN');
-  //       if (csrfToken) {
-  //         // Print the CSRF token to the console
-  //         console.log('The token', csrfToken);
-  //         // You can store the CSRF token in a cookie if needed
-  //         // this.cookieService.set('XSRF-TOKEN', csrfToken);
-  //       }
-  //     })
-  //   );
-  // }
-
   adminPasswordReset(data: any): Observable<any>{
     const token = sessionStorage.getItem('authorizationCode')
 
@@ -120,12 +104,24 @@ export class BackendService {
 
     console.log("token_____", token);
     
-    console.log(`newData`, data);
-    return this.http.post("http://192.168.68.129:5000/modify_admin_password", { 
-      headers: headers,
-      'newData': data,
-      withCredentials: true 
+    return this.http.put("http://192.168.68.129:5000/modify_admin_password", {data} ,{ 
+      headers
     });
+  }
+
+  modifyAdminOperatorPassword(data: any): Observable<any>{
+    const token = sessionStorage.getItem('authorizationCode')
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    console.log(`token______`, token);
+
+    return this.http.put("http://192.168.68.129:5000/modify_password", {data} ,{ 
+      headers
+    });
+
   }
 
   showNumberOfUsers(): Observable<any>{
@@ -180,29 +176,15 @@ export class BackendService {
 
     return this.http.post(
       'http://192.168.68.129:5000/registration',
+      {data},
       {
         headers: headers,
-        'user_data': data,
-        withCredentials: true,
       }
     );
 
     }
 
-  modifyAdminOperatorPassword(data: any): Observable<any>{
-    const token = sessionStorage.getItem('authorizationCode')
 
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
-    return this.http.post("http://192.168.68.129:5000/modify_admin_opeartor_password", { 
-      headers: headers,
-      'modified_data': data,
-      withCredentials: true 
-    });
-
-  }
 
   logout(employeeId: any){
 
@@ -211,14 +193,18 @@ export class BackendService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });    
-    console.log(`token____`, token);
-    return this.http.post("http://192.168.68.129:5000/logout", { 
-      headers: headers,
-      withCredentials: true 
+    // console.log(`token____`, token);
+    return this.http.get("http://192.168.68.129:5000/logout", { 
+      headers
     });
   }
 
   searchByJobId(jobID: any): Observable<any>{
-    return this.http.post("http://192.168.68.129:5000/search_jobId", {'jobID': jobID});
+    const token = sessionStorage.getItem('authorizationCode')
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.post("http://192.168.68.129:5000/report_analysis_by_job_id", {'jobID': jobID},{headers});
   }
 }

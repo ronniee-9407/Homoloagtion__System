@@ -51,12 +51,11 @@ export class SuperUserComponent implements OnInit {
     this.userDetails.userId = String(sessionStorage.getItem('userId'));
     this.userDetails.name = String(sessionStorage.getItem('name'));
     let userType = String(sessionStorage.getItem('userType'));
-    this.userDetails.designation =
-      userType.charAt(0).toUpperCase() + userType.slice(1);
-    setTimeout(() => {
+    this.userDetails.designation = userType.charAt(0).toUpperCase() + userType.slice(1);
+    this.getDashboardData();
+    setTimeout(()=> {
       this.createChart();
-    }, 500);
-    
+    },10)
     this.getDashboardData();
   }
 
@@ -280,26 +279,27 @@ export class SuperUserComponent implements OnInit {
   }
 
   //! Function to control the route
-  logout() {
-    this.service.logout(this.userDetails.userId).subscribe(
-      (data: any) => {
-        console.log('Logged out', data);
-        this.router.navigate(['/login']);
-        sessionStorage.removeItem('isUserLoggedIn');
-        sessionStorage.removeItem('userType');
-        sessionStorage.removeItem('userId');
-        sessionStorage.removeItem('name');
-        this.notifyService.showInfo('Logged out successfully', 'Notification');
-      },
-      (error: any) => {
-        console.log('logout error', error);
-        this.notifyService.showError(
-          'Logout unsuccessful',
-          'Server Connection Error'
-        );
-        return;
-      }
-    );
+  logout(){
+    
+    this.service.logout(this.userDetails.userId).subscribe((data: any)=>{
+      console.log('Logged out', data);
+      // sessionStorage.removeItem('isUserLoggedIn');
+      // sessionStorage.removeItem('userType');
+      // sessionStorage.removeItem('userId');
+      // sessionStorage.removeItem('name');
+      // sessionStorage.removeItem('authorizationCode');
+      // this.router.navigate(['/login']);
+      this.notifyService.showInfo('Logged out successfully','Notification');
+    },(error: any)=>{
+      console.log('logout error',error);
+      this.notifyService.showError('Logout unsuccessful', 'Server Connection Error');
+      return;
+    });
+    sessionStorage.removeItem('isUserLoggedIn');
+    sessionStorage.removeItem('userType');
+    sessionStorage.removeItem('userId');
+    sessionStorage.removeItem('name');
+    sessionStorage.removeItem('authorizationCode');
     this.router.navigate(['/login']);
   }
 
