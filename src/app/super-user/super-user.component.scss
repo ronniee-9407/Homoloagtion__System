@@ -272,6 +272,17 @@ body {
   width: 100%;
 }
 
+.report_data{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.report_data_title{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
 //! Style for the camera details
 
 .cameraDetails {
