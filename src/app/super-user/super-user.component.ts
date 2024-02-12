@@ -46,10 +46,10 @@ export class SuperUserComponent implements OnInit {
     this.userDetails.name = String(sessionStorage.getItem('name'));
     let userType = String(sessionStorage.getItem('userType'));
     this.userDetails.designation = userType.charAt(0).toUpperCase() + userType.slice(1);
+    this.getDashboardData();
     setTimeout(()=> {
       this.createChart();
     },10)
-    this.getDashboardData();
   }
 
   getDashboardData(){
@@ -244,16 +244,11 @@ export class SuperUserComponent implements OnInit {
       }
       this.service.addUser(data).subscribe((data: any)=>{
         console.log('Add user data',data);
-        if(data['status']){
-          this.notifyService.showSuccess('User added successfully','Notification');
-          name.value = '';
-          userId.value = '';
-          pass.value = '';
-          cnfPass.value = '';
-        }
-        else{
-          this.notifyService.showError('Adding new User denied','Notification');
-        }
+        this.notifyService.showSuccess(data['message'],'Notification');
+        name.value = '';
+        userId.value = '';
+        pass.value = '';
+        cnfPass.value = '';
       },(error: any)=>{
         this.notifyService.showError('Please check your Server', 'Server Connection Error');
       })

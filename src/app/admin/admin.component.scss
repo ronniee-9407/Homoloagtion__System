@@ -78,11 +78,10 @@
 .featureContainer{
     position: relative;
     height: 27%;
-    width: 65%;
+    width: 60%;
     left: 5%;
     cursor: pointer;
     display: inline-block;
-    font-size: 13px;
 }
 .adminFeatureClass{
     width: 100%;
@@ -798,7 +797,27 @@ transition: border-color 0.2s;
     text-decoration: underline;
     font-family: "Inria Sans", sans-serif;
 }
-
+.img_class{
+    cursor: pointer;
+}
+.img_class:hover{
+    color: #0575E6;
+}
+.bigger_image{
+    height: 100%;
+    width: 100%;
+    backdrop-filter: blur(4px);
+    position: absolute;
+    left: 0%;
+    z-index: 100;
+    cursor: pointer;
+    // top: 10%;
+}
+.zoomed_image{
+    height: 80%;
+    width: 80%;
+    border-radius: 10px;
+}
 
 
 
@@ -998,7 +1017,7 @@ table {
     border: 1px solid #f2f2f2;
   }
   .subparts:hover{
-    background-color: #5e5e5e;
+    background-color: #8a8888;
   }
 
 //   .subparts div {

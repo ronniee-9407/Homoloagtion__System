@@ -25,14 +25,28 @@ export class BackendService {
 
   searchDateTime(data: any): Observable<any>
   {
-    // console.log('search data',data);    
-    return this.http.post("http://192.168.68.129:5000/search_date_time",{"report_data": data});
+    console.log('data',data);
+    
+    const token = sessionStorage.getItem('authorizationCode')
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.post("http://192.168.68.129:5000/report_analysis", { 
+      'report_data': data,
+      withCredentials: true 
+    },{headers});
   }
 
-  searchDateTimeFull(query: any): Observable<any>
-  {
-    return this.http.post("http://192.168.68.129:5000/search_date_time_full",{"query": query});
-  }
+  // searchDateTimeFull(query: any): Observable<any>
+  // {
+  //   const token = sessionStorage.getItem('authorizationCode')
+
+  //   const headers = new HttpHeaders({
+  //     'Authorization': `Bearer ${token}`
+  //   });
+  //   return this.http.post("http://192.168.68.129:5000/search_date_time_full",{headers: headers, "query": query, withCredentials: true });
+  // }
 
   getDataforInspection(data: any): Observable<any>{
     console.log(data);
@@ -179,13 +193,18 @@ export class BackendService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });    
-    console.log(`token____`, token);
+    // console.log(`token____`, token);
     return this.http.get("http://192.168.68.129:5000/logout", { 
       headers
     });
   }
 
   searchByJobId(jobID: any): Observable<any>{
-    return this.http.post("http://192.168.68.129:5000/search_jobId", {'jobID': jobID});
+    const token = sessionStorage.getItem('authorizationCode')
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.post("http://192.168.68.129:5000/report_analysis_by_job_id", {'jobID': jobID},{headers});
   }
 }

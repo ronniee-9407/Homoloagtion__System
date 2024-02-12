@@ -29,7 +29,8 @@ export class AdminComponent implements OnInit {
   ];
   curr_admin_view = this.admin_view_list[0];
   // pending_report_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-  pending_report_list: any[] = this.generatePendingReportList(11, 5);
+  pending_report_list: any[] = [];
+  pending_report_list_details: any[] = [];
   report_page_flag: boolean = false;
   inspection_report_flag: boolean = false;
   report_page_flag_detail: boolean = false;
@@ -87,6 +88,9 @@ export class AdminComponent implements OnInit {
   yAxisData = [5, 8, 7, 5, 9, 6, 4];
 
   passwordView = [false, false, false];
+  part_image_list = [];
+  previewFlag: boolean = false;
+  curr_view_image: any;
 
   constructor(
       private service: BackendService, 
@@ -154,7 +158,9 @@ export class AdminComponent implements OnInit {
 
     this.service.getPendingReport(this.userDetails.userId).subscribe(
       (data: any) => {
-        console.log('Pending reports', data);
+        // console.log('Pending reports', data['result'][0]['pending_reports'][0]['admin_id']);
+        this.pending_report_list = data['result'];
+        console.log('data',this.pending_report_list);
       },
       (error: any) => {
         this.notifyService.showError(
@@ -179,7 +185,9 @@ export class AdminComponent implements OnInit {
     if (index == 1) {
       this.service.getPendingReport(this.userDetails.userId).subscribe(
         (data: any) => {
-          console.log('Pending reports', data);
+          this.pending_report_list = data['result'];
+          console.log('data',data);
+          // console.log('data',this.pending_report_list);
         },
         (error: any) => {
           this.notifyService.showError(
@@ -211,6 +219,7 @@ export class AdminComponent implements OnInit {
           sessionStorage.removeItem('userType');
           sessionStorage.removeItem('userId');
           sessionStorage.removeItem('name');
+          sessionStorage.removeItem('authorizationCode');
           this.notifyService.showInfo(
             'Logged out successfully',
             'Notification'
@@ -223,7 +232,7 @@ export class AdminComponent implements OnInit {
           );
         }
       );
-      this.router.navigate(['/login']);
+      // this.router.navigate(['/login']);
     } catch (error) {
       console.log(`Print_error`, error);
     }
@@ -332,7 +341,8 @@ export class AdminComponent implements OnInit {
     this.service.searchDateTime(searchData).subscribe(
       (data: any) => {
         // this.data_received = false;
-        this.dataFromDb = data['tableData'];
+        // this.dataFromDb = data['tableData'];
+        console.log('data for report',data);
       },
       (error: any) => {
         this.notifyService.showError(
@@ -342,11 +352,11 @@ export class AdminComponent implements OnInit {
         return;
       }
     );
-    this.service.searchDateTimeFull(fullData).subscribe(
+    this.service.searchDateTime(fullData).subscribe(
       (data: any) => {
-        this.totalDBData = data['dbdata'];
-        this.totalDBDataCount = data['totalCount'];
-        // console.log('Total DB data', this.totalDBDataCount)
+        // this.totalDBData = data['dbdata'];
+        // this.totalDBDataCount = data['totalCount'];
+        console.log('Total DB data', data)
       },
       (error: any) => {
         this.notifyService.showError(
@@ -428,7 +438,8 @@ export class AdminComponent implements OnInit {
     this.reject_flag = false;
     this.service.getPendingReport(this.userDetails.userId).subscribe(
       (data: any) => {
-        console.log('Pending reports', data);
+        this.pending_report_list = data['result'];
+        console.log('data',this.pending_report_list);
       },
       (error: any) => {
         this.notifyService.showError(
@@ -467,35 +478,43 @@ export class AdminComponent implements OnInit {
   }
 
   viewReport(data: any) {
-    let jobId = 12345;
-    this.service.getPendingReportDetails(jobId).subscribe(
-      (data: any) => {
         this.success_checkpoints = data['success'];
         this.failed_checkpoints = data['failed'];
-        // this.inspection_report_flag = true;
-        // this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
-      },
-      (error: any) => {
-        this.notifyService.showError(
-          'Please check your Server',
-          'Server Connection Error'
-        );
-        return;
-      }
-    );
-    this.inspection_report_flag = true;
-    setTimeout(() => {
-      this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
-    }, 10);
+        this.inspection_report_flag = true;
+        this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
+    // let jobId = 12345;
+    // this.service.getPendingReportDetails(jobId).subscribe(
+    //   (data: any) => {
+    //     console.log('data',data);
+        
+    //     this.success_checkpoints = data['success'];
+    //     this.failed_checkpoints = data['failed'];
+    //     this.inspection_report_flag = true;
+    //     this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
+    //   },
+    //   (error: any) => {
+    //     this.notifyService.showError(
+    //       'Please check your Server',
+    //       'Server Connection Error'
+    //     );
+    //     return;
+    //   }
+    // );
+    // this.inspection_report_flag = true;
+    // setTimeout(() => {
+    //   this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
+    // }, 10);
   }
   viewReportFromdashboard() {
     let jobId = 12345;
     this.service.getPendingReportDetails(jobId).subscribe(
       (data: any) => {
+        console.log('data',data);
         this.success_checkpoints = data['success'];
         this.failed_checkpoints = data['failed'];
         this.inspection_report_flag = true;
-        // this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
+        this.curr_admin_view = this.admin_view_list[1];
+        this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
       },
       (error: any) => {
         this.notifyService.showError(
@@ -505,11 +524,11 @@ export class AdminComponent implements OnInit {
         return;
       }
     );
-    this.inspection_report_flag = true;
-    this.curr_admin_view = this.admin_view_list[1];
-    setTimeout(() => {
-      this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
-    }, 10);
+    // this.inspection_report_flag = true;
+    // this.curr_admin_view = this.admin_view_list[1];
+    // setTimeout(() => {
+    //   this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
+    // }, 10);
   }
 
   createPieChart(xData: any, yData: any) {
@@ -730,17 +749,18 @@ export class AdminComponent implements OnInit {
   searchByJobId(){
     let jobId = <HTMLInputElement> document.getElementById('jobID');
     let idValue = jobId.value;
-    // console.log('Job id is', idValue);
     if(idValue === ''){
       this.notifyService.showInfo('Please enter JobID','Notification');
       return;
     }
-    this.report_page_flag = false;
-    this.report_page_flag_detail = true;
     this.service.searchByJobId(idValue).subscribe((data: any)=>{
+      // this.decode_image(data['entries']);
+      this.pending_report_list_details = data['entries'];
+      console.log('pending_report_list_details',this.pending_report_list_details);
+
       if(data['status']){
-        // this.report_page_flag = false;
-        // this.report_page_flag_detail = true;
+        this.report_page_flag = false;
+        this.report_page_flag_detail = true;
         jobId.value = '';
       }
       else{
@@ -750,5 +770,28 @@ export class AdminComponent implements OnInit {
     (error: any)=>{
       this.notifyService.showError('Please check your Server', 'Server Connection Error');
     });
+  }
+
+  decode_image(data: any){
+    let occurrenceMap = new Map();
+
+    data.forEach((item: any) => {
+        let vehiclePart = item.vehicle_part;
+        if (occurrenceMap.has(vehiclePart)) {
+            occurrenceMap.set(vehiclePart, occurrenceMap.get(vehiclePart) + 1);
+        } else {
+            occurrenceMap.set(vehiclePart, 1);
+        }
+    });
+
+    console.log(occurrenceMap);
+  }
+
+  view_image(img: any){
+    this.previewFlag = true;
+    let videoUrl = 'data:image/jpg;base64,' + img;
+    let new_img = this.sanitizer.bypassSecurityTrustUrl(videoUrl);
+    this.curr_view_image = new_img;
+    console.log(this.curr_view_image);
   }
 }
