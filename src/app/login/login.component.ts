@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit{
       this.flag_operator_page= false
     }
     this.viewPassword = [false, false, false];
-    // console.log('CurrentUser', this.curr_user);
   }
 
 
@@ -66,7 +65,6 @@ export class LoginComponent implements OnInit{
       'user_type' : this.curr_user
     };
     this.service.validateUser(user_data).subscribe((data: any)=>{
-      // console.log('login data',data);
       let login_status = data['status'];
       let name = data['name'];
       this.login_clicked = false;
@@ -77,7 +75,6 @@ export class LoginComponent implements OnInit{
         sessionStorage.setItem('name', name);
         sessionStorage.setItem('authorizationCode', data['access_token']);
         this.router.navigate([this.curr_user]);
-        // this.notifyService.showSuccess('Logged in successfully','Notification');
       }
       else{
         this.notifyService.showError('Incorrect login Credentials','Error')
@@ -87,10 +84,6 @@ export class LoginComponent implements OnInit{
       this.login_clicked = false;
       this.notifyService.showError('Please check your Server', 'Server Connection Error');
     });
-    // sessionStorage.setItem('isUserLoggedIn', 'true');
-    // sessionStorage.setItem('userType', this.curr_user);
-    // sessionStorage.setItem('userId', userId);
-    // this.router.navigate([this.curr_user]);
   }
 
   showPassword(index: any){

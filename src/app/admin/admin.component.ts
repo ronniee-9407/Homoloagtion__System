@@ -213,13 +213,13 @@ export class AdminComponent implements OnInit {
     try {
       this.service.logout(this.userDetails.userId).subscribe(
         (data: any) => {
-          console.log('Logged out', data);
-          this.router.navigate(['/login']);
+          // console.log('Logged out', data);
           sessionStorage.removeItem('isUserLoggedIn');
           sessionStorage.removeItem('userType');
           sessionStorage.removeItem('userId');
           sessionStorage.removeItem('name');
           sessionStorage.removeItem('authorizationCode');
+          this.router.navigate(['/login']);
           this.notifyService.showInfo(
             'Logged out successfully',
             'Notification'
@@ -232,7 +232,6 @@ export class AdminComponent implements OnInit {
           );
         }
       );
-      // this.router.navigate(['/login']);
     } catch (error) {
       console.log(`Print_error`, error);
     }
