@@ -290,7 +290,8 @@ export class SuperUserComponent implements OnInit {
       // sessionStorage.removeItem('authorizationCode');
       // this.router.navigate(['/login']);
       this.notifyService.showInfo('Logged out successfully','Notification');
-    },(error: any)=>{
+    },
+    (error: any)=>{
       console.log('logout error',error);
       this.notifyService.showError('Logout unsuccessful', 'Server Connection Error');
       return;

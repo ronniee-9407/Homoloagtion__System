@@ -86,6 +86,7 @@ export class LoginComponent implements OnInit{
     (error: any) => {
       this.login_clicked = false;
       this.notifyService.showError('Please check your Server', 'Server Connection Error');
+      
     });
     // sessionStorage.setItem('isUserLoggedIn', 'true');
     // sessionStorage.setItem('userType', this.curr_user);
