@@ -449,12 +449,10 @@ export class AdminComponent implements OnInit {
     );
   }
   approveToggle(data: any) {
-    // console.log('index for approval...',data);
     this.approval_flag = true;
     this.index_for_approve_reject = data;
   }
   rejectToggle(data: any) {
-    // console.log('index for rejection...',data);
     this.reject_flag = true;
     this.index_for_approve_reject = data;
   }
@@ -463,7 +461,6 @@ export class AdminComponent implements OnInit {
     if (!data) {
       this.approval_flag = false;
     } else {
-      // console.log('Report Approved');
       this.approval_flag = false;
     }
   }
@@ -471,7 +468,6 @@ export class AdminComponent implements OnInit {
     if (!data) {
       this.reject_flag = false;
     } else {
-      // console.log('Report Rejected');
       this.reject_flag = false;
     }
   }
@@ -509,8 +505,8 @@ export class AdminComponent implements OnInit {
     this.service.getPendingReportDetails(jobId).subscribe(
       (data: any) => {
         console.log('data',data);
-        this.success_checkpoints = data['success'];
-        this.failed_checkpoints = data['failed'];
+        // this.success_checkpoints = data['success'];
+        // this.failed_checkpoints = data['failed'];
         this.inspection_report_flag = true;
         this.curr_admin_view = this.admin_view_list[1];
         this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
@@ -678,7 +674,6 @@ export class AdminComponent implements OnInit {
         newPassword: newPassValue,
         userId: this.userDetails.userId,
       };
-      // console.log('new data',data);
       this.service.adminPasswordReset(data).subscribe(
         (data: any) => {
           console.log('Data', data);
