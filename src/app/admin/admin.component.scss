@@ -158,6 +158,8 @@
 .pending_report_header{
     color: black;
     text-align: center;
+    position: relative;
+    top: 1%;
 }
 .pending_report_outer_container{
     height: 90%;
@@ -456,22 +458,35 @@ label{
     top: 5%;
     display: inline;
     font-family: "Inria Sans", sans-serif; 
+    font-size: 16px;
 }
 .subPartContainer{
     position: relative;
     margin-top: 2%;
 }
+.pending_report_checkbox{
+    position: relative;
+    left: 12%;
+}
 .pending_report_subPartName{
     position: relative;
-    right: 5%;
-    display: inline;
+    left: 20%;
+    display: inline-block;
     font-family: "Inria Sans", sans-serif; 
+    font-size: 14px;
+    width: 45%;
+    text-align: center;
 }
 .pending_report_subPartStatus{
     position: relative;
-    left: 5%;
-    display: inline;
+    left: 45%;
+    display: inline-block;
     font-family: "Inria Sans", sans-serif; 
+    font-size: 14px;
+    width: 23%;
+    position: relative;
+    left: 22%;
+    text-align: center;
 }
 .ff{
     font-family: "Inria Sans", sans-serif; 

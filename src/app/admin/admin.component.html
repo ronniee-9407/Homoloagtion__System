@@ -29,10 +29,10 @@
         <div class="upperRightContainer flex-row-even">
             <div class="pending_data_container_dashboard flex-row-even">
                 <!-- <h4 class="greet w-25">Date/Time</h4> -->
-                <h3 class="greet w-15">JOB ID</h3>
-                <h3 class="greet w-30">26-12-2023  05:00 PM</h3>
-                <h3 class="greet w-45">Inspection of Activa 125cc</h3>
-                <h4 class="greet w-10 link" (click)="viewReportFromdashboard()">Preview</h4>
+                <h3 class="greet w-15">{{pending_report_list[0].job_id}}</h3>
+                <h3 class="greet w-30">{{pending_report_list[0].date_time}}</h3>
+                <h3 class="greet w-45">{{pending_report_list[0].vehicle_name}}</h3>
+                <h4 class="greet w-10 link" style="font-size: 14px;" (click)="viewReport(0, pending_report_list[0].job_id)">Preview</h4>
             </div>
             <h4 class="link greet" (click)="goToPendingReport()">See All</h4>
         </div>
@@ -77,7 +77,7 @@
                     <h3 class="greet w-15">{{value.job_id}}</h3>
                     <h3 class="greet w-30">{{value['date_time']}}</h3>
                     <h3 class="greet w-45">Inspection of {{value.vehicle_name}} 125cc</h3>
-                    <h4 class="greet w-10 link" (click)="viewReport(i)">Preview</h4>
+                    <h4 class="greet w-10 link" style="font-size: 14px;" (click)="viewReport(i, value.job_id)">Preview</h4>
                 </div>
                 <div class="btnContainer flex-row-even">
                     <img class="h-100" src="../../assets/icons/yes.png" alt="" (click)="approveToggle(i+1)">
@@ -114,16 +114,16 @@
             </div>
         </div>
         <div class="pendingReportTable">
-            <div *ngFor="let data of pending_report_list; let i = index" class="partContainer">
+            <div *ngFor="let item of pending_parts_list; let i = index" class="partContainer">
                 <h3 class="ff partName">
-                  <input type="checkbox" id="part_name" name="part_name" [(ngModel)]="data.checked" (click)="toggleSubParts(i)">
-                  {{data.name}}
-                </h3><br><br>
-              
-                <div *ngFor="let subpart of data.subparts" class="subPartContainer flex-row-even">
-                  <input type="checkbox" id="{{subpart.id}}" name="{{subpart.name}}" [(ngModel)]="subpart.checked" class="pending_report_checkbox">
-                  <p class="pending_report_subPartName">{{subpart.name}}</p>
-                  <p class="pending_report_subPartStatus">{{subpart.status}}</p>
+                  <input type="checkbox" id="part_name_{{i}}" name="part_name" #partCheckbox (change)="toggleSubParts(partCheckbox.checked, i)">
+                  <span style="margin-left: 10px;">{{item}}</span>
+                </h3>
+                <br><br>
+                <div *ngFor="let subpart of pending_subparts_list[i]; let j = index" class="subPartContainer">
+                  <input type="checkbox" id="{{subpart.id}}" name="{{subpart.part_code_name}}" class="pending_report_checkbox" [(ngModel)]="subpart.checked">
+                  <p class="pending_report_subPartName">{{subpart.part_code_name}}</p>
+                  <p class="pending_report_subPartStatus">{{subpart.result}}</p>
                 </div>
               </div>
         </div>

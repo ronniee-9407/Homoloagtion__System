@@ -207,4 +207,14 @@ export class BackendService {
     });
     return this.http.post("http://192.168.68.129:5000/report_analysis_by_job_id", {'jobID': jobID},{headers});
   }
+
+  submit_pending_reInspection_data(data: any): Observable<any>{
+    console.log('data for reInspection',data);
+    const token = sessionStorage.getItem('authorizationCode')
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.post("http://192.168.68.129:5000/reinspection_of_pending_report", {'data': data},{headers});
+  }
 }

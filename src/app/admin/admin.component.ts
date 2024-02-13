@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { KeyValue } from '@angular/common';
 import { BackendService } from 'src/services/backend.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -91,6 +92,11 @@ export class AdminComponent implements OnInit {
   part_image_list = [];
   previewFlag: boolean = false;
   curr_view_image: any;
+  curr_selected_pending_list: any;
+  pending_parts_list: any = [];
+  pending_subparts_list: any = [];
+  checkedCheckboxIds: any = [];
+  curr_jobID_for_pending_re_inspection: any;
 
   constructor(
       private service: BackendService, 
@@ -102,7 +108,7 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.userDetails.userId = String(sessionStorage.getItem('userId'));
-    this.userDetails.name = String(sessionStorage.getItem('name'));
+    // this.userDetails.name = String(sessionStorage.getItem('name'));
     let userType = String(sessionStorage.getItem('userType'));
     this.userDetails.designation =
       userType.charAt(0).toUpperCase() + userType.slice(1);
@@ -110,7 +116,9 @@ export class AdminComponent implements OnInit {
       this.createChart(this.xAxisData, this.yAxisData);
     }, 10);
     this.getDashboardData();
+    this.pending_report_list = this.fill_dummy_pending_reports();
   }
+
   generatePendingReportList(numParts: number, numSubparts: number): any[] {
     const pendingReportList: any[] = [];
 
@@ -135,6 +143,7 @@ export class AdminComponent implements OnInit {
 
     return pendingReportList;
   }
+
   getDashboardData(){
     this.service.getWeeklyReport().subscribe((data: any)=>{
       console.log('Get weekly report', data); 
@@ -159,8 +168,8 @@ export class AdminComponent implements OnInit {
     this.service.getPendingReport(this.userDetails.userId).subscribe(
       (data: any) => {
         // console.log('Pending reports', data['result'][0]['pending_reports'][0]['admin_id']);
+        console.log('this.pending_report_list for dashboard',this.pending_report_list);
         this.pending_report_list = data['result'];
-        console.log('data',this.pending_report_list);
       },
       (error: any) => {
         this.notifyService.showError(
@@ -185,8 +194,9 @@ export class AdminComponent implements OnInit {
     if (index == 1) {
       this.service.getPendingReport(this.userDetails.userId).subscribe(
         (data: any) => {
-          this.pending_report_list = data['result'];
           console.log('data',data);
+          if(data['status'])
+            this.pending_report_list = data['result'];
           // console.log('data',this.pending_report_list);
         },
         (error: any) => {
@@ -472,58 +482,32 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  viewReport(data: any) {
-        this.success_checkpoints = data['success'];
-        this.failed_checkpoints = data['failed'];
-        this.inspection_report_flag = true;
-        this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
-    // let jobId = 12345;
-    // this.service.getPendingReportDetails(jobId).subscribe(
-    //   (data: any) => {
-    //     console.log('data',data);
-        
-    //     this.success_checkpoints = data['success'];
-    //     this.failed_checkpoints = data['failed'];
-    //     this.inspection_report_flag = true;
-    //     this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
-    //   },
-    //   (error: any) => {
-    //     this.notifyService.showError(
-    //       'Please check your Server',
-    //       'Server Connection Error'
-    //     );
-    //     return;
-    //   }
-    // );
-    // this.inspection_report_flag = true;
-    // setTimeout(() => {
-    //   this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
-    // }, 10);
+  viewReport(data: any, jobId: any) {
+    this.curr_jobID_for_pending_re_inspection = jobId;
+    this.curr_admin_view = this.admin_view_list[1];
+    this.curr_selected_pending_list = this.pending_report_list[data]['vehicle_parts'];
+    console.log('this.curr_selected_pending_list',this.curr_selected_pending_list);
+    this.inspection_report_flag = true;
+    const { keys, values } = this.viewTempData(this.curr_selected_pending_list);
+    this.pending_parts_list = keys;
+    this.pending_subparts_list = values;
+    setTimeout(()=>{
+      this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
+    },10);
+
   }
-  viewReportFromdashboard() {
-    let jobId = 12345;
-    this.service.getPendingReportDetails(jobId).subscribe(
-      (data: any) => {
-        console.log('data',data);
-        // this.success_checkpoints = data['success'];
-        // this.failed_checkpoints = data['failed'];
-        this.inspection_report_flag = true;
-        this.curr_admin_view = this.admin_view_list[1];
-        this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
-      },
-      (error: any) => {
-        this.notifyService.showError(
-          'Please check your Server',
-          'Server Connection Error'
-        );
-        return;
-      }
-    );
-    // this.inspection_report_flag = true;
-    // this.curr_admin_view = this.admin_view_list[1];
-    // setTimeout(() => {
-    //   this.createPieChart(this.success_checkpoints, this.failed_checkpoints);
-    // }, 10);
+
+  viewTempData(data: any){
+    const keys: string[] = [];
+    const values: any[][] = [];
+
+    for (const key in data) {
+        if (Object.prototype.hasOwnProperty.call(data, key)) {
+            keys.push(key);
+            values.push(data[key]);
+        }
+    }
+    return { keys, values };
   }
 
   createPieChart(xData: any, yData: any) {
@@ -719,26 +703,58 @@ export class AdminComponent implements OnInit {
     currId.type = 'password';
   }
 
-  toggleSubParts(partIndex: number) {
-    const part = this.pending_report_list[partIndex];
-    part.checked = !part.checked;
-    part.subparts.forEach((subpart: any) => subpart.checked = part.checked);
-  }
-  submitPendingReport() {
-    const checkedSubparts: any[] = [];
+//   toggleSubParts(checked: boolean, index: number) {
+//     const subpartCheckboxes = this.pending_subparts_list[index].map((subpart: any) => document.getElementById(subpart.id));
+//     subpartCheckboxes.forEach((checkbox: any) => checkbox.checked = checked);
+//   }
 
-    this.pending_report_list.forEach(part => {
-      part.subparts.forEach((subpart: any) => {
-        if (subpart.checked) {
-          checkedSubparts.push({
-            partName: part.name,
-            subpart
-          });
-        }
-      });
+// submitPendingReport() {
+//   let checkedSubparts: any[] = [];
+  
+//   // Iterate over each part
+//   this.pending_subparts_list.forEach((part: any) => {
+//     part.forEach((subpart: any) => {
+//       if (subpart.checked) {
+//         checkedSubparts.push(subpart);
+//       }
+//     });
+//   });
+//   console.log('pending_subparts_list',this.pending_subparts_list);
+//   console.log('Checked Subparts:', checkedSubparts);
+// }
+
+toggleSubParts(checked: boolean, index: number) {
+  const subparts = this.pending_subparts_list[index];
+  subparts.forEach((subpart: any) => subpart.checked = checked);
+  // this.submitPendingReport();
+  // console.log('this.checkedCheckboxIds',this.checkedCheckboxIds);
+}
+
+submitPendingReport() {
+  this.checkedCheckboxIds = [];
+  this.pending_subparts_list.forEach((subparts: any) => {
+    subparts.forEach((subpart: any) => {
+      if (subpart.checked) {
+        this.checkedCheckboxIds.push(subpart.id);
+      }
     });
-    console.log('Checked Subparts:', checkedSubparts);
+  });
+  console.log('this.checkedCheckboxIds',this.checkedCheckboxIds);
+  let data = {
+    'job_id': this.curr_jobID_for_pending_re_inspection,
+    're_inspect_data': this.checkedCheckboxIds
   }
+  this.service.submit_pending_reInspection_data(data).subscribe((data: any)=>{
+    if(data['status']){
+      this.notifyService.showInfo('Data successfully submitted for Re-Inspection','Notification');
+    }
+  },(error: any)=>{
+    this.notifyService.showError('Please check your Server', 'Server Connection Error');
+  });
+}
+
+
+
     
   searchByJobId(){
     let jobId = <HTMLInputElement> document.getElementById('jobID');
@@ -748,9 +764,8 @@ export class AdminComponent implements OnInit {
       return;
     }
     this.service.searchByJobId(idValue).subscribe((data: any)=>{
-      // this.decode_image(data['entries']);
       this.pending_report_list_details = data['entries'];
-      console.log('pending_report_list_details',this.pending_report_list_details);
+      // console.log('pending_report_list_details',this.pending_report_list_details);
 
       if(data['status']){
         this.report_page_flag = false;
@@ -787,5 +802,36 @@ export class AdminComponent implements OnInit {
     let new_img = this.sanitizer.bypassSecurityTrustUrl(videoUrl);
     this.curr_view_image = new_img;
     console.log(this.curr_view_image);
+  }
+
+  fill_dummy_pending_reports(){
+    // Define an interface for the object structure
+    interface JobData {
+      job_id: number;
+      date_time: string ;
+      vehicle_name: string;
+    }
+
+    // Dummy array to hold key-value pair objects
+    const dummyArray: JobData[] = [];
+
+    // Generate dummy data for 10 objects
+    for (let i = 0; i < 5; i++) {
+      // Generate random values for each key
+      const job_id: number = Math.floor(Math.random() * 1000) + 1; // Random job ID between 1 and 1000
+      const date_time: string  = new Date().toISOString(); // Current date and time
+      const vehicle_name: string = `Vehicle ${i + 1}`; // Vehicle name with index
+
+      // Create key-value pair object
+      const obj: JobData = { job_id, date_time, vehicle_name };
+
+      // Push object to dummy array
+      dummyArray.push(obj);
+    }
+
+    // Print the dummy array
+    // console.log(dummyArray);
+    return dummyArray;
+
   }
 }

@@ -86,6 +86,12 @@ export class LoginComponent implements OnInit{
       this.notifyService.showError('Please check your Server', 'Server Connection Error');
       
     });
+    // sessionStorage.setItem('isUserLoggedIn', 'true');
+    // sessionStorage.setItem('userType', this.curr_user);
+    // sessionStorage.setItem('userId', userId);
+    // // sessionStorage.setItem('name', name);
+    // // sessionStorage.setItem('authorizationCode', data['access_token']);
+    // this.router.navigate([this.curr_user]);
   }
 
   showPassword(index: any){
