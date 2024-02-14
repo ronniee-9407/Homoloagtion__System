@@ -58,8 +58,6 @@ export class AdminComponent implements OnInit {
   picker: Litepicker | undefined;
 
   dataFromDb: any = [];
-  errorData: boolean = true;
-  errorSlab: boolean = true;
   tableLoader: boolean = false;
   previousAvailable = false;
   nextAvailable = false;
@@ -349,32 +347,26 @@ export class AdminComponent implements OnInit {
     this.report_page_flag = true;
     this.service.searchDateTime(searchData).subscribe(
       (data: any) => {
-        // this.data_received = false;
-        // this.dataFromDb = data['tableData'];
         console.log('data for report',data);
+        this.totalDBDataCount = data['total_job_ids'];
+        this.dataFromDb = data['result']
       },
       (error: any) => {
         this.notifyService.showError(
           'Please check your Server',
           'Server Connection Error'
         );
-        return;
-      }
-    );
-    this.service.searchDateTime(fullData).subscribe(
-      (data: any) => {
-        // this.totalDBData = data['dbdata'];
-        // this.totalDBDataCount = data['totalCount'];
-        console.log('Total DB data', data)
-      },
-      (error: any) => {
-        this.notifyService.showError(
-          'Please check your Server',
-          'Server Connection Error'
-        );
-        return;
-      }
-    );
+    });
+    // this.service.searchDateTime(fullData).subscribe(
+    //   (data: any) => {
+    //     console.log('Total DB data', data)
+    //   },
+    //   (error: any) => {
+    //     this.notifyService.showError(
+    //       'Please check your Server',
+    //       'Server Connection Error'
+    //     );
+    // });
   }
 
   clickNext() {
@@ -703,25 +695,6 @@ export class AdminComponent implements OnInit {
     currId.type = 'password';
   }
 
-//   toggleSubParts(checked: boolean, index: number) {
-//     const subpartCheckboxes = this.pending_subparts_list[index].map((subpart: any) => document.getElementById(subpart.id));
-//     subpartCheckboxes.forEach((checkbox: any) => checkbox.checked = checked);
-//   }
-
-// submitPendingReport() {
-//   let checkedSubparts: any[] = [];
-  
-//   // Iterate over each part
-//   this.pending_subparts_list.forEach((part: any) => {
-//     part.forEach((subpart: any) => {
-//       if (subpart.checked) {
-//         checkedSubparts.push(subpart);
-//       }
-//     });
-//   });
-//   console.log('pending_subparts_list',this.pending_subparts_list);
-//   console.log('Checked Subparts:', checkedSubparts);
-// }
 
 toggleSubParts(checked: boolean, index: number) {
   const subparts = this.pending_subparts_list[index];
@@ -739,7 +712,7 @@ submitPendingReport() {
       }
     });
   });
-  console.log('this.checkedCheckboxIds',this.checkedCheckboxIds);
+  // console.log('this.checkedCheckboxIds',this.checkedCheckboxIds);
   let data = {
     'job_id': this.curr_jobID_for_pending_re_inspection,
     're_inspect_data': this.checkedCheckboxIds
@@ -752,10 +725,7 @@ submitPendingReport() {
     this.notifyService.showError('Please check your Server', 'Server Connection Error');
   });
 }
-
-
-
-    
+ 
   searchByJobId(){
     let jobId = <HTMLInputElement> document.getElementById('jobID');
     let idValue = jobId.value;
@@ -805,33 +775,23 @@ submitPendingReport() {
   }
 
   fill_dummy_pending_reports(){
-    // Define an interface for the object structure
     interface JobData {
       job_id: number;
       date_time: string ;
       vehicle_name: string;
     }
-
-    // Dummy array to hold key-value pair objects
     const dummyArray: JobData[] = [];
-
-    // Generate dummy data for 10 objects
     for (let i = 0; i < 5; i++) {
-      // Generate random values for each key
-      const job_id: number = Math.floor(Math.random() * 1000) + 1; // Random job ID between 1 and 1000
-      const date_time: string  = new Date().toISOString(); // Current date and time
-      const vehicle_name: string = `Vehicle ${i + 1}`; // Vehicle name with index
-
-      // Create key-value pair object
+      const job_id: number = Math.floor(Math.random() * 1000) + 1; 
+      const date_time: string  = new Date().toISOString(); 
+      const vehicle_name: string = `Vehicle ${i + 1}`; 
       const obj: JobData = { job_id, date_time, vehicle_name };
-
-      // Push object to dummy array
       dummyArray.push(obj);
     }
-
-    // Print the dummy array
-    // console.log(dummyArray);
     return dummyArray;
+  }
 
+  generate_excel(){
+    console.log('generate_excel called.............');
   }
 }

@@ -349,7 +349,7 @@ label{
 }
 .backBtnSize{
     position: absolute;
-    top: 92%;
+    top: 92.8%;
     left: 90%;
     height: 7%;
     width: 8%;
@@ -470,7 +470,7 @@ label{
 }
 .pending_report_subPartName{
     position: relative;
-    left: 20%;
+    left: 15%;
     display: inline-block;
     font-family: "Inria Sans", sans-serif; 
     font-size: 14px;
@@ -797,7 +797,11 @@ transition: border-color 0.2s;
     width: 80%;
     border-radius: 10px;
 }
-
+.report_analysis_table{
+    height: 92%;
+    width: 100%;
+    position: relative;
+}
 
 
 
@@ -983,7 +987,8 @@ table {
     border: 1px solid #f2f2f2;
   }
   .subparts:hover{
-    background-color: #8a8888;
+    background-color: #00000065;
+    color: white;
   }
 
 #tableContentNotAvailable{
@@ -994,7 +999,7 @@ table {
 
 table tr:nth-child(odd){background-color: #F8F7FF;}
 
-table tr:hover {background-color: #ddd;}
+table tr:hover {background-color: #cef3eb;}
 
 
 .Btn {
