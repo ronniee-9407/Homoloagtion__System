@@ -1,7 +1,10 @@
+<!------------------------------------------- Header --------------------------------------------------->
 <header class="headerClass">
     <img src="../../assets/icons/logo.png" alt="" class="logoClass">
     <img src="../../assets/icons/Honda_Logo.svg" alt="" class="hondaLogoclass">
 </header>
+
+<!------------------------------------------- Dashboard --------------------------------------------------->
 <body *ngIf="curr_admin_view == 'Dashboard'" class="bodyClass flex-row-even">
     <div class="leftContainer flex-col-even">
         <div class="upperContainer flex-col-even">
@@ -31,7 +34,7 @@
                 <!-- <h4 class="greet w-25">Date/Time</h4> -->
                 <h3 class="greet w-15">{{pending_report_list[0].job_id}}</h3>
                 <h3 class="greet w-30">{{pending_report_list[0].date_time}}</h3>
-                <h3 class="greet w-45">{{pending_report_list[0].vehicle_name}}</h3>
+                <h3 class="greet w-45">Inspection of {{pending_report_list[0].vehicle_name}} 125cc</h3>
                 <h4 class="greet w-10 link" style="font-size: 14px;" (click)="viewReport(0, pending_report_list[0].job_id)">Preview</h4>
             </div>
             <h4 class="link greet" (click)="goToPendingReport()">See All</h4>
@@ -47,6 +50,7 @@
     </div>
 </body>
 
+<!------------------------------------------- Pending Report --------------------------------------------------->
 <body *ngIf="curr_admin_view == 'Pending Report'" class="bodyClass flex-row-even">
     <div class="leftContainerClass flex-col-even">
         <div class="upperContainer flex-col-even">
@@ -124,8 +128,9 @@
                   <input type="checkbox" id="{{subpart.id}}" name="{{subpart.part_code_name}}" class="pending_report_checkbox" [(ngModel)]="subpart.checked">
                   <p class="pending_report_subPartName">{{subpart.part_code_name}}</p>
                   <p class="pending_report_subPartStatus">{{subpart.result}}</p>
+                  <p class="pending_report_subPartImage link" (click)="viewPendingSubPartImage(subpart.image)">Image</p>
                 </div>
-              </div>
+            </div>
         </div>
         <button class="submitBtnSize bg-color_green" (click)="submitPendingReport()">Re-Inspect</button>
         <button class="backBtnSize bg-color_black" (click)="goToPendingReport()">Back</button>
@@ -153,8 +158,12 @@
             </div>
         </div>
     </div>
+    <div *ngIf="pendingImagePreviewFlag" class="bigger_image flex-col-even" (click)="(pendingImagePreviewFlag = false)">
+        <img [src]="curr_pending_view_image" alt="" class="zoomed_image" (click)="$event.stopPropagation()" style="cursor: auto;">
+    </div>
 </body>
 
+<!------------------------------------------- Report Analysis --------------------------------------------------->
 <body *ngIf="curr_admin_view == 'Report Analysis'" class="bodyClass flex-row-even">
     <div class="leftContainerClass flex-col-even">
         <div class="upperContainer flex-col-even">
@@ -178,7 +187,7 @@
     </div>
     <div class="rightContainerClass flex-col-even">
         <div class="searchContainer flex-col-even">
-            <div *ngIf="!report_page_flag && !report_page_flag_detail" class="searchByDate">
+            <div *ngIf="!report_page_flag && !report_page_flag_detail && !data_not_found" class="searchByDate">
                 <h2 id="subHeading1">Search By Date</h2>
                 <div id="datePick">
                     <div id="date">
@@ -206,7 +215,8 @@
             
                 <button id="searchButton" class="btn btn-primary" (click)="searchDateTime()">Search</button>
             </div>
-            <div *ngIf="!report_page_flag && !report_page_flag_detail" class="searchById flex-col-even">
+
+            <div *ngIf="!report_page_flag && !report_page_flag_detail && !data_not_found" class="searchById flex-col-even">
                 <h2 id="subHeadingId">Search By JOB ID</h2>
                 <div class="idSearchContainer flex-row-even">
                     <div class="innerSearchContainer flex-row-even">
@@ -222,8 +232,35 @@
             </div>
 
             <div *ngIf="report_page_flag && !report_page_flag_detail" class="reportDataClass">
-                <div class="report_analysis_table"></div>
-                <button class="backBtnSize bg-color_black" (click)="goToSearchReport()">Back</button>
+                <div class="report_analysis_table flex-col-even">
+                    <div class="table_head">
+                        <!-- <button class="backBtnSize bg-color_black" (click)="goToSearchReport()">Back</button> -->
+                        <button class="Btn">
+                            <div class="sign">
+                                <svg viewBox="0 0 512 512">
+                                    <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
+                                </svg>
+                            </div>
+                            <div class="text" (click)="goToSearchReport()">Back</div>
+                        </button>
+                        <h3 class="report_table_header">DATABASE</h3>
+                        <p class="date_range">Date : {{startDate}} - {{endDate}}</p>
+                    </div>
+                    <div *ngIf="!data_not_found" class="table_body">
+                        <div *ngFor="let value of dataFromDb; let i = index" class="table_row flex-row-even">
+                            <div class="report_data_container flex-row-even">
+                                <!-- <h4 class="greet w-25">Date/Time</h4> -->
+                                <h3 class="greet w-15">{{value.job_id}}</h3>
+                                <h3 class="greet w-30">{{value.date_time}}</h3>
+                                <h3 class="greet w-45">Inspection of {{value.vehicle_name}} 125cc</h3>
+                                <h4 class="greet w-10 link" style="font-size: 14px;" (click)="viewDetailsUsingJobId(value.job_id)">Preview</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="data_not_found" class="table_body flex-col-even">
+                        <h1 style="font-size: 60px; color: rgb(182, 16, 16);">No data found in the Database !</h1>
+                    </div>
+                </div>
             </div>
 
             <div *ngIf="!report_page_flag && report_page_flag_detail" class="reportDataClass flex-col-even">
@@ -241,7 +278,7 @@
                         <tbody>
                             <tr *ngFor="let key of pending_report_list_details | keyvalue">
                                 <td>
-                                    {{ key.key  }}
+                                    <b>{{ key.key  }}</b>
                                 </td>
                                 <td>
                                     <ng-container *ngFor="let item of key.value">
@@ -277,17 +314,8 @@
                                 <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
                             </svg>
                         </div>
-                        <div class="text" (click)="goToSearchReportDashboard()">Back</div>
+                        <div class="text" (click)="goToSearchReport()">Back</div>
                     </button>
-
-                    <!-- <div class="button" data-tooltip="Size: 20Mb">
-                        <div class="button-wrapper">
-                          <div class="pdfText">Download</div>
-                            <span class="icon">
-                              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"></path></svg>
-                            </span>
-                        </div>
-                    </div> -->
                     <button class="botao" (click)="generate_excel()">
                         <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="mysvg"><g id="SVGRepo_bgCarrier" stroke-width="0">
                           </g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
@@ -301,12 +329,13 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="previewFlag" class="bigger_image flex-col-even" (click)="(previewFlag = false)">
-                <img [src]="curr_view_image" alt="" class="zoomed_image" (click)="$event.stopPropagation()" style="cursor: auto;">
+        <div *ngIf="reportImagePreviewFlag" class="bigger_image flex-col-even" (click)="(reportImagePreviewFlag = false)">
+                <img [src]="curr_report_view_image" alt="" class="zoomed_image" (click)="$event.stopPropagation()" style="cursor: auto;">
         </div>
     </div>
 </body>
 
+<!------------------------------------------- Camera --------------------------------------------------->
 <body *ngIf="curr_admin_view == 'Camera'" class="bodyClass flex-row-even">
     <div class="leftContainerClass flex-col-even">
         <div class="upperContainer flex-col-even">
@@ -356,6 +385,7 @@
     </div>
 </body>
 
+<!------------------------------------------- Profile --------------------------------------------------->
 <body *ngIf="curr_admin_view == 'Profile'" class="bodyClass flex-row-even">
     <div class="leftContainerClass flex-col-even">
         <div class="upperContainer flex-col-even">

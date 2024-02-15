@@ -63,7 +63,7 @@ export class AdminComponent implements OnInit {
   nextAvailable = false;
   queryPage = 1;
   totalDBDataCount: number = 0;
-  per_page = 10;
+  per_page = 5;
   totalDBData: any = [];
   lenOfArray = [];
   dataForExcel: any;
@@ -88,13 +88,16 @@ export class AdminComponent implements OnInit {
 
   passwordView = [false, false, false];
   part_image_list = [];
-  previewFlag: boolean = false;
-  curr_view_image: any;
+  reportImagePreviewFlag: boolean = false;
+  pendingImagePreviewFlag: boolean = false;
+  curr_report_view_image: any;
+  curr_pending_view_image: any;
   curr_selected_pending_list: any;
   pending_parts_list: any = [];
   pending_subparts_list: any = [];
   checkedCheckboxIds: any = [];
   curr_jobID_for_pending_re_inspection: any;
+  data_not_found: boolean = false;
 
   constructor(
       private service: BackendService, 
@@ -165,9 +168,10 @@ export class AdminComponent implements OnInit {
 
     this.service.getPendingReport(this.userDetails.userId).subscribe(
       (data: any) => {
-        // console.log('Pending reports', data['result'][0]['pending_reports'][0]['admin_id']);
-        console.log('this.pending_report_list for dashboard',this.pending_report_list);
-        this.pending_report_list = data['result'];
+        console.log('getPendingReport', data);
+        // console.log('this.pending_report_list for dashboard',this.pending_report_list);
+        if(data['status'] && data['result'].length > 0)
+          this.pending_report_list = data['result'];
       },
       (error: any) => {
         this.notifyService.showError(
@@ -192,10 +196,9 @@ export class AdminComponent implements OnInit {
     if (index == 1) {
       this.service.getPendingReport(this.userDetails.userId).subscribe(
         (data: any) => {
-          console.log('data',data);
-          if(data['status'])
+          console.log('getPendingReport', data);
+          if(data['status'] && data['result'].length > 0)
             this.pending_report_list = data['result'];
-          // console.log('data',this.pending_report_list);
         },
         (error: any) => {
           this.notifyService.showError(
@@ -209,13 +212,14 @@ export class AdminComponent implements OnInit {
   goToSearchReport() {
     this.report_page_flag = false;
     this.report_page_flag_detail = false;
+    this.data_not_found = false;
     setTimeout(() => this.initializingDatePicker(), 0);
   }
-  goToSearchReportDashboard(){
-    this.report_page_flag = false;
-    this.report_page_flag_detail = false;
-    setTimeout(() => this.initializingDatePicker(), 0);
-  }
+  // goToSearchReportDashboard(){
+  //   this.report_page_flag = false;
+  //   this.report_page_flag_detail = false;
+  //   setTimeout(() => this.initializingDatePicker(), 0);
+  // }
 
   logout() {
     try {
@@ -345,11 +349,19 @@ export class AdminComponent implements OnInit {
     };
 
     this.report_page_flag = true;
+    this.report_page_flag_detail = false;
     this.service.searchDateTime(searchData).subscribe(
       (data: any) => {
-        console.log('data for report',data);
-        this.totalDBDataCount = data['total_job_ids'];
-        this.dataFromDb = data['result']
+        console.log('searchDateTime',data);
+        if(data['result'].length > 0){
+          this.totalDBDataCount = data['total_job_ids'];
+          this.dataFromDb = data['result'];
+          this.data_not_found = false;
+          // console.log('data for report',data['result'].length);
+        }
+        else{
+          this.data_not_found = true;
+        }
       },
       (error: any) => {
         this.notifyService.showError(
@@ -367,6 +379,53 @@ export class AdminComponent implements OnInit {
     //       'Server Connection Error'
     //     );
     // });
+  }
+
+  viewDetailsUsingJobId(jobId: any){
+    // console.log('jobId',jobId);
+    this.service.searchByJobId(jobId).subscribe((data: any)=>{
+      console.log('searchByJobId',data);
+      // console.log('pending_report_list_details',this.pending_report_list_details);
+      
+      if(data['status'] && Object.keys(data.entries).length != 0){
+        this.pending_report_list_details = data['entries'];
+        this.report_page_flag = false;
+        this.report_page_flag_detail = true;
+        jobId.value = '';
+      }
+      else{
+        this.notifyService.showInfo(data['message'],'Notification');
+      }
+    },
+    (error: any)=>{
+      this.notifyService.showError('Please check your Server', 'Server Connection Error');
+    });
+  }
+
+  searchByJobId(){
+    let jobId = <HTMLInputElement> document.getElementById('jobID');
+    let idValue = jobId.value;
+    if(idValue === ''){
+      this.notifyService.showInfo('Please enter JobID','Notification');
+      return;
+    }
+    this.service.searchByJobId(idValue).subscribe((data: any)=>{
+      console.log('searchByJobId',data);
+      // console.log('pending_report_list_details',this.pending_report_list_details);
+      
+      if(data['status'] && Object.keys(data.entries).length != 0){
+        this.pending_report_list_details = data['entries'];
+        this.report_page_flag = false;
+        this.report_page_flag_detail = true;
+        jobId.value = '';
+      }
+      else{
+        this.notifyService.showInfo(data['message'],'Notification');
+      }
+    },
+    (error: any)=>{
+      this.notifyService.showError('Please check your Server', 'Server Connection Error');
+    });
   }
 
   clickNext() {
@@ -439,8 +498,9 @@ export class AdminComponent implements OnInit {
     this.reject_flag = false;
     this.service.getPendingReport(this.userDetails.userId).subscribe(
       (data: any) => {
-        this.pending_report_list = data['result'];
-        console.log('data',this.pending_report_list);
+        console.log('getPendingReport', data);
+        if(data['status'] && data['result'].length > 0)
+          this.pending_report_list = data['result'];
       },
       (error: any) => {
         this.notifyService.showError(
@@ -478,7 +538,7 @@ export class AdminComponent implements OnInit {
     this.curr_jobID_for_pending_re_inspection = jobId;
     this.curr_admin_view = this.admin_view_list[1];
     this.curr_selected_pending_list = this.pending_report_list[data]['vehicle_parts'];
-    console.log('this.curr_selected_pending_list',this.curr_selected_pending_list);
+    // console.log('this.curr_selected_pending_list',this.curr_selected_pending_list);
     this.inspection_report_flag = true;
     const { keys, values } = this.viewTempData(this.curr_selected_pending_list);
     this.pending_parts_list = keys;
@@ -725,31 +785,6 @@ submitPendingReport() {
     this.notifyService.showError('Please check your Server', 'Server Connection Error');
   });
 }
- 
-  searchByJobId(){
-    let jobId = <HTMLInputElement> document.getElementById('jobID');
-    let idValue = jobId.value;
-    if(idValue === ''){
-      this.notifyService.showInfo('Please enter JobID','Notification');
-      return;
-    }
-    this.service.searchByJobId(idValue).subscribe((data: any)=>{
-      this.pending_report_list_details = data['entries'];
-      // console.log('pending_report_list_details',this.pending_report_list_details);
-
-      if(data['status']){
-        this.report_page_flag = false;
-        this.report_page_flag_detail = true;
-        jobId.value = '';
-      }
-      else{
-        this.notifyService.showInfo('JOB ID not found','Notification');
-      }
-    },
-    (error: any)=>{
-      this.notifyService.showError('Please check your Server', 'Server Connection Error');
-    });
-  }
 
   decode_image(data: any){
     let occurrenceMap = new Map();
@@ -767,11 +802,18 @@ submitPendingReport() {
   }
 
   view_image(img: any){
-    this.previewFlag = true;
+    this.reportImagePreviewFlag = true;
     let videoUrl = 'data:image/jpg;base64,' + img;
     let new_img = this.sanitizer.bypassSecurityTrustUrl(videoUrl);
-    this.curr_view_image = new_img;
-    console.log(this.curr_view_image);
+    this.curr_report_view_image = new_img;
+    // console.log(this.curr_view_image);
+  }
+
+  viewPendingSubPartImage(img: any){
+    this.pendingImagePreviewFlag = true;
+    let videoUrl = 'data:image/jpg;base64,' + img;
+    let new_img = this.sanitizer.bypassSecurityTrustUrl(videoUrl);
+    this.curr_pending_view_image = new_img;
   }
 
   fill_dummy_pending_reports(){
@@ -793,5 +835,15 @@ submitPendingReport() {
 
   generate_excel(){
     console.log('generate_excel called.............');
+    // this.service.searchDateTime(fullData).subscribe(
+    //   (data: any) => {
+    //     console.log('Total DB data', data)
+    //   },
+    //   (error: any) => {
+    //     this.notifyService.showError(
+    //       'Please check your Server',
+    //       'Server Connection Error'
+    //     );
+    // });
   }
 }

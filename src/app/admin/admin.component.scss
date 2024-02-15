@@ -349,7 +349,7 @@ label{
 }
 .backBtnSize{
     position: absolute;
-    top: 92.8%;
+    top: 92%;
     left: 90%;
     height: 7%;
     width: 8%;
@@ -466,7 +466,7 @@ label{
 }
 .pending_report_checkbox{
     position: relative;
-    left: 12%;
+    left: 10%;
 }
 .pending_report_subPartName{
     position: relative;
@@ -474,19 +474,28 @@ label{
     display: inline-block;
     font-family: "Inria Sans", sans-serif; 
     font-size: 14px;
-    width: 45%;
-    text-align: center;
+    width: 32%;
+    // text-align: center;
 }
 .pending_report_subPartStatus{
-    position: relative;
-    left: 45%;
     display: inline-block;
-    font-family: "Inria Sans", sans-serif; 
+    font-family: "Inria Sans", sans-serif;
     font-size: 14px;
-    width: 23%;
+    width: 22%;
     position: relative;
-    left: 22%;
-    text-align: center;
+    left: 19%;
+    // text-align: center;
+}
+.pending_report_subPartImage{
+    display: inline-block;
+    font-family: "Inria Sans", sans-serif;
+    font-size: 9px;
+    font-weight: bold;
+    width: 13%;
+    position: relative;
+    left: 27%;
+    cursor: pointer;
+    // text-align: center;
 }
 .ff{
     font-family: "Inria Sans", sans-serif; 
@@ -798,12 +807,53 @@ transition: border-color 0.2s;
     border-radius: 10px;
 }
 .report_analysis_table{
-    height: 92%;
+    height: 100%;
     width: 100%;
     position: relative;
 }
-
-
+.table_head{
+    position: relative;
+    height: 10%;
+    width: 100%;
+    background-color: #afcfd3;
+}
+.table_body{
+    position: relative;
+    height: 90%;
+    width: 100%;
+    background-color: #d9d9d9;
+}
+.table_row{
+    position: relative;
+    left: 5%;
+    height: 17%;
+    width: 90%;
+    background-color: white;
+    border-radius: 10px;
+    margin-top: 1%;
+    margin-bottom:1%;
+}
+.report_data_container{
+    height: 70%;
+    width: 90%;
+    background-color: #afcfd3;
+    border-radius: 10px;
+}
+.report_table_header{
+    display: inline-block;
+    font-size: 50px;
+    position: relative;
+    left: 38%;
+    bottom: 66%;
+}
+.date_range{
+    position: relative;
+    display: inline-block;
+    left: 53%;
+    bottom: 90%;
+    font-weight: bold;
+    font-size: 18px;
+}
 
 
 
@@ -1013,7 +1063,7 @@ table tr:hover {background-color: #cef3eb;}
     cursor: pointer;
     position: relative;
     left: 3%;
-    top: 11%;
+    top: 12%;
     overflow: hidden;
     transition-duration: .3s;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
