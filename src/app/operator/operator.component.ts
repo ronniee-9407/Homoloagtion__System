@@ -127,8 +127,8 @@ liveFeed(){
       this.reInspectFlag = false;
     }
     else{
-      this.reInspectFlag = false;
-      this.curr_operator_view = this.operator_view_list[2];
+      this.reInspectFlag = true;
+      this.curr_operator_view = this.operator_view_list[4];
     }
   }
   abort(flag: any){

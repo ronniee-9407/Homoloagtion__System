@@ -212,7 +212,20 @@ label{
 }
 .inputClass:focus{
     outline: none;
+    border: 1px solid black;
 }
+.inputClass:hover{
+    border: 1px solid black;
+}
+.inputClass::placeholder {
+    color: silver;
+    font-size: 14px;
+    // position: relative;
+    // right: 35%;
+  }
+  .inputClass:focus::placeholder {
+    color: transparent;
+  }
 .searchContainer{
     background-color: white;
     height: 99.1%;
@@ -236,7 +249,7 @@ label{
 .idSearchContainer{
     height: 55%;
     width: 90%;
-    border: 1px solid black;
+    // border: 1px solid black;
     border-radius: 10px;
 }
 .innerSearchContainer{
@@ -835,7 +848,7 @@ transition: border-color 0.2s;
 }
 .report_data_container{
     height: 70%;
-    width: 90%;
+    width: 97%;
     background-color: #afcfd3;
     border-radius: 10px;
 }
@@ -854,6 +867,29 @@ transition: border-color 0.2s;
     font-weight: bold;
     font-size: 18px;
 }
+.report_header_class{
+    height: 6%;
+    width: 90%;
+    position: relative;
+    left: 5%;
+    // margin-top: 1%;
+    background-color: black;
+    color: white;
+    border-radius: 4px;
+    // border: 1px solid black;
+}
+.report_header_class p{
+    font-size: 22px;
+    font-weight: bold;
+    font-family: "Inria Sans", sans-serif;
+}
+
+
+
+
+
+
+
 
 
 

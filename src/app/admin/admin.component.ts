@@ -391,7 +391,6 @@ export class AdminComponent implements OnInit {
         this.pending_report_list_details = data['entries'];
         this.report_page_flag = false;
         this.report_page_flag_detail = true;
-        jobId.value = '';
       }
       else{
         this.notifyService.showInfo(data['message'],'Notification');

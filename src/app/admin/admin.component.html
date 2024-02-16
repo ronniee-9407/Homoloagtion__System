@@ -218,7 +218,7 @@
 
             <div *ngIf="!report_page_flag && !report_page_flag_detail && !data_not_found" class="searchById flex-col-even">
                 <h2 id="subHeadingId">Search By JOB ID</h2>
-                <div class="idSearchContainer flex-row-even">
+                <div class="idSearchContainer flex-row-even shadow">
                     <div class="innerSearchContainer flex-row-even">
                         <p style="font-size: 1.4rem;">JOB ID : </p>
                         <div class="input-container">
@@ -247,12 +247,19 @@
                         <p class="date_range">Date : {{startDate}} - {{endDate}}</p>
                     </div>
                     <div *ngIf="!data_not_found" class="table_body">
+                        <div class="report_header_class flex-row-even">
+                            <p style="position: relative; right: 8.8%;">Job ID</p>
+                            <p style="position: relative; right: 11%;">Date/Time</p>
+                            <p style="position: relative; right: 2%;">Inspected Vehicle</p>
+                            <p style="position: relative; left: 1%;">Inspected By</p>
+                        </div>
                         <div *ngFor="let value of dataFromDb; let i = index" class="table_row flex-row-even">
                             <div class="report_data_container flex-row-even">
                                 <!-- <h4 class="greet w-25">Date/Time</h4> -->
-                                <h3 class="greet w-15">{{value.job_id}}</h3>
+                                <h3 class="greet w-10">{{value.job_id}}</h3>
                                 <h3 class="greet w-30">{{value.date_time}}</h3>
                                 <h3 class="greet w-45">Inspection of {{value.vehicle_name}} 125cc</h3>
+                                <h3 class="greet w-15">Operator123</h3>
                                 <h4 class="greet w-10 link" style="font-size: 14px;" (click)="viewDetailsUsingJobId(value.job_id)">Preview</h4>
                             </div>
                         </div>
@@ -308,7 +315,7 @@
 
                 <div class="buttonContainer">
                     <!-- <button class="backBtnSizeToReport bg-color_black" (click)="goToSearchReport()">Back</button> -->
-                    <button class="Btn">
+                    <button class="Btn" (click)="goToSearchReport()">
                         <div class="sign">
                             <svg viewBox="0 0 512 512">
                                 <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
@@ -362,19 +369,19 @@
             <h2 class="greet camera_header">Enter Camera Credentials</h2>
             <div class="flex-row w-50">
                 <label for="user">User ID : </label>
-                <input type="text" name="user" id="user" class="inputClass" value="admin" required>
+                <input type="text" name="user" id="user" class="inputClass" value="" placeholder="Enter User Id" required>
             </div>
             <div class="flex-row w-50">
                 <label for="pass">Password : </label>
-                <input type="password" name="pass" id="pass" class="inputClass" value="Deevia@123" required>
+                <input type="password" name="pass" id="pass" class="inputClass" value="" placeholder="Password" required>
             </div>
             <div class="flex-row w-50">
                 <label for="ip">Cam IP : </label>
-                <input type="text" name="ip" id="ip" class="inputClass" placeholder="192.168.1.2" required>
+                <input type="text" name="ip" id="ip" class="inputClass" placeholder="192.168.x.x" required>
             </div>
             <div class="flex-row w-50">
                 <label for="port">Port : </label>
-                <input type="text" name="port" id="port" class="inputClass" value="554" required readonly>
+                <input type="text" name="port" id="port" class="inputClass" value="554" style="cursor: not-allowed;" required readonly>
             </div>
             <!-- <div class="flex-row w-50">
                 <label for="user">RTSP: </label>
