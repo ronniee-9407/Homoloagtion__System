@@ -854,10 +854,11 @@ transition: border-color 0.2s;
 }
 .report_table_header{
     display: inline-block;
-    font-size: 50px;
+    font-size: 48px;
     position: relative;
     left: 38%;
     bottom: 66%;
+    font-family: "Inria Sans", sans-serif;
 }
 .date_range{
     position: relative;
@@ -866,6 +867,7 @@ transition: border-color 0.2s;
     bottom: 90%;
     font-weight: bold;
     font-size: 18px;
+    font-family: "Inria Sans", sans-serif;
 }
 .report_header_class{
     height: 6%;

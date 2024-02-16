@@ -8,6 +8,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   let curr_user = sessionStorage.getItem('userType');
 
   let url = state.url;
+  console.log('url',url);
   let new_url = url.substring(1);
   
   if(checkLoggedIn != null && checkLoggedIn == 'true' && new_url == curr_user){

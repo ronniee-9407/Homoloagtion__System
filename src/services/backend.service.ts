@@ -13,11 +13,9 @@ export class BackendService {
 
   addCamera(camDetails: any): Observable<any>{
     const token = sessionStorage.getItem('authorizationCode')
-
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-
     return this.http.post("http://192.168.68.129:5000/add_camera", {camDetails}, { 
       headers: headers,
     });
@@ -25,31 +23,18 @@ export class BackendService {
 
   searchDateTime(data: any): Observable<any>
   {
-    console.log('data',data);
-    
     const token = sessionStorage.getItem('authorizationCode')
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-
     return this.http.post("http://192.168.68.129:5000/report_analysis", { 
       'report_data': data,
       withCredentials: true 
     },{headers});
   }
 
-  // searchDateTimeFull(query: any): Observable<any>
-  // {
-  //   const token = sessionStorage.getItem('authorizationCode')
-
-  //   const headers = new HttpHeaders({
-  //     'Authorization': `Bearer ${token}`
-  //   });
-  //   return this.http.post("http://192.168.68.129:5000/search_date_time_full",{headers: headers, "query": query, withCredentials: true });
-  // }
-
   getDataforInspection(data: any): Observable<any>{
-    console.log(data);
+    // console.log(data);
     return this.http.post("http://192.168.68.129:5000/vehicle_details",{"data": data});
   }
 
@@ -64,13 +49,10 @@ export class BackendService {
   }
 
   getPendingReport(employeeId: any){
-
     const token = sessionStorage.getItem('authorizationCode')
-
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-
     return this.http.get("http://192.168.68.129:5000/get_pending_reports", { 
       headers: headers,
       withCredentials: true 
@@ -79,11 +61,9 @@ export class BackendService {
 
   getPendingReportDetails(jobId: any): Observable<any>{
     const token = sessionStorage.getItem('authorizationCode')
-
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-
     return this.http.post("http://192.168.68.129:5000/report_details", { 
       headers: headers,
       'jobId': jobId,
@@ -97,13 +77,9 @@ export class BackendService {
 
   adminPasswordReset(data: any): Observable<any>{
     const token = sessionStorage.getItem('authorizationCode')
-
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-
-    console.log("token_____", token);
-    
     return this.http.put("http://192.168.68.129:5000/modify_admin_password", {data} ,{ 
       headers
     });
@@ -111,40 +87,30 @@ export class BackendService {
 
   modifyAdminOperatorPassword(data: any): Observable<any>{
     const token = sessionStorage.getItem('authorizationCode')
-
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-
-    console.log(`token______`, token);
-
     return this.http.put("http://192.168.68.129:5000/modify_password", {data} ,{ 
       headers
     });
-
   }
 
   showNumberOfUsers(): Observable<any>{
     const token = sessionStorage.getItem('authorizationCode')
-
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-
     return this.http.get("http://192.168.68.129:5000/number_of_users", { 
       headers: headers,
       withCredentials: true 
     });
-
   }
 
   getWeeklyReport(): Observable<any>{
     const token = sessionStorage.getItem('authorizationCode')
-
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-
     return this.http.get("http://192.168.68.129:5000/weekly_report", { 
       headers: headers,
       withCredentials: true 
@@ -153,47 +119,33 @@ export class BackendService {
 
   getQuarterlyReport(): Observable<any>{
     const token = sessionStorage.getItem('authorizationCode')
-
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-
     return this.http.get("http://192.168.68.129:5000/quarterly_report", { 
       headers: headers,
       withCredentials: true 
     });
   }
 
-
   addUser(data: any): Observable<any>{
     const token = sessionStorage.getItem('authorizationCode');
-
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-
-    console.log(`token____`, token);
-
     return this.http.post(
       'http://192.168.68.129:5000/registration',
       {data},
       {
         headers: headers,
-      }
-    );
-
+      });
     }
 
-
-
   logout(employeeId: any){
-
     const token = sessionStorage.getItem('authorizationCode')
-
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });    
-    // console.log(`token____`, token);
     return this.http.get("http://192.168.68.129:5000/logout", { 
       headers
     });
@@ -201,7 +153,6 @@ export class BackendService {
 
   searchByJobId(jobID: any): Observable<any>{
     const token = sessionStorage.getItem('authorizationCode')
-
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
@@ -209,9 +160,8 @@ export class BackendService {
   }
 
   submit_pending_reInspection_data(data: any): Observable<any>{
-    console.log('data for reInspection',data);
+    // console.log('data for reInspection',data);
     const token = sessionStorage.getItem('authorizationCode')
-
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });

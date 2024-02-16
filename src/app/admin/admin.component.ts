@@ -75,7 +75,7 @@ export class AdminComponent implements OnInit {
   failed_checkpoints: any = 16;
 
   myChart: any;
-  xAxisData = [
+  weekly_xAxisData = [
     '25-12-2023',
     '26-12-2023',
     '27-12-2023',
@@ -84,7 +84,7 @@ export class AdminComponent implements OnInit {
     '30-12-2023',
     '31-12-2023',
   ];
-  yAxisData = [5, 8, 7, 5, 9, 6, 4];
+  weekly_yAxisData = [5, 8, 7, 5, 9, 6, 4];
 
   passwordView = [false, false, false];
   part_image_list = [];
@@ -98,6 +98,8 @@ export class AdminComponent implements OnInit {
   checkedCheckboxIds: any = [];
   curr_jobID_for_pending_re_inspection: any;
   data_not_found: boolean = false;
+  weekly_report_list: any = [];
+  quarterly_report_list: any = [];
 
   constructor(
       private service: BackendService, 
@@ -109,15 +111,14 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.userDetails.userId = String(sessionStorage.getItem('userId'));
-    // this.userDetails.name = String(sessionStorage.getItem('name'));
+    this.userDetails.name = String(sessionStorage.getItem('name'));
     let userType = String(sessionStorage.getItem('userType'));
-    this.userDetails.designation =
-      userType.charAt(0).toUpperCase() + userType.slice(1);
-    setTimeout(() => {
-      this.createChart(this.xAxisData, this.yAxisData);
-    }, 10);
+    this.userDetails.designation = userType.charAt(0).toUpperCase() + userType.slice(1);
     this.getDashboardData();
-    this.pending_report_list = this.fill_dummy_pending_reports();
+    // this.pending_report_list = this.fill_dummy_pending_reports();
+    setTimeout(() => {
+      this.createWeeklyChart(this.weekly_xAxisData, this.weekly_yAxisData);
+    }, 10);
   }
 
   generatePendingReportList(numParts: number, numSubparts: number): any[] {
@@ -155,7 +156,6 @@ export class AdminComponent implements OnInit {
 
     this.service.getQuarterlyReport().subscribe(
       (data: any) => {
-        // this.cookieService.set('session', 'cookie_value');
         console.log('Get quarterly report', data);
       },
       (error: any) => {
@@ -168,8 +168,7 @@ export class AdminComponent implements OnInit {
 
     this.service.getPendingReport(this.userDetails.userId).subscribe(
       (data: any) => {
-        console.log('getPendingReport', data);
-        // console.log('this.pending_report_list for dashboard',this.pending_report_list);
+        // console.log('getPendingReport', data);
         if(data['status'] && data['result'].length > 0)
           this.pending_report_list = data['result'];
       },
@@ -184,19 +183,16 @@ export class AdminComponent implements OnInit {
 
   changeView(index: any) {
     this.curr_admin_view = this.admin_view_list[index];
-    if (index == 2) {
-      setTimeout(() => this.initializingDatePicker(), 0);
-    }
     if (index == 0) {
       this.getDashboardData();
       setTimeout(() => {
-        this.createChart(this.xAxisData, this.yAxisData);
+        this.createWeeklyChart(this.weekly_xAxisData, this.weekly_yAxisData);
       }, 100);
     }
+
     if (index == 1) {
       this.service.getPendingReport(this.userDetails.userId).subscribe(
         (data: any) => {
-          console.log('getPendingReport', data);
           if(data['status'] && data['result'].length > 0)
             this.pending_report_list = data['result'];
         },
@@ -208,7 +204,12 @@ export class AdminComponent implements OnInit {
         }
       );
     }
+        
+    if (index == 2) {
+      setTimeout(() => this.initializingDatePicker(), 0);
+    }
   }
+
   goToSearchReport() {
     this.report_page_flag = false;
     this.report_page_flag_detail = false;
@@ -226,11 +227,12 @@ export class AdminComponent implements OnInit {
       this.service.logout(this.userDetails.userId).subscribe(
         (data: any) => {
           // console.log('Logged out', data);
-          sessionStorage.removeItem('isUserLoggedIn');
-          sessionStorage.removeItem('userType');
-          sessionStorage.removeItem('userId');
-          sessionStorage.removeItem('name');
-          sessionStorage.removeItem('authorizationCode');
+          // sessionStorage.removeItem('isUserLoggedIn');
+          // sessionStorage.removeItem('userType');
+          // sessionStorage.removeItem('userId');
+          // sessionStorage.removeItem('name');
+          // sessionStorage.removeItem('authorizationCode');
+          ['isUserLoggedIn', 'userType', 'userId', 'name', 'authorizationCode'].forEach(key => sessionStorage.removeItem(key));
           this.router.navigate(['/login']);
           this.notifyService.showInfo(
             'Logged out successfully',
@@ -348,11 +350,11 @@ export class AdminComponent implements OnInit {
       end_date: edDate,
     };
 
-    this.report_page_flag = true;
-    this.report_page_flag_detail = false;
     this.service.searchDateTime(searchData).subscribe(
       (data: any) => {
-        console.log('searchDateTime',data);
+        this.report_page_flag = true;
+        this.report_page_flag_detail = false;
+        // console.log('searchDateTime',data);
         if(data['result'].length > 0){
           this.totalDBDataCount = data['total_job_ids'];
           this.dataFromDb = data['result'];
@@ -497,7 +499,7 @@ export class AdminComponent implements OnInit {
     this.reject_flag = false;
     this.service.getPendingReport(this.userDetails.userId).subscribe(
       (data: any) => {
-        console.log('getPendingReport', data);
+        // console.log('getPendingReport', data);
         if(data['status'] && data['result'].length > 0)
           this.pending_report_list = data['result'];
       },
@@ -509,10 +511,12 @@ export class AdminComponent implements OnInit {
       }
     );
   }
+  
   approveToggle(data: any) {
     this.approval_flag = true;
     this.index_for_approve_reject = data;
   }
+
   rejectToggle(data: any) {
     this.reject_flag = true;
     this.index_for_approve_reject = data;
@@ -525,6 +529,7 @@ export class AdminComponent implements OnInit {
       this.approval_flag = false;
     }
   }
+
   reportRejected(data: any) {
     if (!data) {
       this.reject_flag = false;
@@ -609,7 +614,7 @@ export class AdminComponent implements OnInit {
     myChart2.setOption(option);
   }
 
-  createChart(xData: any, yData: any) {
+  createWeeklyChart(xData: any, yData: any) {
     const maxValue = Math.max(...yData);
     this.myChart = echarts.init(document.getElementById('chart1') as any);
     const option_1 = {
@@ -754,36 +759,35 @@ export class AdminComponent implements OnInit {
     currId.type = 'password';
   }
 
-
-toggleSubParts(checked: boolean, index: number) {
-  const subparts = this.pending_subparts_list[index];
-  subparts.forEach((subpart: any) => subpart.checked = checked);
-  // this.submitPendingReport();
-  // console.log('this.checkedCheckboxIds',this.checkedCheckboxIds);
-}
-
-submitPendingReport() {
-  this.checkedCheckboxIds = [];
-  this.pending_subparts_list.forEach((subparts: any) => {
-    subparts.forEach((subpart: any) => {
-      if (subpart.checked) {
-        this.checkedCheckboxIds.push(subpart.id);
-      }
-    });
-  });
-  // console.log('this.checkedCheckboxIds',this.checkedCheckboxIds);
-  let data = {
-    'job_id': this.curr_jobID_for_pending_re_inspection,
-    're_inspect_data': this.checkedCheckboxIds
+  toggleSubParts(checked: boolean, index: number) {
+    const subparts = this.pending_subparts_list[index];
+    subparts.forEach((subpart: any) => subpart.checked = checked);
+    // this.submitPendingReport();
+    // console.log('this.checkedCheckboxIds',this.checkedCheckboxIds);
   }
-  this.service.submit_pending_reInspection_data(data).subscribe((data: any)=>{
-    if(data['status']){
-      this.notifyService.showInfo('Data successfully submitted for Re-Inspection','Notification');
+
+  submitPendingReport() {
+    this.checkedCheckboxIds = [];
+    this.pending_subparts_list.forEach((subparts: any) => {
+      subparts.forEach((subpart: any) => {
+        if (subpart.checked) {
+          this.checkedCheckboxIds.push(subpart.id);
+        }
+      });
+    });
+    // console.log('this.checkedCheckboxIds',this.checkedCheckboxIds);
+    let data = {
+      'job_id': this.curr_jobID_for_pending_re_inspection,
+      're_inspect_data': this.checkedCheckboxIds
     }
-  },(error: any)=>{
-    this.notifyService.showError('Please check your Server', 'Server Connection Error');
-  });
-}
+    this.service.submit_pending_reInspection_data(data).subscribe((data: any)=>{
+      if(data['status']){
+        this.notifyService.showInfo('Data successfully submitted for Re-Inspection','Notification');
+      }
+    },(error: any)=>{
+      this.notifyService.showError('Please check your Server', 'Server Connection Error');
+    });
+  }
 
   decode_image(data: any){
     let occurrenceMap = new Map();

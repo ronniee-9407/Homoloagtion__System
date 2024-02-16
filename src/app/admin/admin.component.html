@@ -187,7 +187,7 @@
     </div>
     <div class="rightContainerClass flex-col-even">
         <div class="searchContainer flex-col-even">
-            <div *ngIf="!report_page_flag && !report_page_flag_detail && !data_not_found" class="searchByDate">
+            <div *ngIf="!report_page_flag && !report_page_flag_detail" class="searchByDate">
                 <h2 id="subHeading1">Search By Date</h2>
                 <div id="datePick">
                     <div id="date">
@@ -216,7 +216,7 @@
                 <button id="searchButton" class="btn btn-primary" (click)="searchDateTime()">Search</button>
             </div>
 
-            <div *ngIf="!report_page_flag && !report_page_flag_detail && !data_not_found" class="searchById flex-col-even">
+            <div *ngIf="!report_page_flag && !report_page_flag_detail" class="searchById flex-col-even">
                 <h2 id="subHeadingId">Search By JOB ID</h2>
                 <div class="idSearchContainer flex-row-even shadow">
                     <div class="innerSearchContainer flex-row-even">
@@ -244,7 +244,7 @@
                             <div class="text" (click)="goToSearchReport()">Back</div>
                         </button>
                         <h3 class="report_table_header">DATABASE</h3>
-                        <p class="date_range">Date : {{startDate}} - {{endDate}}</p>
+                        <p class="date_range">Date : {{startDate}} &nbsp; to &nbsp; {{endDate}}</p>
                     </div>
                     <div *ngIf="!data_not_found" class="table_body">
                         <div class="report_header_class flex-row-even">
@@ -260,7 +260,7 @@
                                 <h3 class="greet w-30">{{value.date_time}}</h3>
                                 <h3 class="greet w-45">Inspection of {{value.vehicle_name}} 125cc</h3>
                                 <h3 class="greet w-15">Operator123</h3>
-                                <h4 class="greet w-10 link" style="font-size: 14px;" (click)="viewDetailsUsingJobId(value.job_id)">Preview</h4>
+                                <h4 class="greet w-10 link" style="font-size: 10px;" (click)="viewDetailsUsingJobId(value.job_id)">Preview</h4>
                             </div>
                         </div>
                     </div>

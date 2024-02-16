@@ -1,7 +1,10 @@
+<!------------------------------------------- Header --------------------------------------------------->
 <header class="headerClass">
-    <img src="../../assets/icons/logo.png" alt="" class="logoClass">
+    <img src="../../assets/icons/logo.png" alt="" class="logoClass" (click)="goToDashboard()">
     <img src="../../assets/icons/Honda_Logo.svg" alt="" class="hondaLogoclass">
 </header>
+
+<!------------------------------------------- Dashboard --------------------------------------------------->
 <body *ngIf="curr_operator_view == 'Dashboard'" class="bodyClass flex-row-even">
     <div class="leftContainer flex-col-even">
         <div class="upperContainer flex-col-even">
@@ -33,6 +36,7 @@
     </div>
 </body>
 
+<!------------------------------------------- select_vehicle --------------------------------------------------->
 <body *ngIf="curr_operator_view == 'select_vehicle'" class="bodyClass flex-row-even">
     <div class="start_inspection_page flex-col-even">
         <div class="selectionClass flex-row-even">
@@ -64,6 +68,7 @@
     </div>
 </body>
 
+<!------------------------------------------- live_feed --------------------------------------------------->
 <body *ngIf="curr_operator_view == 'live_feed'" class="bodyClass flex-row-even">
     <div class="fullBodyContainer flex-row-even">
         <div class="outer_video_container flex-col-even">
@@ -117,12 +122,6 @@
             </div>
             <div class="lowerClass flex-row-even">
                 <div id="good" class="status_container shadow flex-col-even">
-                    <!-- <div class="loader" [style.--percentage]="this.inspection_percentage">
-                        <span class="loader-text">{{inspection_percentage}}%</span>
-                        <svg class="loader-circle">
-                            <circle cx="50%" cy="50%" r="34%" stroke-width="10%" class="loader-circle-progress" />
-                        </svg>
-                    </div> -->
                     <div>
                         <circle-progress [percent]="inspection_percentage"  [space]="4" [radius]="80" [outerStrokeWidth]="16"
                           [innerStrokeWidth]="8" [outerStrokeColor]="'#78C000'" [innerStrokeColor]="'#C7E596'" [animation]="true"
@@ -148,9 +147,7 @@
                         <h3 class="countClass greet" style="color: #F99500;">34</h3>
                         <h3 class="countClass greet" style="color: #000000;">100</h3>
                     </div>
-
-                </div>
-                
+                </div>            
             </div>
         </div>
     </div>
@@ -179,6 +176,7 @@
     </div>
 </body>
 
+<!------------------------------------------- reInspect_landing --------------------------------------------------->
 <body *ngIf="curr_operator_view == 'reInspect_landing'" class="bodyClass flex-row-even">
     <div class="leftContainer flex-col-even">
         <div class="upperContainer flex-col-even">

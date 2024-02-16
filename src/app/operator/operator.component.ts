@@ -45,10 +45,11 @@ export class OperatorComponent implements OnInit {
   constructor(private service: BackendService, private sanitizer: DomSanitizer, private router: Router, private notifyService: NotificationService){}
 
   ngOnInit(): void {
-    this.userDetails.userId = String(sessionStorage.getItem('userId'));
-    this.userDetails.name = String(sessionStorage.getItem('name'));
-    let userType = String(sessionStorage.getItem('userType'));
-    this.userDetails.designation = userType.charAt(0).toUpperCase() + userType.slice(1);
+    this.userDetails.userId = sessionStorage.getItem('userId') ?? '';
+    this.userDetails.name = sessionStorage.getItem('name') ?? '';
+    let userType = sessionStorage.getItem('userType') ?? '';
+    if(userType != '')
+      this.userDetails.designation = userType.charAt(0).toUpperCase() + userType.slice(1);
   }
 
   newInspection(){
@@ -71,24 +72,25 @@ export class OperatorComponent implements OnInit {
       this.variant_list = data['variant_list'];
     });
   }
+  
   variantSelection(){
     this.variant_selected = true;
     let data = {
       'model': this.inspection_model,
       'variant': this.inspection_variant
     }
-    console.log(data);
+    // console.log(data);
     this.service.getVehicleCc(data).subscribe((data: any)=>{
       // this.variant_selected = true;
       this.cc_list = data['cc_list'];
     });   
   }
+
   ccSelection(){
     this.cc_selected = true;
   }
 
   startInspection(){
-    // console.log('Vehicle details for inspection',this.inspection_model, this.inspection_variant, this.inspection_cc);
     let vehicle_info = {
       'model': this.inspection_model,
       'variant': this.inspection_variant,
@@ -97,22 +99,21 @@ export class OperatorComponent implements OnInit {
     this.curr_operator_view = this.operator_view_list[2];
     this.service.getDataforInspection(vehicle_info).subscribe((data: any)=>{
       console.log('Got data for inspection', data);
-      this.curr_operator_view = this.operator_view_list[2];
+      // this.curr_operator_view = this.operator_view_list[2];
       this.liveFeed();
-    });
-    
+    });  
   }
 
-liveFeed(){
-  let videoFeed = "ws://127.0.0.1:8000/camFeed";
-  let socketVideo = webSocket(videoFeed);
-  let ipVideo = socketVideo.subscribe((data: any)=>{
-    console.log('Websocket data', data);
-    let videoUrl = 'data:image/jpg;base64,' + data['image'];
-    this.camFeed = this.sanitizer.bypassSecurityTrustUrl(videoUrl);
-    this.noVideo = data['noVideo'];
-  });
-}
+  liveFeed(){
+    let videoFeed = "ws://127.0.0.1:8000/camFeed";
+    let socketVideo = webSocket(videoFeed);
+    let ipVideo = socketVideo.subscribe((data: any)=>{
+      console.log('Websocket data', data);
+      let videoUrl = 'data:image/jpg;base64,' + data['image'];
+      this.camFeed = this.sanitizer.bypassSecurityTrustUrl(videoUrl);
+      this.noVideo = data['noVideo'];
+    });
+  }
 
   reInspectToggle(){
     this.reInspectFlag = true;
@@ -127,10 +128,11 @@ liveFeed(){
       this.reInspectFlag = false;
     }
     else{
-      this.reInspectFlag = true;
+      this.reInspectFlag = false;
       this.curr_operator_view = this.operator_view_list[4];
     }
   }
+
   abort(flag: any){
     if(!flag){
       this.abortFlag = false;
@@ -143,33 +145,31 @@ liveFeed(){
       this.inspection_cc = '';
       this.model_selected = false;
       this.variant_selected = false;
+      this.cc_selected = false;
     }
   }
+
   checkValue(data: any){
     
   }
+
   goToDashboard(){
     this.curr_operator_view = this.operator_view_list[0];
   }
 
   logout(){
     this.service.logout(this.userDetails.userId).subscribe((data: any)=>{
-      console.log('Logged out', data);
-      sessionStorage.removeItem('isUserLoggedIn');
-      sessionStorage.removeItem('userType');
-      sessionStorage.removeItem('userId');
-      sessionStorage.removeItem('name');
-      sessionStorage.removeItem('authorizationCode');
+      // console.log('Logged out', data);
+      // sessionStorage.removeItem('isUserLoggedIn');
+      // sessionStorage.removeItem('userType');
+      // sessionStorage.removeItem('userId');
+      // sessionStorage.removeItem('name');
+      // sessionStorage.removeItem('authorizationCode');
+      ['isUserLoggedIn', 'userType', 'userId', 'name', 'authorizationCode'].forEach(key => sessionStorage.removeItem(key));
       this.router.navigate(['/login']);
       this.notifyService.showInfo('Logged out successfully','Notification');
     },(error: any)=>{
       this.notifyService.showError('Please check your Server', 'Server Connection Error');
     });
-    // sessionStorage.removeItem('isUserLoggedIn');
-    // sessionStorage.removeItem('userType');
-    // sessionStorage.removeItem('userId');
-    // sessionStorage.removeItem('name');
-    // sessionStorage.removeItem('authorizationCode');
-    // this.router.navigate(['/login']);
   }
 }
